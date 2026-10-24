@@ -18,6 +18,7 @@
   import CareTeamLink from "#lib/components/CareTeamLink.svelte";
   import MealPlanner from "#lib/components/MealPlanner.svelte";
   import GroceryList from "#lib/components/GroceryList.svelte";
+  import RecipeNutrientBuilder from "#lib/components/RecipeNutrientBuilder.svelte";
 
   let activeNav = $state<"Today" | "My pregnancy" | "Learn" | "My midwife">("Today");
   let authorized = $state(false);
@@ -50,7 +51,7 @@
 
   let selectedTrimester = $state<1 | 2 | 3>(3);
   let selectedWeek = $state<number>(29);
-  let learnTab = $state<"foods" | "mealplan" | "meds">("foods");
+  let learnTab = $state<"foods" | "mealplan" | "grocery" | "recipes" | "meds">("foods");
 
   const navigation = [
     { label: "Today" as const, icon: "iconoir-home", color: "text-[#809474]" },
@@ -556,25 +557,39 @@
             <!-- Hub Sub-Navigation Tabs -->
             <div class="flex flex-wrap gap-2 p-1.5 bg-white rounded-2xl border border-[#e7e4dc] shadow-2xs">
               <button
-                class="flex-1 min-w-[160px] flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer {learnTab === 'foods' ? 'bg-[#809474] text-white shadow-xs' : 'text-[#686960] hover:text-[#2b2c28] hover:bg-[#faf9f6]'}"
+                class="flex-1 min-w-[140px] flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer {learnTab === 'foods' ? 'bg-[#809474] text-white shadow-xs' : 'text-[#686960] hover:text-[#2b2c28] hover:bg-[#faf9f6]'}"
                 onclick={() => (learnTab = "foods")}
               >
                 <i class="iconoir-apple-half text-sm"></i>
-                <span>Nigerian Foods & Nutrients</span>
+                <span>Food Directory</span>
               </button>
               <button
-                class="flex-1 min-w-[160px] flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer {learnTab === 'mealplan' ? 'bg-[#809474] text-white shadow-xs' : 'text-[#686960] hover:text-[#2b2c28] hover:bg-[#faf9f6]'}"
+                class="flex-1 min-w-[140px] flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer {learnTab === 'mealplan' ? 'bg-[#809474] text-white shadow-xs' : 'text-[#686960] hover:text-[#2b2c28] hover:bg-[#faf9f6]'}"
                 onclick={() => (learnTab = "mealplan")}
               >
                 <i class="iconoir-calendar text-sm"></i>
-                <span>7-Day Meal Planner & Market List</span>
+                <span>7-Day Meal Planner</span>
               </button>
               <button
-                class="flex-1 min-w-[160px] flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer {learnTab === 'meds' ? 'bg-[#809474] text-white shadow-xs' : 'text-[#686960] hover:text-[#2b2c28] hover:bg-[#faf9f6]'}"
+                class="flex-1 min-w-[140px] flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer {learnTab === 'grocery' ? 'bg-[#809474] text-white shadow-xs' : 'text-[#686960] hover:text-[#2b2c28] hover:bg-[#faf9f6]'}"
+                onclick={() => (learnTab = "grocery")}
+              >
+                <i class="iconoir-cart text-sm"></i>
+                <span>Market List</span>
+              </button>
+              <button
+                class="flex-1 min-w-[140px] flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer {learnTab === 'recipes' ? 'bg-[#809474] text-white shadow-xs' : 'text-[#686960] hover:text-[#2b2c28] hover:bg-[#faf9f6]'}"
+                onclick={() => (learnTab = "recipes")}
+              >
+                <i class="iconoir-sparks text-sm"></i>
+                <span>Recipe Builder</span>
+              </button>
+              <button
+                class="flex-1 min-w-[140px] flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer {learnTab === 'meds' ? 'bg-[#809474] text-white shadow-xs' : 'text-[#686960] hover:text-[#2b2c28] hover:bg-[#faf9f6]'}"
                 onclick={() => (learnTab = "meds")}
               >
                 <i class="iconoir-shield-check text-sm"></i>
-                <span>Medication Safety & Guides</span>
+                <span>Medication Safety</span>
               </button>
             </div>
 
@@ -583,9 +598,12 @@
               {#if learnTab === "foods"}
                 <FoodGuide week={week ?? 28} />
               {:else if learnTab === "mealplan"}
-                <div class="space-y-6">
-                  <MealPlanner pregnancyWeek={week ?? 28} />
-                  <GroceryList />
+                <MealPlanner pregnancyWeek={week ?? 28} />
+              {:else if learnTab === "grocery"}
+                <GroceryList />
+              {:else if learnTab === "recipes"}
+                <div class="rounded-3xl bg-white border border-[#e7e4dc] p-6 sm:p-8 shadow-xs">
+                  <RecipeNutrientBuilder />
                 </div>
               {:else if learnTab === "meds"}
                 <LearningResources />

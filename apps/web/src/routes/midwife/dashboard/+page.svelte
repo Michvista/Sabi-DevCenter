@@ -76,6 +76,10 @@
   let replyText = $state("");
   let sendingReply = $state(false);
   let replySuccess = $state(false);
+  let openedFollowups = $state(false);
+  let openedMessages = $state(false);
+  let approvingId = $state<string | null>(null);
+  let reviewDecision = $state<"APPROVED" | "CHANGES_REQUESTED" | null>(null);
 
   onMount(() => {
     if (!hasSession("midwife")) void goto("/sign-in/midwife");
@@ -247,18 +251,24 @@
   }
 
   async function approveRequest(id: string) {
-    const api = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
-    await fetch(`${api}/records/care-team/requests/${id}/approve`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${sessionToken()}` },
-    });
-    await loadCareData();
+    approvingId = id;
+    try {
+      const api = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
+      await fetch(`${api}/records/care-team/requests/${id}/approve`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${sessionToken()}` },
+      });
+      await loadCareData();
+    } finally {
+      approvingId = null;
+    }
   }
 
   async function submitClinicalReview(
     status: "APPROVED" | "CHANGES_REQUESTED",
   ) {
     reviewBusy = true;
+    reviewDecision = status;
     reviewMessage = "";
     try {
       const response = await fetch(
@@ -277,14 +287,15 @@
         throw new Error(result.message ?? "Could not save review.");
       reviewMessage =
         status === "APPROVED"
-          ? "Review recorded. This is an audit record; it does not verify professional credentials."
-          : "Revision request recorded.";
+          ? "✓ Clinical review recorded successfully for Week " + reviewWeek + "."
+          : "✓ Content revision request logged for Week " + reviewWeek + ".";
       await loadCareData();
     } catch (error) {
       reviewMessage =
         error instanceof Error ? error.message : "Could not save review.";
     } finally {
       reviewBusy = false;
+      reviewDecision = null;
     }
   }
 
@@ -353,11 +364,14 @@
 
         <button
           class="w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all cursor-pointer {activeTab === 'followups' ? 'bg-[#f4f7f2] text-[#2b2c28] border border-[#dce5d6]' : 'text-[#72746b] hover:text-[#2b2c28] hover:bg-[#faf9f6]'}"
-          onclick={() => (activeTab = 'followups')}
+          onclick={() => {
+            activeTab = 'followups';
+            openedFollowups = true;
+          }}
         >
           <i class="iconoir-calendar text-base text-[#af705a]"></i>
           <span>Follow-up queue</span>
-          {#if followUpList.length > 0}
+          {#if followUpList.length > 0 && !openedFollowups}
             <span class="ml-auto px-2 py-0.5 text-xs font-bold rounded-full bg-[#af705a] text-white">
               {followUpList.length}
             </span>
@@ -366,11 +380,14 @@
 
         <button
           class="w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all cursor-pointer {activeTab === 'messages' ? 'bg-[#f4f7f2] text-[#2b2c28] border border-[#dce5d6]' : 'text-[#72746b] hover:text-[#2b2c28] hover:bg-[#faf9f6]'}"
-          onclick={() => (activeTab = 'messages')}
+          onclick={() => {
+            activeTab = 'messages';
+            openedMessages = true;
+          }}
         >
           <i class="iconoir-chat-bubble-check text-base text-[#3b82f6]"></i>
           <span>Patient messages</span>
-          {#if patientMessages.length > 0}
+          {#if patientMessages.length > 0 && !openedMessages}
             <span class="ml-auto px-2 py-0.5 text-xs font-bold rounded-full bg-[#3b82f6]/15 text-[#3b82f6]">
               {patientMessages.length}
             </span>
@@ -522,10 +539,16 @@
                       </div>
                       <button
                         type="button"
+                        disabled={approvingId === request.id}
                         onclick={() => void approveRequest(request.id)}
-                        class="py-1 px-3 text-xs font-semibold rounded-lg bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer"
+                        class="py-1 px-3 text-xs font-semibold rounded-lg bg-[#809474] text-white hover:bg-[#6c8060] disabled:opacity-50 transition-colors cursor-pointer flex items-center gap-1"
                       >
-                        Approve
+                        {#if approvingId === request.id}
+                          <i class="iconoir-refresh animate-spin text-xs"></i>
+                          <span>Approving…</span>
+                        {:else}
+                          <span>Approve</span>
+                        {/if}
                       </button>
                     </div>
                   {/each}
@@ -867,16 +890,26 @@
               <button
                 disabled={reviewBusy}
                 onclick={() => void submitClinicalReview("APPROVED")}
-                class="py-2 px-4 text-xs font-semibold rounded-xl bg-[#475842] text-white hover:bg-[#384634] transition-colors cursor-pointer disabled:opacity-50"
+                class="py-2 px-4 text-xs font-semibold rounded-xl bg-[#475842] text-white hover:bg-[#384634] transition-colors cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
               >
-                Record review
+                {#if reviewBusy && reviewDecision === "APPROVED"}
+                  <i class="iconoir-refresh animate-spin text-xs"></i>
+                  <span>Recording…</span>
+                {:else}
+                  <span>Record review</span>
+                {/if}
               </button>
               <button
                 disabled={reviewBusy}
                 onclick={() => void submitClinicalReview("CHANGES_REQUESTED")}
-                class="py-2 px-4 text-xs font-semibold rounded-xl bg-[#faf9f6] border border-[#d6d2c4] text-[#72746b] hover:bg-[#f0ede6] transition-colors cursor-pointer disabled:opacity-50"
+                class="py-2 px-4 text-xs font-semibold rounded-xl bg-[#faf9f6] border border-[#d6d2c4] text-[#72746b] hover:bg-[#f0ede6] transition-colors cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
               >
-                Request changes
+                {#if reviewBusy && reviewDecision === "CHANGES_REQUESTED"}
+                  <i class="iconoir-refresh animate-spin text-xs"></i>
+                  <span>Submitting…</span>
+                {:else}
+                  <span>Request changes</span>
+                {/if}
               </button>
             </div>
 

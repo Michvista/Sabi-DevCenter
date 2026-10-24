@@ -74,6 +74,7 @@
   let ideasDisclaimer = $state("");
   let generating = $state(false);
   let savingIdeas = $state(false);
+  let exporting = $state(false);
   async function load() {
     const r = await fetch(`${api}/records/meal-plan`, {
       headers: { Authorization: `Bearer ${sessionToken()}` },
@@ -104,14 +105,22 @@
     await load();
   }
   async function makeList() {
-    const r = await fetch(`${api}/records/groceries/from-plan`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${sessionToken()}` },
-    });
-    const result = await r.json();
-    message = r.ok
-      ? `${result.added} grocery items added${result.expandedMeals ? ` from ${result.expandedMeals} matched meal${result.expandedMeals === 1 ? "" : "s"}` : ""}.`
-      : "Could not build the grocery list.";
+    exporting = true;
+    message = "";
+    try {
+      const r = await fetch(`${api}/records/groceries/from-plan`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${sessionToken()}` },
+      });
+      const result = await r.json();
+      message = r.ok
+        ? `✓ ${result.added} items added to your market list${result.expandedMeals ? ` (from ${result.expandedMeals} scheduled dishes)` : ""}.`
+        : "Could not build the grocery list.";
+    } catch {
+      message = "Could not export to grocery list. Please try again.";
+    } finally {
+      exporting = false;
+    }
   }
   async function generateIdeas() {
     generating = true;
@@ -323,7 +332,7 @@
       <!-- 7-Day Auto Builder in an accordion -->
       <details class="mt-5 pt-4 border-t border-[#e5e1d5] text-xs text-[#686960]">
         <summary class="font-bold text-[#475842] cursor-pointer hover:underline flex items-center gap-1">
-          <i class="iconoir-spark text-xs text-[#809474]"></i>
+          <i class="iconoir-sparks text-xs text-[#809474]"></i>
           <span>Auto-generate a 7-day Nigerian meal plan</span>
         </summary>
         <p class="mt-2 text-xs leading-relaxed text-[#77786f]">
@@ -423,12 +432,13 @@
           </div>
 
           <button
-            class="text-xs font-semibold px-3 py-1.5 rounded-xl bg-[#809474]/15 text-[#475842] hover:bg-[#809474]/25 transition-colors cursor-pointer flex items-center gap-1.5"
+            class="text-xs font-semibold px-3 py-1.5 rounded-xl bg-[#809474]/15 text-[#475842] hover:bg-[#809474]/25 disabled:opacity-50 transition-colors cursor-pointer flex items-center gap-1.5"
             type="button"
+            disabled={exporting}
             onclick={makeList}
           >
-            <i class="iconoir-cart text-xs"></i>
-            <span>Export to Grocery List</span>
+            <i class="{exporting ? 'iconoir-refresh animate-spin' : 'iconoir-cart'} text-xs"></i>
+            <span>{exporting ? "Exporting…" : "Export to Grocery List"}</span>
           </button>
         </div>
 
@@ -449,7 +459,7 @@
         {:else}
           <div class="rounded-2xl border-2 border-dashed border-[#e2dfd5] p-8 text-center bg-[#faf9f6]">
             <div class="w-12 h-12 rounded-full bg-white mx-auto flex items-center justify-center mb-3 shadow-2xs text-[#9a988f]">
-              <i class="iconoir-pot text-xl"></i>
+              <i class="iconoir-organic-food text-xl"></i>
             </div>
             <h5 class="text-sm font-semibold text-[#525547] mb-1">No meals planned yet</h5>
             <p class="text-xs text-[#8e9083] max-w-sm mx-auto">

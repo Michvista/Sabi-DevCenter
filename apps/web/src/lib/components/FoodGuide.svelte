@@ -7,7 +7,6 @@
   } from "../data/food-log";
   import { sessionToken } from "#lib/auth/session.ts";
   import { onMount } from "svelte";
-  import RecipeNutrientBuilder from "./RecipeNutrientBuilder.svelte";
   import { getPregnancyWeek } from "../data/pregnancy-weeks";
   let { week = 20 }: { week?: number } = $props();
 
@@ -53,6 +52,8 @@
   let mealNote = $state("");
   let foodLog = $state<FoodLogEntry[]>([]);
   let savedMessage = $state("");
+  let loggingId = $state<string | null>(null);
+  let savedFoodId = $state<string | null>(null);
 
   const nutrientLabels: Record<string, string> = {
     calciumMg: "Calcium",
@@ -115,45 +116,61 @@
   }
 
   async function saveFoodLog(food: Food) {
-    const scaled = portion(food);
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL ?? "http://localhost:8080"}/records/meals`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionToken()}`,
+    const key = food.id || food.label;
+    loggingId = key;
+    savedMessage = "";
+    try {
+      const scaled = portion(food);
+      const token = sessionToken();
+      if (!token) {
+        savedMessage = "Please sign in to log meals to your account.";
+        return;
+      }
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL ?? "http://localhost:8080"}/records/meals`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            foodName: food.label,
+            mealType: meal,
+            servingGrams: servingGrams > 0 ? String(servingGrams) : "150",
+            nutrients: scaled,
+            source: food.source ?? "Nigerian Food Directory",
+            note: mealNote,
+          }),
         },
-        body: JSON.stringify({
-          foodName: food.label,
-          mealType: meal,
-          servingGrams:
-            food.source !== "FatSecret" && servingGrams > 0
-              ? String(servingGrams)
-              : undefined,
-          nutrients: scaled,
-          source: food.source ?? "No nutrition source",
-          note: mealNote,
-        }),
-      },
-    );
-    if (!response.ok) {
-      savedMessage = "Could not save to your account. Please try again.";
-      return;
+      );
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        savedMessage = err?.message ?? "Could not save to your account. Please try again.";
+        return;
+      }
+      const saved = (await response.json()) as { id: string; createdAt: string };
+      const entry = {
+        ...createFoodLogEntry(food.label, meal, mealNote),
+        id: saved.id,
+        loggedAt: saved.createdAt,
+      };
+      foodLog = [entry, ...foodLog].slice(0, 50);
+      writeFoodLog(
+        typeof localStorage === "undefined" ? undefined : localStorage,
+        foodLog,
+      );
+      mealNote = "";
+      savedFoodId = key;
+      savedMessage = `✓ ${food.label} added to your meal journal!`;
+      setTimeout(() => {
+        if (savedFoodId === key) savedFoodId = null;
+      }, 3500);
+    } catch {
+      savedMessage = "Could not reach server. Please check your connection.";
+    } finally {
+      loggingId = null;
     }
-    const saved = (await response.json()) as { id: string; createdAt: string };
-    const entry = {
-      ...createFoodLogEntry(food.label, meal, mealNote),
-      id: saved.id,
-      loggedAt: saved.createdAt,
-    };
-    foodLog = [entry, ...foodLog].slice(0, 30);
-    writeFoodLog(
-      typeof localStorage === "undefined" ? undefined : localStorage,
-      foodLog,
-    );
-    mealNote = "";
-    savedMessage = `${food.label} added to your account meal log.`;
   }
 
   async function removeFoodLog(id: string) {
@@ -295,7 +312,7 @@
   <section class="rounded-3xl bg-white border border-[#e7e4dc] p-6 sm:p-8 shadow-xs space-y-6" aria-labelledby="food-guide-title">
     <div class="flex items-center gap-3 pb-4 border-b border-[#f0ede6]">
       <div class="w-10 h-10 rounded-xl bg-[#809474]/15 flex items-center justify-center text-xl text-[#475842]">
-        <i class="iconoir-pot"></i>
+        <i class="iconoir-organic-food"></i>
       </div>
       <div>
         <span class="text-[11px] font-bold tracking-widest text-[#888b7c] uppercase">FOOD FROM ACROSS NIGERIA</span>
@@ -307,6 +324,17 @@
       Log foods you eat during pregnancy and explore familiar Nigerian and West African ingredients.
       Where the FAO/INFOODS table has a match, we show its measured composition per 100 g edible portion.
     </p>
+
+    <!-- Expanding catalogue notice banner -->
+    <div class="p-3.5 rounded-xl bg-[#fef9e7] border border-[#e9d27a] text-xs text-[#7c440a] flex items-start gap-2.5">
+      <i class="iconoir-warning-triangle text-base text-[#b8860b] mt-0.5 shrink-0"></i>
+      <div>
+        <strong class="font-semibold block">Growing West African Food Directory</strong>
+        <span>
+          Our catalogue is continuously expanding with local dishes. If a specific family recipe or rare local soup is not catalogued yet, you can still schedule it directly in your meal planner or measure its ingredients using our Recipe Builder below.
+        </span>
+      </div>
+    </div>
 
     <div class="p-3.5 rounded-xl bg-[#faf9f6] border-l-4 border-[#809474] text-xs text-[#72746b] leading-relaxed">
       Pregnancy-aware food journaling, not a personal diet prescription. Food-composition values describe the listed food and serving basis; they do not determine what is right for your pregnancy.
@@ -357,8 +385,11 @@
     <!-- Results Grid -->
     {#if searched && foods.length}
       <div class="space-y-4 pt-4 border-t border-[#edeae1]" aria-live="polite">
-        <h4 class="font-serif text-base font-semibold text-[#2b2c28]">Search Results ({foods.length})</h4>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="flex items-center justify-between">
+          <h4 class="font-serif text-base font-semibold text-[#2b2c28]">Search Results ({foods.length})</h4>
+          <span class="text-xs text-[#888b7c]">Scroll to see all matches</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[520px] overflow-y-auto pr-1">
           {#each foods as food}
             <article class="p-4 rounded-2xl border border-[#e7e4dc] bg-[#faf9f6] space-y-3">
               <div class="flex items-center gap-3">
@@ -410,10 +441,19 @@
                 <div class="flex items-end">
                   <button
                     type="button"
+                    disabled={loggingId === (food.id || food.label)}
                     onclick={() => void saveFoodLog(food)}
-                    class="w-full py-1.5 px-3 text-xs font-semibold rounded-lg bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer"
+                    class="w-full py-2 px-3 text-xs font-semibold rounded-lg bg-[#809474] text-white hover:bg-[#6c8060] disabled:opacity-60 transition-all cursor-pointer flex items-center justify-center gap-1.5"
                   >
-                    + Log Meal
+                    {#if loggingId === (food.id || food.label)}
+                      <i class="iconoir-refresh animate-spin text-xs"></i>
+                      <span>Logging…</span>
+                    {:else if savedFoodId === (food.id || food.label)}
+                      <i class="iconoir-check-circle text-xs"></i>
+                      <span>Logged!</span>
+                    {:else}
+                      <span>+ Log Meal</span>
+                    {/if}
                   </button>
                 </div>
               </div>
@@ -467,9 +507,5 @@
         </p>
       {/if}
     </aside>
-
-    <div class="pt-4 border-t border-[#edeae1]">
-      <RecipeNutrientBuilder />
-    </div>
   </section>
 </div>

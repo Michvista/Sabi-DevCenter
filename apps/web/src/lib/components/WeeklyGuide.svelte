@@ -1,6 +1,5 @@
 <script lang="ts">
   import GuideAudio from "./GuideAudio.svelte";
-  import GuideTextTranslation from "./GuideTextTranslation.svelte";
   import {
     getPregnancyWeek,
     type BookGuideSection,
@@ -408,9 +407,6 @@
     </div>
     <div class="pt-2">
       <GuideAudio text={comprehensiveNarration} />
-    </div>
-    <div class="pt-2 border-t border-[#edeae1]">
-      <GuideTextTranslation text={comprehensiveNarration} />
     </div>
   </section>
 

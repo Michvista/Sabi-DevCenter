@@ -65,17 +65,22 @@ export class VoiceController {
       );
     } catch {
       // 3. Fallback: For Hausa, Igbo, Yoruba use 9jaLingo!
-      if (body.targetLanguage === "ha" || body.targetLanguage === "ig" || body.targetLanguage === "yo") {
+      if (
+        body.targetLanguage === "ha" ||
+        body.targetLanguage === "ig" ||
+        body.targetLanguage === "yo"
+      ) {
         try {
           result = await this.nineJalingo.synthesizeGuide(
             body.text,
             body.targetLanguage as NineJalingoLanguage,
           );
+          if (!result?.audio) throw new Error("No 9jaLingo audio");
           fallback = `9jalingo-${body.targetLanguage}`;
         } catch {
-          // If 9jaLingo also fails, fall back to Azure English
-          result = await this.azure.synthesizeEnglishGuide(body.text);
-          fallback = "azure-original-english";
+          throw new ServiceUnavailableException(
+            "Audio in this language is temporarily unavailable. Please try again later.",
+          );
         }
       } else {
         // For English, use Azure Nigerian English voice

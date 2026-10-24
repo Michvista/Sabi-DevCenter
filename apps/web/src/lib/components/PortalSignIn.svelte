@@ -199,7 +199,7 @@
               aria-pressed={showPassword}
               onclick={() => (showPassword = !showPassword)}
             >
-              <i class="{showPassword ? 'iconoir-eye-off' : 'iconoir-eye'} text-lg"></i>
+              <i class="{showPassword ? 'iconoir-eye-closed' : 'iconoir-eye'} text-lg"></i>
             </button>
           </div>
         </div>

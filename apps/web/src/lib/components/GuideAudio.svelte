@@ -116,9 +116,22 @@
     </button>
   </div>
   {#if audioUrl}
-    <audio bind:this={audioElement} controls src={audioUrl} class="w-full h-9 rounded-lg">
-      Your browser does not support audio playback.
-    </audio>
+    <div class="space-y-2 pt-1">
+      <audio bind:this={audioElement} controls src={audioUrl} class="w-full h-9 rounded-lg">
+        Your browser does not support audio playback.
+      </audio>
+      <div class="flex items-center justify-between text-xs">
+        <span class="text-[11px] text-[#72746b]">Generated via Nigerian Voice AI</span>
+        <a
+          href={audioUrl}
+          download={`sabi-week-guide-${targetLanguage}.mp3`}
+          class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg bg-[#faf9f6] border border-[#d6d2c4] text-[#475842] hover:bg-[#edf5eb] hover:border-[#809474] transition-colors"
+        >
+          <i class="iconoir-arrow-right text-xs"></i>
+          <span>Download Audio (.mp3)</span>
+        </a>
+      </div>
+    </div>
   {/if}
   {#if message}
     <p class="text-xs text-[#525547]" aria-live="polite">{message}</p>

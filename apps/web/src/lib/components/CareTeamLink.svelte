@@ -15,6 +15,8 @@
     status?: string;
   }>({ connected: false });
   let loadingConnection = $state(true);
+  let checkingNotes = $state(false);
+  let notesCheckedMessage = $state("");
 
   // Chat conversation state
   let messages = $state<Array<{
@@ -27,8 +29,10 @@
   let sendingChat = $state(false);
   let chatSent = $state(false);
 
-  async function checkConnection() {
-    loadingConnection = true;
+  async function checkConnection(manual = false) {
+    if (manual) checkingNotes = true;
+    else loadingConnection = true;
+    notesCheckedMessage = "";
     try {
       const res = await fetch(`${api}/records/care-links/status`, {
         headers: { Authorization: `Bearer ${sessionToken()}` },
@@ -36,13 +40,20 @@
       if (res.ok) {
         connection = await res.json();
         if (connection.connected) {
-          void loadMessages();
+          await loadMessages();
         }
       }
+      if (manual) {
+        notesCheckedMessage = `Updated notes & messages just now (${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })})`;
+        setTimeout(() => {
+          notesCheckedMessage = "";
+        }, 5000);
+      }
     } catch {
-      // keep default
+      if (manual) notesCheckedMessage = "Could not refresh notes right now.";
     } finally {
       loadingConnection = false;
+      checkingNotes = false;
     }
   }
 
@@ -167,13 +178,22 @@
           </div>
         </div>
 
-        <button
-          onclick={() => void checkConnection()}
-          class="inline-flex items-center justify-center gap-1.5 py-2 px-4 rounded-xl border border-[#d6d2c4] bg-white text-xs font-semibold text-[#475842] hover:bg-[#faf9f6] transition-colors cursor-pointer shadow-2xs self-start sm:self-auto"
-        >
-          <i class="iconoir-activity text-xs"></i>
-          <span>Check for new notes</span>
-        </button>
+        <div class="flex flex-col items-start sm:items-end gap-1.5 self-start sm:self-auto">
+          <button
+            onclick={() => void checkConnection(true)}
+            disabled={checkingNotes}
+            class="inline-flex items-center justify-center gap-1.5 py-2 px-4 rounded-xl border border-[#d6d2c4] bg-white text-xs font-semibold text-[#475842] hover:bg-[#faf9f6] disabled:opacity-60 transition-colors cursor-pointer shadow-2xs"
+          >
+            <i class="{checkingNotes ? 'iconoir-refresh animate-spin' : 'iconoir-activity'} text-xs"></i>
+            <span>{checkingNotes ? "Checking…" : "Check for new notes"}</span>
+          </button>
+          {#if notesCheckedMessage}
+            <span class="text-[11px] font-medium text-[#385a38] flex items-center gap-1 animate-fade-in">
+              <i class="iconoir-check-circle text-xs text-[#809474]"></i>
+              {notesCheckedMessage}
+            </span>
+          {/if}
+        </div>
       </div>
 
       <!-- Clinical Live Sync Cards -->
