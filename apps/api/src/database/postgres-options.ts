@@ -11,6 +11,7 @@ import { GroceryItemEntity } from "./entities/grocery-item.entity";
 import { PushSubscriptionEntity } from "./entities/push-subscription.entity";
 import { ClinicalContentReviewEntity } from "./entities/clinical-content-review.entity";
 import { PregnancyBookChunkEntity } from "./entities/pregnancy-book-chunk.entity";
+import { CareMessageEntity } from "./entities/care-message.entity";
 
 export function createPostgresOptions(env = process.env) {
   if (!env.DATABASE_URL) return null;
@@ -46,6 +47,7 @@ export function createPostgresOptions(env = process.env) {
       PushSubscriptionEntity,
       ClinicalContentReviewEntity,
       PregnancyBookChunkEntity,
+      CareMessageEntity,
     ],
     synchronize: false,
     migrationsRun: true,

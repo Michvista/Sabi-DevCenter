@@ -13,7 +13,7 @@
   let query = $state("");
   let selected = $state("");
   let authorized = $state(false);
-  let activeTab = $state<"overview" | "followups">("overview");
+  let activeTab = $state<"overview" | "followups" | "messages" | "reviews">("overview");
   let clinicianName = $state("Care team member");
   let roster = $state<
     {
@@ -64,6 +64,15 @@
     }>
   >([]);
 
+  // Direct patient messaging state
+  let patientMessages = $state<
+    Array<{
+      id: string;
+      senderRole: "PREGNANT_PERSON" | "MIDWIFE";
+      content: string;
+      createdAt: string;
+    }>
+  >([]);
   let replyText = $state("");
   let sendingReply = $state(false);
   let replySuccess = $state(false);
@@ -164,8 +173,30 @@
     });
     if (!selected && roster[0]) {
       selected = roster[0].id;
+      void loadPatientMessages(selected);
     }
   }
+
+  async function loadPatientMessages(patientId: string) {
+    if (!patientId) return;
+    try {
+      const api = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
+      const res = await fetch(`${api}/records/care-team/patients/${patientId}/messages`, {
+        headers: { Authorization: `Bearer ${sessionToken()}` },
+      });
+      if (res.ok) {
+        patientMessages = await res.json();
+      }
+    } catch {
+      // silent
+    }
+  }
+
+  $effect(() => {
+    if (selected) {
+      void loadPatientMessages(selected);
+    }
+  });
 
   async function viewPatientHistory(patientId: string) {
     showHistory = true;
@@ -188,14 +219,28 @@
 
   async function sendClinicianNote(e: SubmitEvent) {
     e.preventDefault();
-    if (!replyText.trim() || sendingReply) return;
+    if (!replyText.trim() || sendingReply || !patient.id) return;
     sendingReply = true;
+    const textToSend = replyText.trim();
     try {
-      replySuccess = true;
-      replyText = "";
-      setTimeout(() => {
-        replySuccess = false;
-      }, 4000);
+      const api = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
+      const res = await fetch(`${api}/records/care-team/patients/${patient.id}/messages`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionToken()}`,
+        },
+        body: JSON.stringify({ content: textToSend }),
+      });
+      if (res.ok) {
+        const saved = await res.json();
+        patientMessages = [...patientMessages, saved];
+        replySuccess = true;
+        replyText = "";
+        setTimeout(() => {
+          replySuccess = false;
+        }, 4000);
+      }
     } finally {
       sendingReply = false;
     }
@@ -295,7 +340,7 @@
         </span>
       </a>
 
-      <div class="text-[11px] font-bold tracking-wider text-[#9c998f] uppercase mb-3 px-3">CLINIC</div>
+      <div class="text-[11px] font-bold tracking-wider text-[#9c998f] uppercase mb-3 px-3">CLINICAL SUITE</div>
 
       <nav class="space-y-1" aria-label="Care team navigation">
         <button
@@ -305,17 +350,39 @@
           <i class="iconoir-activity text-base text-[#809474]"></i>
           <span>Patient overview</span>
         </button>
+
         <button
           class="w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all cursor-pointer {activeTab === 'followups' ? 'bg-[#f4f7f2] text-[#2b2c28] border border-[#dce5d6]' : 'text-[#72746b] hover:text-[#2b2c28] hover:bg-[#faf9f6]'}"
           onclick={() => (activeTab = 'followups')}
         >
           <i class="iconoir-calendar text-base text-[#af705a]"></i>
-          <span>Follow-ups</span>
+          <span>Follow-up queue</span>
           {#if followUpList.length > 0}
             <span class="ml-auto px-2 py-0.5 text-xs font-bold rounded-full bg-[#af705a] text-white">
               {followUpList.length}
             </span>
           {/if}
+        </button>
+
+        <button
+          class="w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all cursor-pointer {activeTab === 'messages' ? 'bg-[#f4f7f2] text-[#2b2c28] border border-[#dce5d6]' : 'text-[#72746b] hover:text-[#2b2c28] hover:bg-[#faf9f6]'}"
+          onclick={() => (activeTab = 'messages')}
+        >
+          <i class="iconoir-chat-bubble-check text-base text-[#3b82f6]"></i>
+          <span>Patient messages</span>
+          {#if patientMessages.length > 0}
+            <span class="ml-auto px-2 py-0.5 text-xs font-bold rounded-full bg-[#3b82f6]/15 text-[#3b82f6]">
+              {patientMessages.length}
+            </span>
+          {/if}
+        </button>
+
+        <button
+          class="w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all cursor-pointer {activeTab === 'reviews' ? 'bg-[#f4f7f2] text-[#2b2c28] border border-[#dce5d6]' : 'text-[#72746b] hover:text-[#2b2c28] hover:bg-[#faf9f6]'}"
+          onclick={() => (activeTab = 'reviews')}
+        >
+          <i class="iconoir-shield-check text-base text-[#7b6fa0]"></i>
+          <span>Content review</span>
         </button>
       </nav>
 
@@ -350,7 +417,7 @@
         <div class="flex items-center gap-4">
           <div class="flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-[#809474]"></span>
-            <span class="text-xs text-[#8e9083] font-medium">Active Session</span>
+            <span class="text-xs text-[#8e9083] font-medium">Active Clinical Session</span>
           </div>
           <div class="w-8 h-8 rounded-full bg-[#475842]/20 text-[#475842] font-serif font-bold text-xs flex items-center justify-center border border-white shadow-2xs">
             {clinicianInitials}
@@ -417,8 +484,8 @@
           </article>
         </div>
 
+        <!-- SECTION 1: OVERVIEW TAB -->
         {#if activeTab === 'overview'}
-          <!-- 2-COLUMN PATIENT OVERVIEW BOARD -->
           <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             <!-- Left Panel: Roster List -->
             <div class="lg:col-span-5 rounded-3xl bg-white border border-[#e7e4dc] p-6 shadow-xs space-y-4">
@@ -470,7 +537,10 @@
                 {#each filtered as person}
                   <button
                     class="w-full text-left p-3 rounded-2xl border transition-all cursor-pointer flex items-center gap-3 {selected === person.id ? 'bg-[#f4f7f2] border-[#809474]' : 'bg-[#faf9f6] border-[#eeece6] hover:bg-white'}"
-                    onclick={() => (selected = person.id)}
+                    onclick={() => {
+                      selected = person.id;
+                      void loadPatientMessages(person.id);
+                    }}
                   >
                     <div class="w-10 h-10 rounded-full bg-[#af705a]/15 text-[#af705a] font-serif font-bold text-xs flex items-center justify-center shrink-0">
                       {person.name.split(/\s+/).map((part) => part[0]).join("").slice(0, 2).toUpperCase()}
@@ -567,7 +637,7 @@
                   </div>
                 {/if}
 
-                <div class="pt-2">
+                <div class="pt-2 flex items-center justify-between">
                   <button
                     class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#809474] hover:underline cursor-pointer"
                     onclick={() => void viewPatientHistory(patient.id)}
@@ -575,45 +645,20 @@
                     <span>View full check-in history</span>
                     <i class="iconoir-arrow-right text-xs"></i>
                   </button>
-                </div>
-
-                <!-- Clinician Reply Form -->
-                <div class="pt-4 border-t border-[#edeae1] space-y-3">
-                  <div class="flex items-center gap-2">
-                    <i class="iconoir-chat-bubble-check text-base text-[#809474]"></i>
-                    <strong class="text-xs font-semibold text-[#2b2c28]">Send Clinical Note / Follow-up</strong>
-                  </div>
-                  <form class="space-y-2.5" onsubmit={sendClinicianNote}>
-                    <textarea
-                      bind:value={replyText}
-                      rows="3"
-                      maxlength="500"
-                      placeholder="Add reassurance, dietary advice, or antenatal appointment prep for {patient.name}…"
-                      class="w-full p-3 text-xs rounded-xl border border-[#dedad0] bg-[#faf9f6] focus:outline-none focus:ring-2 focus:ring-[#809474]/40 focus:bg-white resize-none"
-                    ></textarea>
-                    <div class="flex items-center justify-between">
-                      <small class="text-[11px] text-[#8e9083]">Visible on patient dashboard</small>
-                      <button
-                        type="submit"
-                        disabled={sendingReply || !replyText.trim()}
-                        class="py-2 px-4 text-xs font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] disabled:opacity-50 transition-colors cursor-pointer shadow-xs"
-                      >
-                        {sendingReply ? "Saving…" : "Post Note"}
-                      </button>
-                    </div>
-                  </form>
-                  {#if replySuccess}
-                    <div class="p-3 rounded-xl bg-[#edf5eb] border border-[#c6dfc0] text-xs font-medium text-[#385a38]">
-                      ✓ Note saved to patient record!
-                    </div>
-                  {/if}
+                  <button
+                    class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#3b82f6] hover:underline cursor-pointer"
+                    onclick={() => (activeTab = 'messages')}
+                  >
+                    <span>Open message conversation</span>
+                    <i class="iconoir-chat-bubble-check text-xs"></i>
+                  </button>
                 </div>
               </div>
             </div>
           </section>
 
-        {:else}
-          <!-- FOLLOW-UPS TAB -->
+        <!-- SECTION 2: FOLLOW-UPS TAB -->
+        {:else if activeTab === 'followups'}
           <section class="rounded-3xl bg-white border border-[#e7e4dc] p-6 sm:p-8 shadow-xs space-y-6">
             <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-[#f0ede6]">
               <div>
@@ -683,85 +728,163 @@
               </div>
             {/if}
           </section>
-        {/if}
 
-        <!-- Clinical Content Review -->
-        <section class="rounded-3xl bg-white border border-[#e7e4dc] p-6 sm:p-8 shadow-xs space-y-4" aria-labelledby="clinical-review-title">
-          <div class="pb-3 border-b border-[#f0ede6]">
-            <div class="text-[11px] font-bold tracking-widest text-[#888b7c] uppercase">CONTENT QUALITY</div>
-            <h2 id="clinical-review-title" class="font-serif text-xl font-semibold text-[#2b2c28]">Clinical content review</h2>
-            <p class="text-xs text-[#72746b] mt-0.5">
-              Review the weekly educational excerpt and leave a decision or correction note. Sabi does not verify professional credentials.
-            </p>
-          </div>
+        <!-- SECTION 3: PATIENT MESSAGES TAB -->
+        {:else if activeTab === 'messages'}
+          <section class="rounded-3xl bg-white border border-[#e7e4dc] p-6 sm:p-8 shadow-xs space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-[#f0ede6]">
+              <div>
+                <div class="text-[11px] font-bold tracking-widest text-[#888b7c] uppercase">TWO-WAY THREAD</div>
+                <h2 class="font-serif text-2xl font-semibold text-[#2b2c28]">Messages with {patient.name}</h2>
+                <p class="text-xs text-[#72746b] mt-0.5">Clinical notes and answers shared directly to the patient's dashboard.</p>
+              </div>
+              <span class="text-xs font-semibold px-3 py-1 rounded-full bg-[#3b82f6]/15 text-[#3b82f6]">
+                {patientMessages.length} messages
+              </span>
+            </div>
 
-          <div>
-            <label class="block text-xs font-semibold text-[#55574f] mb-1.5">Pregnancy week</label>
-            <select
-              bind:value={reviewWeek}
-              onchange={() => {
-                reviewNotes =
-                  clinicalReviews.find(
-                    (entry) => entry.week === Number(reviewWeek),
-                  )?.notes ?? "";
-              }}
-              class="w-full sm:w-80 px-3 py-2 text-xs rounded-xl border border-[#dedad0] bg-[#faf9f6]"
-            >
-              {#each clinicalReviews as item}
-                <option value={item.week}>
-                  Week {item.week} · {item.status === "PENDING" ? "Pending" : item.status === "APPROVED" ? "Reviewed" : "Changes requested"}
-                </option>
-              {/each}
-            </select>
-          </div>
+            <!-- Thread Messages -->
+            <div class="space-y-3 max-h-[420px] overflow-y-auto pr-1">
+              {#if patientMessages.length === 0}
+                <div class="py-12 text-center rounded-2xl bg-[#faf9f6] border border-dashed border-[#e2dfd5] space-y-1">
+                  <i class="iconoir-chat-bubble-check text-2xl text-[#888]"></i>
+                  <p class="text-xs text-[#72746b]">No messages in this patient thread yet.</p>
+                  <span class="text-[11px] text-[#8e9083]">Post a note below to begin the care dialogue.</span>
+                </div>
+              {:else}
+                {#each patientMessages as msg (msg.id)}
+                  <div class="flex flex-col {msg.senderRole === 'MIDWIFE' ? 'items-end' : 'items-start'}">
+                    <div class="flex items-center gap-1.5 mb-1 px-1">
+                      <span class="text-[11px] font-semibold {msg.senderRole === 'MIDWIFE' ? 'text-[#475842]' : 'text-[#809474]'}">
+                        {msg.senderRole === 'MIDWIFE' ? 'You (Midwife)' : patient.name}
+                      </span>
+                      <span class="text-[10px] text-[#8e9083]">· {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                    </div>
+                    <div class="max-w-md p-4 rounded-2xl text-xs sm:text-sm leading-relaxed shadow-2xs {msg.senderRole === 'MIDWIFE' ? 'bg-[#475842] text-white rounded-tr-xs' : 'bg-[#faf9f6] border border-[#e7e4dc] text-[#2b2c28] rounded-tl-xs'}">
+                      {msg.content}
+                    </div>
+                  </div>
+                {/each}
+              {/if}
+            </div>
 
-          <article class="p-4 rounded-2xl bg-[#faf9f6] border border-[#eeece6] space-y-2">
-            <strong class="font-serif text-base font-semibold text-[#2b2c28] block">{reviewWeekGuide.title}</strong>
-            {#if reviewWeekGuide.bookSections.length}
-              {#each reviewWeekGuide.bookSections as section}
-                <p class="text-xs text-[#525547] leading-relaxed"><b>{section.title}:</b> {section.summary}</p>
-                <small class="block text-[11px] text-[#8e9083]">Book PDF pages {section.citationPages.join(", ")}</small>
-              {/each}
-            {:else}
-              <p class="text-xs text-[#525547] leading-relaxed">{reviewWeekGuide.gentlePrompt}</p>
+            <!-- Clinician Reply Form -->
+            <form class="space-y-3 pt-4 border-t border-[#f0ede6]" onsubmit={sendClinicianNote}>
+              <div>
+                <label for="clinician-msg-input" class="block text-xs font-semibold text-[#55574f] mb-1.5">
+                  Send a clinical response or antenatal follow-up to {patient.name}
+                </label>
+                <textarea
+                  id="clinician-msg-input"
+                  bind:value={replyText}
+                  rows="3"
+                  maxlength="500"
+                  placeholder="Add reassurance, dietary guidance, or check on reported symptoms for {patient.name}…"
+                  class="w-full p-3.5 text-xs sm:text-sm rounded-xl border border-[#dedad0] bg-[#faf9f6] focus:outline-none focus:ring-2 focus:ring-[#809474]/40 focus:bg-white resize-none"
+                ></textarea>
+              </div>
+
+              <div class="flex items-center justify-between">
+                <small class="text-xs text-[#8e9083]">Appears directly in the patient's My Midwife tab</small>
+                <button
+                  type="submit"
+                  disabled={sendingReply || !replyText.trim()}
+                  class="py-2.5 px-6 text-xs font-semibold rounded-xl bg-[#475842] text-white hover:bg-[#384634] disabled:opacity-50 transition-colors cursor-pointer shadow-xs flex items-center gap-1.5"
+                >
+                  <i class="iconoir-arrow-right text-xs"></i>
+                  <span>{sendingReply ? "Posting…" : "Post Clinical Note"}</span>
+                </button>
+              </div>
+            </form>
+
+            {#if replySuccess}
+              <div class="p-3 rounded-xl bg-[#edf5eb] border border-[#c6dfc0] text-xs font-medium text-[#385a38]">
+                ✓ Clinical note saved and delivered to patient dashboard!
+              </div>
             {/if}
-            <p class="text-xs text-[#525547] leading-relaxed pt-2 border-t border-[#edeae1]">
-              <b>Antenatal care focus:</b> {reviewWeekGuide.antenatalFocus}
-            </p>
-          </article>
+          </section>
 
-          <div>
-            <label class="block text-xs font-semibold text-[#55574f] mb-1.5">Review notes</label>
-            <textarea
-              bind:value={reviewNotes}
-              maxlength="2000"
-              placeholder="Add a correction, qualification or review note"
-              rows="3"
-              class="w-full p-3 text-xs rounded-xl border border-[#dedad0] bg-[#faf9f6] focus:outline-none focus:ring-2 focus:ring-[#809474]/40 focus:bg-white resize-none"
-            ></textarea>
-          </div>
+        <!-- SECTION 4: CONTENT REVIEW TAB -->
+        {:else if activeTab === 'reviews'}
+          <section class="rounded-3xl bg-white border border-[#e7e4dc] p-6 sm:p-8 shadow-xs space-y-4" aria-labelledby="clinical-review-title">
+            <div class="pb-3 border-b border-[#f0ede6]">
+              <div class="text-[11px] font-bold tracking-widest text-[#888b7c] uppercase">CONTENT QUALITY & AUDIT</div>
+              <h2 id="clinical-review-title" class="font-serif text-2xl font-semibold text-[#2b2c28]">Clinical content review</h2>
+              <p class="text-xs text-[#72746b] mt-0.5">
+                Review the weekly educational excerpt and leave a decision or correction note. Sabi does not verify professional credentials.
+              </p>
+            </div>
 
-          <div class="flex flex-wrap gap-2">
-            <button
-              disabled={reviewBusy}
-              onclick={() => void submitClinicalReview("APPROVED")}
-              class="py-2 px-4 text-xs font-semibold rounded-xl bg-[#475842] text-white hover:bg-[#384634] transition-colors cursor-pointer disabled:opacity-50"
-            >
-              Record review
-            </button>
-            <button
-              disabled={reviewBusy}
-              onclick={() => void submitClinicalReview("CHANGES_REQUESTED")}
-              class="py-2 px-4 text-xs font-semibold rounded-xl bg-[#faf9f6] border border-[#d6d2c4] text-[#72746b] hover:bg-[#f0ede6] transition-colors cursor-pointer disabled:opacity-50"
-            >
-              Request changes
-            </button>
-          </div>
+            <div>
+              <label for="midwife-review-week" class="block text-xs font-semibold text-[#55574f] mb-1.5">Pregnancy week</label>
+              <select
+                id="midwife-review-week"
+                bind:value={reviewWeek}
+                onchange={() => {
+                  reviewNotes =
+                    clinicalReviews.find(
+                      (entry) => entry.week === Number(reviewWeek),
+                    )?.notes ?? "";
+                }}
+                class="w-full sm:w-80 px-3 py-2 text-xs rounded-xl border border-[#dedad0] bg-[#faf9f6]"
+              >
+                {#each clinicalReviews as item}
+                  <option value={item.week}>
+                    Week {item.week} · {item.status === "PENDING" ? "Pending" : item.status === "APPROVED" ? "Reviewed" : "Changes requested"}
+                  </option>
+                {/each}
+              </select>
+            </div>
 
-          {#if reviewMessage}
-            <p class="text-xs text-[#475842] font-medium" role="status">{reviewMessage}</p>
-          {/if}
-        </section>
+            <article class="p-4 rounded-2xl bg-[#faf9f6] border border-[#eeece6] space-y-2">
+              <strong class="font-serif text-base font-semibold text-[#2b2c28] block">{reviewWeekGuide.title}</strong>
+              {#if reviewWeekGuide.bookSections.length}
+                {#each reviewWeekGuide.bookSections as section}
+                  <p class="text-xs text-[#525547] leading-relaxed"><b>{section.title}:</b> {section.summary}</p>
+                  <small class="block text-[11px] text-[#8e9083]">Book PDF pages {section.citationPages.join(", ")}</small>
+                {/each}
+              {:else}
+                <p class="text-xs text-[#525547] leading-relaxed">{reviewWeekGuide.gentlePrompt}</p>
+              {/if}
+              <p class="text-xs text-[#525547] leading-relaxed pt-2 border-t border-[#edeae1]">
+                <b>Antenatal care focus:</b> {reviewWeekGuide.antenatalFocus}
+              </p>
+            </article>
+
+            <div>
+              <label for="midwife-review-notes" class="block text-xs font-semibold text-[#55574f] mb-1.5">Review notes</label>
+              <textarea
+                id="midwife-review-notes"
+                bind:value={reviewNotes}
+                maxlength="2000"
+                placeholder="Add a correction, qualification or review note"
+                rows="3"
+                class="w-full p-3 text-xs rounded-xl border border-[#dedad0] bg-[#faf9f6] focus:outline-none focus:ring-2 focus:ring-[#809474]/40 focus:bg-white resize-none"
+              ></textarea>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              <button
+                disabled={reviewBusy}
+                onclick={() => void submitClinicalReview("APPROVED")}
+                class="py-2 px-4 text-xs font-semibold rounded-xl bg-[#475842] text-white hover:bg-[#384634] transition-colors cursor-pointer disabled:opacity-50"
+              >
+                Record review
+              </button>
+              <button
+                disabled={reviewBusy}
+                onclick={() => void submitClinicalReview("CHANGES_REQUESTED")}
+                class="py-2 px-4 text-xs font-semibold rounded-xl bg-[#faf9f6] border border-[#d6d2c4] text-[#72746b] hover:bg-[#f0ede6] transition-colors cursor-pointer disabled:opacity-50"
+              >
+                Request changes
+              </button>
+            </div>
+
+            {#if reviewMessage}
+              <p class="text-xs text-[#475842] font-medium" role="status">{reviewMessage}</p>
+            {/if}
+          </section>
+        {/if}
 
         <!-- Safety Footer Note -->
         <div class="p-4 rounded-2xl bg-[#f4f7f2] border border-[#dce5d6] text-xs text-[#475842] flex items-center gap-2.5">
@@ -785,7 +908,7 @@
               onclick={() => (showHistory = false)}
               aria-label="Close modal"
             >
-              <i class="iconoir-xmark text-sm"></i>
+              ✕
             </button>
           </div>
 
@@ -846,14 +969,21 @@
         onclick={() => (activeTab = 'followups')}
       >
         <i class="iconoir-calendar text-xl"></i>
-        <span class="text-[10px]">Follow-ups ({followUpList.length})</span>
+        <span class="text-[10px]">Follow-ups</span>
       </button>
       <button
-        class="flex flex-col items-center justify-center gap-1 py-1 px-3 rounded-xl text-[#8e9083] transition-colors cursor-pointer"
-        onclick={signOut}
+        class="flex flex-col items-center justify-center gap-1 py-1 px-3 rounded-xl transition-colors cursor-pointer {activeTab === 'messages' ? 'text-[#3b82f6] font-bold' : 'text-[#8e9083]'}"
+        onclick={() => (activeTab = 'messages')}
       >
-        <i class="iconoir-log-out text-xl"></i>
-        <span class="text-[10px]">Sign out</span>
+        <i class="iconoir-chat-bubble-check text-xl"></i>
+        <span class="text-[10px]">Messages</span>
+      </button>
+      <button
+        class="flex flex-col items-center justify-center gap-1 py-1 px-3 rounded-xl transition-colors cursor-pointer {activeTab === 'reviews' ? 'text-[#7b6fa0] font-bold' : 'text-[#8e9083]'}"
+        onclick={() => (activeTab = 'reviews')}
+      >
+        <i class="iconoir-shield-check text-xl"></i>
+        <span class="text-[10px]">Reviews</span>
       </button>
     </nav>
   </div>

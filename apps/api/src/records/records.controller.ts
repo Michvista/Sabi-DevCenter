@@ -35,6 +35,11 @@ import { MealPlanEntity } from "../database/entities/meal-plan.entity";
 import { GroceryItemEntity } from "../database/entities/grocery-item.entity";
 import { FoodSearchService } from "../infrastructure/food-search.service";
 import { ClinicalContentReviewEntity } from "../database/entities/clinical-content-review.entity";
+import { CareMessageEntity } from "../database/entities/care-message.entity";
+
+class SendMessageDto {
+  @IsString() @MaxLength(2000) content!: string;
+}
 
 class PregnancyDto {
   @IsString() dueDate!: string;
@@ -502,4 +507,85 @@ export class RecordsController {
     });
   }
 
+  @Get("care-messages")
+  async getCareMessages(
+    @Req() req: AuthenticatedRequest,
+  ) {
+    if (req.auth.role === "PREGNANT_PERSON") {
+      const link = await this.database()
+        .getRepository(CareLinkEntity)
+        .findOneBy({ patientId: req.auth.userId, status: "active" });
+      if (!link) return [];
+      return this.database().getRepository(CareMessageEntity).find({
+        where: { patientId: req.auth.userId, midwifeId: link.midwifeId },
+        order: { createdAt: "ASC" },
+        take: 100,
+      });
+    }
+    return [];
+  }
+
+  @Post("care-messages")
+  async sendMessage(
+    @Req() req: AuthenticatedRequest,
+    @Body() body: SendMessageDto,
+  ) {
+    if (req.auth.role !== "PREGNANT_PERSON")
+      throw new ForbiddenException("Only pregnant patients can send messages through this endpoint.");
+    const link = await this.database()
+      .getRepository(CareLinkEntity)
+      .findOneBy({ patientId: req.auth.userId, status: "active" });
+    if (!link)
+      throw new BadRequestException("You are not currently connected to an active midwife.");
+    const message = await this.database().getRepository(CareMessageEntity).save({
+      id: randomUUID(),
+      patientId: req.auth.userId,
+      midwifeId: link.midwifeId,
+      senderRole: "PREGNANT_PERSON",
+      content: body.content.trim(),
+      read: false,
+    });
+    return message;
+  }
+
+  @Get("care-team/patients/:id/messages")
+  async getMidwifePatientMessages(
+    @Req() req: AuthenticatedRequest,
+    @Param("id") patientId: string,
+  ) {
+    if (req.auth.role !== "MIDWIFE")
+      throw new ForbiddenException("Only midwives can access patient message threads.");
+    const link = await this.database()
+      .getRepository(CareLinkEntity)
+      .findOneBy({ patientId, midwifeId: req.auth.userId, status: "active" });
+    if (!link) throw new ForbiddenException("No active link with this patient.");
+    return this.database().getRepository(CareMessageEntity).find({
+      where: { patientId, midwifeId: req.auth.userId },
+      order: { createdAt: "ASC" },
+      take: 100,
+    });
+  }
+
+  @Post("care-team/patients/:id/messages")
+  async sendMidwifeMessage(
+    @Req() req: AuthenticatedRequest,
+    @Param("id") patientId: string,
+    @Body() body: SendMessageDto,
+  ) {
+    if (req.auth.role !== "MIDWIFE")
+      throw new ForbiddenException("Only midwives can send clinical messages through this endpoint.");
+    const link = await this.database()
+      .getRepository(CareLinkEntity)
+      .findOneBy({ patientId, midwifeId: req.auth.userId, status: "active" });
+    if (!link) throw new ForbiddenException("No active link with this patient.");
+    const message = await this.database().getRepository(CareMessageEntity).save({
+      id: randomUUID(),
+      patientId,
+      midwifeId: req.auth.userId,
+      senderRole: "MIDWIFE",
+      content: body.content.trim(),
+      read: false,
+    });
+    return message;
+  }
 }

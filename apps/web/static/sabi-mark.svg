@@ -1,6 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <rect width="64" height="64" rx="20" fill="#B76851"/>
-  <path d="M32 49.5c-3.5-5.2-16.4-13.2-16.4-25.1 0-6.7 4.3-11.2 10-11.2 3 0 5.1 1.3 6.4 3.5 1.3-2.2 3.4-3.5 6.4-3.5 5.7 0 10 4.5 10 11.2C48.4 36.3 35.5 44.3 32 49.5Z" stroke="#FFF9F3" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M22.5 30.5c4.7 0 8.1-3.6 9.5-8 1.4 4.4 4.8 8 9.5 8M25 37c2.3 1.7 4.6 3.8 7 6.3 2.4-2.5 4.7-4.6 7-6.3" stroke="#F4D9C9" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="32" cy="31" r="2.2" fill="#F4D9C9"/>
+  <!-- Warm rounded background with subtle organic gradient -->
+  <defs>
+    <linearGradient id="sabiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#AF705A"/>
+      <stop offset="100%" stop-color="#809474"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="20" fill="url(#sabiGrad)"/>
+  
+  <!-- Outer protecting mother embrace curve -->
+  <path d="M22 36C22 25.5066 30.5066 17 41 17C43.5 17 45.8 17.5 48 18.5" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Gentle heart-womb embrace holding baby bloom -->
+  <path d="M22 34C22 43.9411 30.0589 50 37 50C43.5 50 48 44.5 48 37C48 29.5 41 23 32 28C26 31.5 22 32.5 22 34Z" stroke="#FAF8F5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Little one spark / sprout of life inside -->
+  <circle cx="34" cy="37" r="3.5" fill="#FAF8F5"/>
+  <path d="M34 32C34.8 30 37 29.2 39 30" stroke="#FAF8F5" stroke-width="2" stroke-linecap="round"/>
 </svg>
