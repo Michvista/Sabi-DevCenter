@@ -1,4 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --color-sabi-ink: #30312c;
+  --color-sabi-muted: #85847d;
+  --color-sabi-line: #ece9e1;
+  --color-sabi-paper: #ffffff;
+  --color-sabi-terracotta: #b66851;
+  --color-sabi-soft-terracotta: #f8e8df;
+  --color-sabi-green: #617961;
+  --color-sabi-soft-green: #eef3ee;
+  --color-sabi-bg: #f7f6f2;
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-sans: "DM Sans", sans-serif;
+}
 
 :root {
   font-family: "DM Sans", sans-serif;
@@ -2014,4 +2029,1024 @@ p {
   .mobile-nav button.active svg {
     color: #ad6651;
   }
+}
+
+
+/* ==========================================================================
+   FLO-INSPIRED MATERNAL COMPANION & REDESIGN STYLES
+   ========================================================================== */
+
+/* Today Layout Grid */
+.today-layout-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+@media (min-width: 980px) {
+  .today-layout-grid {
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: start;
+  }
+}
+
+.today-left-col,
+.today-right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* Today Week Preview Flo Card */
+.today-week-preview-card {
+  background: linear-gradient(135deg, #ffffff 0%, #fbf8f3 100%);
+  border: 1px solid #eae6de;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 18px rgba(47, 48, 44, 0.04);
+}
+.preview-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--terracotta);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.badge-week {
+  background: var(--soft-terracotta);
+  color: var(--terracotta);
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: 11px;
+}
+.preview-fruit-title {
+  margin: 0 0 8px;
+  font: 500 24px/1.3 var(--serif);
+  color: var(--ink);
+}
+.highlight-fruit {
+  color: var(--terracotta);
+  font-style: italic;
+}
+.preview-metrics {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.preview-metrics .bullet {
+  opacity: 0.5;
+}
+.preview-blurb {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #55574f;
+  margin: 0 0 16px;
+}
+.preview-food-snippet {
+  background: #f4f6f2;
+  border-left: 3px solid var(--green);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 18px;
+}
+.preview-food-snippet strong {
+  display: block;
+  font-size: 12px;
+  color: #3b503b;
+  margin-bottom: 4px;
+}
+.preview-food-snippet p {
+  margin: 0;
+  font-size: 13px;
+  color: #465a46;
+  line-height: 1.5;
+}
+.preview-cta-button {
+  width: 100%;
+  min-height: 46px;
+  background: var(--terracotta);
+  color: #ffffff;
+  border: 0;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.preview-cta-button:hover {
+  background: #a1553f;
+  transform: translateY(-1px);
+}
+.care-reassurance-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #fdfaf6;
+  border: 1px dashed #e6ded3;
+  border-radius: 16px;
+  padding: 16px 18px;
+}
+.care-heart {
+  font-size: 24px;
+  color: var(--terracotta);
+  flex-shrink: 0;
+}
+.care-reassurance-card strong {
+  display: block;
+  font-size: 13px;
+  color: var(--ink);
+}
+.care-reassurance-card p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* Flo Week-by-Week Guide */
+.flo-week-guide {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Flo Hero Banner */
+.flo-hero-card {
+  background: linear-gradient(135deg, #fefdfb 0%, #f9f5ee 100%);
+  border: 1px solid #ebe5d8;
+  border-radius: 24px;
+  padding: clamp(24px, 4vw, 36px);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(47, 48, 44, 0.03);
+}
+.flo-hero-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.flo-trimester-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f3ece1;
+  color: #634b3c;
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.flo-trimester-tag .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--terracotta);
+}
+.flo-pill-quiet {
+  font-size: 11px;
+  color: #9c9a92;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.flo-hero-main {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.flo-size-visual {
+  flex-shrink: 0;
+}
+.flo-fruit-circle {
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  background: #f7ede3;
+  border: 3px solid #eedecf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(182, 104, 81, 0.12);
+}
+.flo-fruit-emoji {
+  font-size: 40px;
+}
+.flo-size-meta {
+  flex: 1;
+  min-width: 240px;
+}
+.flo-size-subtitle {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #8c887d;
+  margin-bottom: 4px;
+}
+.flo-fruit-name {
+  margin: 0 0 12px;
+  font: 600 clamp(26px, 4vw, 36px)/1.2 var(--serif);
+  color: var(--ink);
+}
+.flo-metrics-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.flo-metric {
+  display: flex;
+  flex-direction: column;
+}
+.flo-metric .label {
+  font-size: 11px;
+  color: #8c887d;
+  margin-bottom: 2px;
+}
+.flo-metric strong {
+  font-size: 15px;
+  color: var(--ink);
+  font-weight: 600;
+}
+.flo-metric-sep {
+  width: 1px;
+  height: 24px;
+  background: #e6e2d8;
+}
+.flo-theme-prompt {
+  margin: 14px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid #eee8dd;
+  font-size: 14px;
+  color: #63665c;
+  line-height: 1.6;
+}
+
+/* Flo Tabs */
+.flo-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+.flo-tab-btn {
+  white-space: nowrap;
+  background: #ffffff;
+  border: 1px solid #e7e4dc;
+  border-radius: 99px;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6e6f66;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.flo-tab-btn:hover {
+  background: #f8f7f3;
+  color: var(--ink);
+}
+.flo-tab-btn.active {
+  background: var(--ink);
+  color: #ffffff;
+  border-color: var(--ink);
+}
+
+/* Flo Content Card */
+.flo-card {
+  background: #ffffff;
+  border: 1px solid #ebe8e1;
+  border-radius: 20px;
+  padding: clamp(20px, 3.5vw, 32px);
+  box-shadow: 0 4px 16px rgba(47, 48, 44, 0.03);
+}
+.flo-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+.flo-badge-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.flo-badge-icon.purple { background: #f4eff9; }
+.flo-badge-icon.peach { background: #fbf0ec; }
+.flo-badge-icon.green { background: #eef5ee; }
+.flo-badge-icon.red { background: #fdf0ef; }
+.flo-badge-icon.blue { background: #edf4fa; }
+
+.flo-card-header h3 {
+  margin: 0;
+  font: 500 20px/1.3 var(--serif);
+  color: var(--ink);
+}
+.flo-card-header .sub {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.flo-sections-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.flo-story-block {
+  background: #faf9f6;
+  border: 1px solid #eeebe3;
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+.flo-story-block h4 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #3b3d36;
+}
+.flo-story-block p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: #55584f;
+}
+.flo-highlight-box {
+  margin-top: 18px;
+  background: #f7f3ec;
+  border-left: 3px solid var(--terracotta);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.flo-highlight-box .highlight-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--terracotta);
+  margin-bottom: 4px;
+}
+.flo-highlight-box p {
+  margin: 0;
+  font-size: 13px;
+  color: #534c44;
+  line-height: 1.5;
+}
+.flo-antenatal-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: 18px;
+  background: #f2f6f2;
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+.antenatal-icon {
+  color: var(--green);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.flo-antenatal-banner strong {
+  display: block;
+  font-size: 13px;
+  color: #314431;
+  margin-bottom: 4px;
+}
+.flo-antenatal-banner p {
+  margin: 0;
+  font-size: 13px;
+  color: #4b604b;
+  line-height: 1.55;
+}
+
+/* Nutrition Flo Card */
+.flo-food-tip-box {
+  background: #f4f7f2;
+  border-left: 3px solid var(--green);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+}
+.flo-food-tip-box strong {
+  display: block;
+  font-size: 13px;
+  color: #2f442f;
+  margin-bottom: 4px;
+}
+.flo-food-tip-box p {
+  margin: 0;
+  font-size: 14px;
+  color: #3b503b;
+  line-height: 1.6;
+}
+.flo-nutrition-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+@media (min-width: 640px) {
+  .flo-nutrition-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.flo-nutri-col {
+  background: #faf8f5;
+  border: 1px solid #eae6de;
+  border-radius: 14px;
+  padding: 16px;
+}
+.nutri-group-title {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #55574f;
+  margin-bottom: 10px;
+}
+.pill-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.nutrient-pill {
+  padding: 5px 12px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.nutrient-pill.green-pill {
+  background: #e7efe7;
+  color: #335033;
+}
+.nutrient-pill.warm-pill {
+  background: #faede6;
+  color: #8c4e3a;
+}
+.flo-avoid-box {
+  background: #fdf5f4;
+  border: 1px solid #f7dfdb;
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+.avoid-title {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #a33827;
+  margin-bottom: 8px;
+}
+.avoid-list {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 13px;
+  color: #6d4239;
+  line-height: 1.6;
+}
+
+/* Danger Signs Flo Card */
+.flo-danger-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.danger-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff8f7;
+  border: 1px solid #f9e2df;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #78352b;
+}
+.danger-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #eed3cf;
+  color: #a82e1d;
+  font-weight: 800;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.emergency-action-card {
+  background: #faf4f3;
+  border-left: 3px solid #b32b23;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.emergency-action-card strong {
+  display: block;
+  font-size: 13px;
+  color: #92221b;
+  margin-bottom: 4px;
+}
+.emergency-action-card p {
+  margin: 0;
+  font-size: 13px;
+  color: #6d332d;
+  line-height: 1.55;
+}
+
+/* Clinic Questions Flo Card */
+.questions-intro {
+  margin: 0 0 16px;
+  font-size: 14px;
+  color: #61635a;
+  line-height: 1.55;
+}
+.questions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.question-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: #f7fafc;
+  border: 1px solid #e2edf5;
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+.question-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #d8e8f4;
+  color: #2b5577;
+  font-weight: 700;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.question-row p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #2b3b47;
+}
+
+/* Audio Hub */
+.flo-audio-hub {
+  background: #fcfbf9;
+  border: 1px solid #ebe7df;
+  border-radius: 18px;
+  padding: 18px 22px;
+}
+.audio-hub-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.audio-hub-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.audio-hub-sub {
+  font-size: 12px;
+  color: var(--muted);
+}
+.audio-hub-player {
+  margin-bottom: 10px;
+}
+.translation-wrapper {
+  padding-top: 10px;
+  border-top: 1px dashed #e9e5dc;
+}
+.flo-source-footer {
+  text-align: center;
+  padding: 12px 16px;
+}
+.flo-source-footer p {
+  margin: 0;
+  font-size: 12px;
+  color: #9c9a92;
+  line-height: 1.5;
+}
+
+/* My Pregnancy Timeline Selector */
+.flo-journey-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.journey-header-box {
+  background: #ffffff;
+  border: 1px solid #eae7df;
+  border-radius: 20px;
+  padding: 24px 28px;
+}
+.journey-header-box h2 {
+  margin: 4px 0 6px;
+  font: 500 28px/1.3 var(--serif);
+  color: var(--ink);
+}
+.journey-header-box p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+.trimester-toggle-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.trimester-btn {
+  background: #ffffff;
+  border: 1px solid #e7e3d9;
+  border-radius: 14px;
+  padding: 14px 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.trimester-btn strong {
+  font-size: 14px;
+  color: var(--ink);
+}
+.trimester-btn small {
+  font-size: 11px;
+  color: var(--muted);
+}
+.trimester-btn.active {
+  background: #fbf5ef;
+  border-color: var(--terracotta);
+}
+.trimester-btn.active strong {
+  color: var(--terracotta);
+}
+
+.week-pills-scroller {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 2px 8px;
+  scrollbar-width: thin;
+}
+.week-bubble {
+  min-width: 48px;
+  height: 54px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid #e6e2d8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+.week-bubble .bubble-num {
+  font-size: 15px;
+  font-weight: 700;
+  color: #4b4c45;
+}
+.week-bubble .bubble-sub {
+  font-size: 9px;
+  color: #8c897f;
+  text-transform: uppercase;
+}
+.week-bubble.current {
+  border-color: var(--green);
+  background: #f1f6f1;
+}
+.week-bubble.current .bubble-num {
+  color: var(--green);
+}
+.week-bubble.selected {
+  background: var(--terracotta);
+  border-color: var(--terracotta);
+}
+.week-bubble.selected .bubble-num,
+.week-bubble.selected .bubble-sub {
+  color: #ffffff;
+}
+
+/* Learn Hub Styles */
+.learn-hub-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.learn-hero-header {
+  background: #ffffff;
+  border: 1px solid #eae6de;
+  border-radius: 20px;
+  padding: 24px 28px;
+}
+.learn-hero-header h2 {
+  margin: 4px 0 6px;
+  font: 500 28px/1.3 var(--serif);
+  color: var(--ink);
+}
+.learn-hero-header p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+.learn-subnav {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+.subnav-pill {
+  white-space: nowrap;
+  background: #ffffff;
+  border: 1px solid #e7e3d9;
+  border-radius: 99px;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #55574f;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.subnav-pill:hover {
+  background: #faf8f4;
+}
+.subnav-pill.active {
+  background: var(--ink);
+  color: #ffffff;
+  border-color: var(--ink);
+}
+.mealplan-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Medication Safety Hub Styles */
+.learning-hub {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.learning-section {
+  background: #ffffff;
+  border: 1px solid #ebe7df;
+  border-radius: 20px;
+  padding: clamp(20px, 3.5vw, 32px);
+}
+.learning-section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+.header-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.header-icon-wrap.amber { background: #fdf5ea; color: #a46d16; }
+.header-icon-wrap.green { background: #edf4ed; color: var(--green); }
+.hub-eyebrow {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--terracotta);
+  margin-bottom: 4px;
+}
+.learning-section-header h2 {
+  margin: 0 0 6px;
+  font: 500 24px/1.3 var(--serif);
+  color: var(--ink);
+}
+.learning-section-header p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.med-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.filter-pill {
+  background: #f6f5f0;
+  border: 1px solid #e7e4dc;
+  border-radius: 99px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #55574f;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.filter-pill.active {
+  background: var(--ink);
+  color: #ffffff;
+  border-color: var(--ink);
+}
+.med-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+@media (min-width: 680px) {
+  .med-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1040px) {
+  .med-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.med-card {
+  border-radius: 14px;
+  border: 1px solid #ebe7df;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+.safe-card { background: #fafdfa; border-color: #dceadc; }
+.caution-card { background: #fdfdf9; border-color: #faeccd; }
+.avoid-card { background: #fdfaf9; border-color: #f7deda; }
+
+.med-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.med-badge {
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.med-badge.safe { background: #e3efe3; color: #295729; }
+.med-badge.caution { background: #faedd0; color: #885c0f; }
+.med-badge.avoid { background: #fbe0dc; color: #a42c1e; }
+.med-tag {
+  font-size: 11px;
+  color: #928f86;
+}
+.med-name {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.med-use {
+  display: block;
+  font-size: 12px;
+  color: #7a786f;
+  margin-bottom: 8px;
+}
+.med-guidance {
+  margin: 0;
+  font-size: 13px;
+  color: #55574e;
+  line-height: 1.5;
+}
+.med-warning-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: #fdf5f4;
+  border: 1px solid #f6ded9;
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+.warning-icon {
+  color: #b32b23;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.med-warning-banner strong {
+  display: block;
+  font-size: 13px;
+  color: #952b1f;
+  margin-bottom: 4px;
+}
+.med-warning-banner p {
+  margin: 0;
+  font-size: 13px;
+  color: #693e36;
+  line-height: 1.55;
+}
+
+/* Regional Food Wisdom Grid */
+.food-examples-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+@media (min-width: 680px) {
+  .food-examples-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.food-example-card {
+  background: #fbfaf7;
+  border: 1px solid #eae6de;
+  border-radius: 14px;
+  padding: 16px;
+}
+.food-card-title-row h4 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #3b3d36;
+}
+.food-nutri-tag {
+  margin-bottom: 8px;
+}
+.food-nutri-tag span {
+  display: inline-block;
+  background: #edf3ed;
+  color: #3b5a3b;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+.food-example-card p {
+  margin: 0;
+  font-size: 13px;
+  color: #5f6158;
+  line-height: 1.55;
+}
+
+/* Midwife Hub Page */
+.midwife-hub-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.midwife-hero-header {
+  background: #ffffff;
+  border: 1px solid #eae6de;
+  border-radius: 20px;
+  padding: 24px 28px;
+}
+.midwife-hero-header h2 {
+  margin: 4px 0 6px;
+  font: 500 28px/1.3 var(--serif);
+  color: var(--ink);
+}
+.midwife-hero-header p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.nav-week-badge {
+  margin-left: auto;
+  background: var(--soft-terracotta);
+  color: var(--terracotta);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 99px;
 }

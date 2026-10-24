@@ -26,3 +26,4 @@ tmp/
 apps/api/prisma/*.db
 *.log
 chatgptvhat.md
+anotherchatgptdiscuss.md

@@ -16,9 +16,10 @@
     ArrowRight01Icon,
     Clock01Icon,
     PlusSignIcon,
+    SparklesIcon,
   } from "@hugeicons/core-free-icons";
   import { daysUntil, formatDate, pregnancyWeek } from "#lib/utils.ts";
-  import PregnancyHero from "#lib/components/PregnancyHero.svelte";
+  import { getPregnancyWeek } from "#lib/data/pregnancy-weeks.ts";
   import WellnessCheckin from "#lib/components/WellnessCheckin.svelte";
   import SafetyCheck from "#lib/components/SafetyCheck.svelte";
   import WeeklyGuide from "#lib/components/WeeklyGuide.svelte";
@@ -29,7 +30,7 @@
   import MealPlanner from "#lib/components/MealPlanner.svelte";
   import GroceryList from "#lib/components/GroceryList.svelte";
 
-  let activeNav = $state("Today");
+  let activeNav = $state<"Today" | "My pregnancy" | "Learn" | "My midwife">("Today");
   let authorized = $state(false);
   let currentUser = $state<{ name: string } | null>(null);
   let displayName = $derived(
@@ -51,15 +52,25 @@
   let visitInput = $state("");
   let visitSaving = $state(false);
   let visitMessage = $state("");
-  let selectedWeek = $state<number | null>(null);
-  let week = $derived(dueDate ? pregnancyWeek(dueDate) : null);
+
+  let week = $derived(dueDate ? pregnancyWeek(dueDate) : 29);
   let days = $derived(dueDate ? daysUntil(dueDate) : null);
+  let currentGuide = $derived(getPregnancyWeek(week ?? 29));
+
+  // My pregnancy interactive state
+  let selectedTrimester = $state<1 | 2 | 3>(3);
+  let selectedWeek = $state<number>(29);
+
+  // Sub-tabs for Learn
+  let learnTab = $state<"foods" | "mealplan" | "meds">("foods");
+
   const navigation = [
-    { label: "Today", href: "/pregnant/dashboard", icon: Home01Icon },
-    { label: "My pregnancy", href: "#pregnancy", icon: Calendar03Icon },
-    { label: "Learn", href: "#learn", icon: BookOpen01Icon },
-    { label: "My midwife", href: "#care-team", icon: UserMultiple02Icon },
+    { label: "Today" as const, href: "/pregnant/dashboard", icon: Home01Icon },
+    { label: "My pregnancy" as const, href: "#pregnancy", icon: Calendar03Icon },
+    { label: "Learn" as const, href: "#learn", icon: BookOpen01Icon },
+    { label: "My midwife" as const, href: "#care-team", icon: UserMultiple02Icon },
   ];
+
   const formattedToday = new Intl.DateTimeFormat("en-NG", {
     weekday: "long",
     month: "long",
@@ -82,6 +93,9 @@
         if (record?.dueDate) {
           dueDate = record.dueDate.slice(0, 10);
           dueInput = dueDate;
+          const currentCalculatedWeek = pregnancyWeek(dueDate);
+          selectedWeek = currentCalculatedWeek;
+          selectedTrimester = currentCalculatedWeek <= 12 ? 1 : currentCalculatedWeek <= 27 ? 2 : 3;
         }
         if (record?.nextVisitDate) {
           nextVisitDate = record.nextVisitDate.slice(0, 10);
@@ -115,6 +129,9 @@
         if (!response.ok) throw new Error("Could not save your due date.");
         dueDate = dueInput;
         dateMessage = "Your due date is saved.";
+        const newW = pregnancyWeek(dueDate);
+        selectedWeek = newW;
+        selectedTrimester = newW <= 12 ? 1 : newW <= 27 ? 2 : 3;
       })
       .catch(() => {
         dateMessage = "We could not save that date. Please try again.";
@@ -149,14 +166,23 @@
         nextVisitDate = record.nextVisitDate?.slice(0, 10) ?? "";
         visitInput = nextVisitDate;
         visitMessage = nextVisitDate
-          ? "Your antenatal visit is saved. Weekly browser reminders are available below."
-          : "Your antenatal visit reminder was removed.";
+          ? "Your antenatal visit is saved."
+          : "Visit reminder was removed.";
       })
       .catch(() => {
         visitMessage = "We could not save that visit date. Please try again.";
       })
       .finally(() => (visitSaving = false));
   }
+
+  // Weeks for current trimester view
+  let trimesterWeeks = $derived(
+    selectedTrimester === 1
+      ? Array.from({ length: 12 }, (_, i) => i + 1)
+      : selectedTrimester === 2
+        ? Array.from({ length: 15 }, (_, i) => i + 13)
+        : Array.from({ length: 15 }, (_, i) => i + 28),
+  );
 </script>
 
 <svelte:head>
@@ -169,6 +195,7 @@
 
 {#if authorized}
   <div class="app-shell">
+    <!-- Sidebar Navigation -->
     <aside class="sidebar">
       <a class="brand" href="/pregnant/dashboard" aria-label="Sabi home">
         <span class="brand-mark"><img src="/sabi-mark.svg" alt="" /></span>
@@ -180,52 +207,57 @@
       <div class="side-label">YOUR SPACE</div>
       <nav aria-label="Main navigation">
         {#each navigation as item}
-          <a
+          <button
             class:active={activeNav === item.label}
             class="nav-item"
-            href={item.href}
             onclick={() => (activeNav = item.label)}
           >
             <HugeiconsIcon icon={item.icon} size={19} strokeWidth={1.8} />
             <span>{item.label}</span>
-            {#if item.label === "My midwife"}<span class="nav-pip"></span>{/if}
-          </a>
+            {#if item.label === "My pregnancy" && week}
+              <span class="nav-week-badge">W{week}</span>
+            {/if}
+          </button>
         {/each}
       </nav>
       <div class="sidebar-spacer"></div>
+
+      <!-- User Profile Badge -->
       <div class="midwife-card">
         <div class="mini-avatar">{userInitials}</div>
         <div>
-          <strong>{currentUser?.name ?? "Your profile"}</strong><small
-            >Your care profile</small
-          >
+          <strong>{currentUser?.name || "Your Profile"}</strong>
+          <small>{dueDate ? `Week ${week} · Due ${dueDate.slice(5)}` : "Care Profile"}</small>
         </div>
-        <button aria-label="Open profile" class="more-button">···</button>
       </div>
       <div class="privacy-note">
-        <span class="privacy-dot"></span> Your health, held with care
+        <span class="privacy-dot"></span> Care held with dignity
       </div>
     </aside>
 
+    <!-- Main Content Area -->
     <main class="main-content">
       <header class="topbar">
         <div class="breadcrumb">
           My space <span>/</span> <strong>{activeNav}</strong>
         </div>
         <div class="topbar-right">
-          <span class="today-label">{formattedToday}</span><button
+          <span class="today-label">{formattedToday}</span>
+          <button
             class="avatar-button"
             aria-label="Sign out"
+            title="Sign out of Sabi"
             onclick={signOut}>{userInitials}</button
           >
         </div>
       </header>
 
       <div class="page-wrap">
+        <!-- TOP VIEW: Welcome Header (Common across pages) -->
         <div class="welcome-row">
           <div>
             <div class="eyebrow">
-              <span class="sun-icon">✳</span> YOUR PREGNANCY, YOUR PACE
+              <span class="sun-icon">✳</span> YOUR CARE, YOUR PACE
             </div>
             <h1>
               Good morning, {displayName}<span class="heading-period">.</span>
@@ -234,91 +266,63 @@
               A little care for you and baby, right where you are.
             </p>
           </div>
-          {#if week !== null}<div class="week-pill">
+          {#if week !== null}
+            <div class="week-pill">
               <span class="week-pill-dot"></span>
-              {week} weeks along
-            </div>{/if}
+              {week} weeks along · Trimester {Math.min(3, Math.ceil(week / 13))}
+            </div>
+          {/if}
         </div>
 
+        <!-- TAB 1: TODAY -->
         {#if activeNav === "Today"}
-          {#if week !== null}
-            <PregnancyHero
-              {week}
-              onExplore={() => {
-                selectedWeek = week;
-                activeNav = "My pregnancy";
-              }}
-            />
-          {:else}
-            <section
-              class="profile-setup"
-              aria-labelledby="profile-setup-title"
-            >
-              <span class="eyebrow small-eyebrow"
-                >LET'S PERSONALIZE YOUR SPACE</span
-              >
-              <h2 id="profile-setup-title">When is your baby due?</h2>
-              <p>
-                Add the due date your health worker gave you to see your
-                pregnancy week and timeline.
-              </p>
-              <label for="first-due-date">Estimated due date</label>
-              <div>
-                <input
-                  id="first-due-date"
-                  type="date"
-                  bind:value={dueInput}
-                /><button
-                  onclick={saveDueDate}
-                  disabled={!dueInput || dateSaving}
-                  >{dateSaving ? "Saving…" : "Save date"}</button
-                >
-              </div>
-              {#if dateMessage}<small role="status">{dateMessage}</small>{/if}
-            </section>
-          {/if}
-          <NotificationOptIn />
-
+          <!-- Summary Cards Row -->
           <section class="summary-grid" aria-label="Pregnancy summary">
+            <!-- Due Date Card -->
             <article class="summary-card due-card">
               <div class="summary-icon coral">
                 <HugeiconsIcon icon={Calendar03Icon} size={18} />
               </div>
               <div class="summary-content">
-                <span class="summary-label">YOUR DUE DATE</span><strong
-                  >{dueDate ? formatDate(dueDate) : "Add your due date"}</strong
-                ><span class="summary-note"
-                  >{days !== null
-                    ? `${days} days to meet your baby`
-                    : "Set a due date to personalize your guide"}</span
-                >
+                <span class="summary-label">ESTIMATED DUE DATE</span>
+                <strong>{dueDate ? formatDate(dueDate) : "Set your due date"}</strong>
+                <span class="summary-note">
+                  {days !== null
+                    ? `${days} days until you meet baby`
+                    : "Enter your date to personalize your timeline"}
+                </span>
               </div>
               <details class="edit-due">
                 <summary aria-label="Edit due date">···</summary>
                 <div class="due-popover">
-                  <label for="due-date">Due date</label><input
-                    id="due-date"
-                    type="date"
-                    bind:value={dueInput}
-                  /><button onclick={saveDueDate}>Save date</button>
+                  <label for="due-date">Due date</label>
+                  <input id="due-date" type="date" bind:value={dueInput} />
+                  <button onclick={saveDueDate} disabled={dateSaving}>
+                    {dateSaving ? "Saving…" : "Save date"}
+                  </button>
+                  {#if dateMessage}<small role="status">{dateMessage}</small>{/if}
                 </div>
               </details>
             </article>
+
+            <!-- Antenatal Visit Card -->
             <article class="summary-card visit-card">
               <div class="summary-icon lilac-bg">
                 <HugeiconsIcon icon={Clock01Icon} size={18} />
               </div>
               <div class="summary-content">
-                <span class="summary-label">NEXT ANTENATAL VISIT</span><strong>
-                  {nextVisitDate ? formatDate(nextVisitDate) : "Not added yet"}
-                </strong><span class="summary-note">
+                <span class="summary-label">NEXT ANTENATAL VISIT</span>
+                <strong>
+                  {nextVisitDate ? formatDate(nextVisitDate) : "Not scheduled yet"}
+                </strong>
+                <span class="summary-note">
                   {nextVisitDate
                     ? daysUntil(nextVisitDate) === 0
-                      ? "Your visit is today"
+                      ? "Your clinic visit is today!"
                       : daysUntil(nextVisitDate) > 0
                         ? `In ${daysUntil(nextVisitDate)} days`
-                        : "This visit date has passed"
-                    : "Keep your next visit on your calendar"}
+                        : "Visit date has passed"
+                    : "Add your next appointment date"}
                 </span>
               </div>
               <details class="edit-due visit-editor">
@@ -326,138 +330,263 @@
                   <HugeiconsIcon icon={PlusSignIcon} size={17} />
                 </summary>
                 <div class="due-popover">
-                  <label for="next-visit">Next visit date</label>
+                  <label for="next-visit">Next clinic date</label>
                   <input id="next-visit" type="date" bind:value={visitInput} />
                   <button onclick={saveNextVisit} disabled={visitSaving}>
                     {visitSaving ? "Saving…" : "Save visit"}
                   </button>
-                  {#if visitMessage}<small role="status">{visitMessage}</small
-                    >{/if}
+                  {#if visitMessage}<small role="status">{visitMessage}</small>{/if}
                 </div>
               </details>
             </article>
+
+            <!-- Care Team Card -->
             <article class="summary-card midwife-summary">
               <div class="summary-icon green-bg">
                 <HugeiconsIcon icon={UserMultiple02Icon} size={18} />
               </div>
               <div class="summary-content">
-                <span class="summary-label">YOUR CARE TEAM</span><strong
-                  >Connect with a midwife</strong
-                ><span class="summary-note"
-                  >You're not on this journey alone</span
-                >
+                <span class="summary-label">YOUR CARE TEAM</span>
+                <strong>Assigned Midwife Connection</strong>
+                <span class="summary-note">You are not alone between visits</span>
               </div>
-              <a
+              <button
                 class="summary-arrow"
-                aria-label="Connect with a midwife"
-                href="/sign-in/midwife"
-                ><HugeiconsIcon icon={ArrowRight01Icon} size={17} /></a
+                aria-label="Open care team tab"
+                onclick={() => (activeNav = "My midwife")}
               >
+                <HugeiconsIcon icon={ArrowRight01Icon} size={17} />
+              </button>
             </article>
           </section>
-          <div class="content-grid">
-            <div class="primary-column">
+
+          <!-- Main Today Two-Column Grid -->
+          <div class="today-layout-grid">
+            <!-- Left Column: Wellness Check-in & Safety Check -->
+            <div class="today-left-col">
               <WellnessCheckin />
               <SafetyCheck />
             </div>
 
-            <aside class="secondary-column">
-              {#if week !== null}<WeeklyGuide {week} />{/if}
-              <FoodGuide week={week ?? 20} />
-              <div class="support-note">
-                <span class="support-icon">♡</span><span
-                  >Questions are welcome.<br /><strong
-                    >Your midwife is here for you.</strong
-                  ></span
-                ><HugeiconsIcon icon={ArrowRight01Icon} size={16} />
+            <!-- Right Column: Today's Week Highlight & Reminders -->
+            <aside class="today-right-col">
+              <!-- Flo Highlight Card -->
+              <div class="today-week-preview-card">
+                <div class="preview-badge">
+                  <span>🌱 BABY THIS WEEK</span>
+                  <span class="badge-week">Week {week}</span>
+                </div>
+                <h3 class="preview-fruit-title">
+                  Baby is the size of a <span class="highlight-fruit">{currentGuide.babyFruit}</span>
+                </h3>
+                <div class="preview-metrics">
+                  <span>Length: ~{currentGuide.babyLength}</span>
+                  <span class="bullet">•</span>
+                  <span>Weight: ~{currentGuide.babyWeight}</span>
+                </div>
+                <p class="preview-blurb">{currentGuide.gentlePrompt}</p>
+
+                <div class="preview-food-snippet">
+                  <strong>🍲 Food to prioritize this week:</strong>
+                  <p>{currentGuide.nigerianFoodTip}</p>
+                </div>
+
+                <button
+                  class="preview-cta-button"
+                  onclick={() => {
+                    selectedWeek = week;
+                    selectedTrimester = currentGuide.trimester;
+                    activeNav = "My pregnancy";
+                  }}
+                >
+                  <span>Explore Full Week {week} Guide</span>
+                  <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
+                </button>
+              </div>
+
+              <!-- Push Reminder Opt-In -->
+              <NotificationOptIn />
+
+              <!-- Quick Care Link Card -->
+              <div class="care-reassurance-card">
+                <span class="care-heart">♡</span>
+                <div>
+                  <strong>Questions between clinic visits?</strong>
+                  <p>Your midwife is connected on Sabi to review your check-in updates.</p>
+                </div>
               </div>
             </aside>
           </div>
+
+        <!-- TAB 2: MY PREGNANCY (FLO-STYLE JOURNEY) -->
         {:else if activeNav === "My pregnancy"}
-          <section class="journey-page" id="pregnancy">
-            <div class="eyebrow small-eyebrow">YOUR JOURNEY</div>
-            <h2>Your pregnancy, week by week</h2>
-            {#if week !== null}
+          <section class="flo-journey-container" id="pregnancy" aria-labelledby="journey-title">
+            <div class="journey-header-box">
+              <div class="eyebrow small-eyebrow">WEEK-BY-WEEK COMPANION</div>
+              <h2 id="journey-title">Your 42-Week Pregnancy Journey</h2>
               <p>
-                You are around week {week}. Your health worker can confirm your
-                dates.
+                Select any week to follow baby’s milestones, your body’s changes, and weekly Nigerian food guidance.
               </p>
-              <div class="journey-progress" aria-label={`Week ${week} of 42`}>
-                <span style={`--progress: ${Math.min(100, (week / 42) * 100)}%`}
-                ></span>
-              </div>
-              <div class="journey-weeks">
-                {#each Array.from({ length: 42 }, (_, i) => i + 1) as journeyWeek}<button
-                    class:current={journeyWeek === week}
-                    class:past={journeyWeek < week}
-                    class:selected={journeyWeek === selectedWeek}
-                    aria-label={`Week ${journeyWeek}`}
-                    aria-pressed={journeyWeek === selectedWeek}
-                    onclick={() => (selectedWeek = journeyWeek)}
-                    >{journeyWeek}</button
-                  >{/each}
-              </div>
-              {#if selectedWeek !== null}<WeeklyGuide
-                  week={selectedWeek}
-                />{:else}<WeeklyGuide {week} />{/if}
-            {:else}
-              <p>
-                Add your due date on Today to see your place in the journey.
-              </p>
-            {/if}
+            </div>
+
+            <!-- Trimester Selector Tabs -->
+            <div class="trimester-toggle-bar" role="tablist">
+              <button
+                class="trimester-btn"
+                class:active={selectedTrimester === 1}
+                onclick={() => {
+                  selectedTrimester = 1;
+                  selectedWeek = Math.min(12, selectedWeek);
+                }}
+              >
+                <strong>Trimester 1</strong>
+                <small>Weeks 1 – 12 · Foundations</small>
+              </button>
+
+              <button
+                class="trimester-btn"
+                class:active={selectedTrimester === 2}
+                onclick={() => {
+                  selectedTrimester = 2;
+                  selectedWeek = Math.max(13, Math.min(27, selectedWeek));
+                }}
+              >
+                <strong>Trimester 2</strong>
+                <small>Weeks 13 – 27 · Growth & Kicks</small>
+              </button>
+
+              <button
+                class="trimester-btn"
+                class:active={selectedTrimester === 3}
+                onclick={() => {
+                  selectedTrimester = 3;
+                  selectedWeek = Math.max(28, selectedWeek);
+                }}
+              >
+                <strong>Trimester 3</strong>
+                <small>Weeks 28 – 42 · Final Stretch</small>
+              </button>
+            </div>
+
+            <!-- Horizontal Week Pills Selector -->
+            <div class="week-pills-scroller" aria-label="Select week">
+              {#each trimesterWeeks as w}
+                <button
+                  class="week-bubble"
+                  class:current={w === week}
+                  class:selected={w === selectedWeek}
+                  onclick={() => (selectedWeek = w)}
+                  aria-pressed={w === selectedWeek}
+                >
+                  <span class="bubble-num">{w}</span>
+                  <span class="bubble-sub">
+                    {#if w === week}You
+                    {:else}Wk {w}{/if}
+                  </span>
+                </button>
+              {/each}
+            </div>
+
+            <!-- Flo-Style Interactive Weekly Guide for Selected Week -->
+            <WeeklyGuide week={selectedWeek} />
           </section>
+
+        <!-- TAB 3: LEARN (STRUCTURED KNOWLEDGE HUB) -->
         {:else if activeNav === "Learn"}
-          <section class="learn-page">
-            <div class="eyebrow small-eyebrow">LEARN AT YOUR OWN PACE</div>
-            <h2>Helpful information for your pregnancy</h2>
-            {#if week !== null}<WeeklyGuide {week} />{/if}
-            <LearningResources />
-            <FoodGuide week={week ?? 20} />
-            <MealPlanner />
-            <GroceryList />
+          <section class="learn-hub-page" id="learn" aria-labelledby="learn-hub-title">
+            <div class="learn-hero-header">
+              <div class="eyebrow small-eyebrow">YOUR KNOWLEDGE HUB</div>
+              <h2 id="learn-hub-title">Everything for a Healthy Pregnancy</h2>
+              <p>
+                Explore Nigerian nutrition, safe medications, weekly meal ideas, and answers to common maternal health questions.
+              </p>
+            </div>
+
+            <!-- Hub Sub-Navigation Tabs -->
+            <div class="learn-subnav">
+              <button
+                class="subnav-pill"
+                class:active={learnTab === "foods"}
+                onclick={() => (learnTab = "foods")}
+              >
+                <span>🍲 Nigerian Foods & Nutrients</span>
+              </button>
+              <button
+                class="subnav-pill"
+                class:active={learnTab === "mealplan"}
+                onclick={() => (learnTab = "mealplan")}
+              >
+                <span>📅 7-Day Meal Planner & Market List</span>
+              </button>
+              <button
+                class="subnav-pill"
+                class:active={learnTab === "meds"}
+                onclick={() => (learnTab = "meds")}
+              >
+                <span>💊 Medication Safety & Food Guides</span>
+              </button>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="learn-tab-pane">
+              {#if learnTab === "foods"}
+                <div class="learn-pane-wrap">
+                  <FoodGuide week={week ?? 20} />
+                </div>
+              {:else if learnTab === "mealplan"}
+                <div class="learn-pane-wrap mealplan-wrap">
+                  <MealPlanner />
+                  <GroceryList />
+                </div>
+              {:else if learnTab === "meds"}
+                <div class="learn-pane-wrap">
+                  <LearningResources />
+                </div>
+              {/if}
+            </div>
           </section>
+
+        <!-- TAB 4: MY MIDWIFE (CARE TEAM PORTAL) -->
         {:else}
-          <section class="midwife-page">
-            <div class="eyebrow small-eyebrow">YOUR CARE TEAM</div>
-            <h2>Stay connected with your midwife</h2>
-            <p>
-              Request a connection with a Sabi care-team account. They can only
-              see your check-ins after you request access and they approve.
-            </p>
-            <CareTeamLink />
+          <section class="midwife-hub-page" id="care-team" aria-labelledby="midwife-title">
+            <div class="midwife-hero-header">
+              <div class="eyebrow small-eyebrow">CARE TEAM OVERSIGHT</div>
+              <h2 id="midwife-title">Connected Care with Your Midwife</h2>
+              <p>
+                Link your profile with your hospital or primary care midwife. They can review your weekly check-ins,
+                blood pressure records, and questions to support you between clinic appointments.
+              </p>
+            </div>
+
+            <div class="midwife-content-box">
+              <CareTeamLink />
+            </div>
           </section>
         {/if}
-
-        {#if activeNav === "Today"}<a
-            class="portal-entry"
-            href="/sign-in/midwife"
-            ><span class="portal-entry-icon"
-              ><HugeiconsIcon icon={UserMultiple02Icon} size={19} /></span
-            ><span
-              ><strong>Are you a nurse or midwife?</strong><small
-                >Open the separate Sabi care team portal.</small
-              ></span
-            ><HugeiconsIcon icon={ArrowRight01Icon} size={17} /></a
-          >{/if}
 
         <footer class="page-footer">
           <a class="footer-brand" href="/pregnant/dashboard"
             >sabi<span>.</span></a
-          ><span>Here for the in-between.</span><span class="footer-disclaimer"
-            >General education only · Always speak with your health worker</span
+          >
+          <span>A maternal health companion for Nigerian families.</span>
+          <span class="footer-disclaimer"
+            >General education only · Always consult your nurse, midwife, or doctor</span
           >
         </footer>
       </div>
     </main>
   </div>
 
+  <!-- Mobile Bottom Navigation -->
   <nav class="mobile-nav" aria-label="Mobile navigation">
-    {#each navigation as item}<a
+    {#each navigation as item}
+      <button
         class:active={activeNav === item.label}
-        href={item.href}
         onclick={() => (activeNav = item.label)}
-        ><HugeiconsIcon icon={item.icon} size={20} /><span>{item.label}</span
-        ></a
-      >{/each}
+      >
+        <HugeiconsIcon icon={item.icon} size={20} />
+        <span>{item.label}</span>
+      </button>
+    {/each}
   </nav>
 {/if}
