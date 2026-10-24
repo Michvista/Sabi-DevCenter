@@ -34,6 +34,66 @@
       : guide.gentlePrompt,
   );
 
+  /** Comprehensive narration script for audio & translation — covers everything about the week */
+  let comprehensiveNarration = $derived.by(() => {
+    const parts: string[] = [];
+
+    // 1. Week intro with baby size
+    parts.push(
+      `Week ${week}, Trimester ${guide.trimester}. Your baby is about the size of a ${guide.babyFruit}, measuring approximately ${guide.babyLength} and weighing ${guide.babyWeight}.`,
+    );
+
+    // 2. Key developmental focus
+    parts.push(`Key focus this week: ${guide.focus}`);
+
+    // 3. Book-sourced clinical summaries (baby + body changes)
+    if (hasBookSource) {
+      if (babySections.length > 0) {
+        parts.push(
+          babySections
+            .slice(0, 3)
+            .map((s) => `${s.title}: ${s.summary}`)
+            .join(" "),
+        );
+      }
+      if (momSections.length > 0) {
+        parts.push(
+          momSections
+            .slice(0, 2)
+            .map((s) => `${s.title}: ${s.summary}`)
+            .join(" "),
+        );
+      }
+    } else {
+      parts.push(guide.gentlePrompt);
+    }
+
+    // 4. Antenatal care reminder
+    parts.push(`Antenatal care reminder: ${guide.antenatalFocus}`);
+
+    // 5. Nigerian nutrition
+    parts.push(
+      `Nutrition this week: ${guide.nigerianFoodTip} Foods to prioritize include ${guide.recommendedFoods.slice(0, 4).join(", ")}. Key nutrients: ${guide.keyNutrients.slice(0, 4).join(", ")}.`,
+    );
+
+    // 6. Top danger signs
+    if (guide.dangerSigns.length > 0) {
+      parts.push(
+        `Watch out for these warning signs: ${guide.dangerSigns.slice(0, 3).join("; ")}. If you notice any of these, contact your clinic or midwife immediately. In Nigeria, dial 112 for emergencies.`,
+      );
+    }
+
+    // 7. Clinic questions
+    if (guide.clinicQuestions.length > 0) {
+      parts.push(
+        `Questions to ask at your next visit: ${guide.clinicQuestions.slice(0, 2).join(" Also ask: ")}`,
+      );
+    }
+
+    // Keep under 4500 chars to stay within translation + TTS limits
+    return parts.join(" ").slice(0, 4500);
+  });
+
   $effect(() => {
     const currentWeek = week;
     const controller = new AbortController();
@@ -347,10 +407,10 @@
       <span class="text-xs text-[#72746b]">Hausa · Igbo · Yorùbá · Nigerian Pidgin · English</span>
     </div>
     <div class="pt-2">
-      <GuideAudio text={`${guide.title}. ${guide.nigerianFoodTip} ${guideText}`} />
+      <GuideAudio text={comprehensiveNarration} />
     </div>
     <div class="pt-2 border-t border-[#edeae1]">
-      <GuideTextTranslation text={`${guide.title}. ${guide.nigerianFoodTip} ${guideText}`} />
+      <GuideTextTranslation text={comprehensiveNarration} />
     </div>
   </section>
 

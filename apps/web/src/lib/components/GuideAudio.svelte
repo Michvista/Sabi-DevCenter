@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onDestroy } from "svelte";
-  import { translateGuideText } from "#lib/translation.ts";
+  import { translateGuideText, type GuideLanguage } from "#lib/translation.ts";
   let { text }: { text: string } = $props();
 
   let targetLanguage = $state("en");
@@ -19,9 +19,23 @@
     if (audioUrl) URL.revokeObjectURL(audioUrl);
     audioUrl = "";
 
+    const langLabels: Record<string, string> = {
+      en: "English",
+      ha: "Hausa",
+      ig: "Igbo",
+      yo: "Yorùbá",
+      pcm: "Nigerian Pidgin",
+    };
+
     try {
+      // Translate the guide text for ALL non-English languages before sending to TTS
       const spokenText =
-        targetLanguage === "pcm" ? await translateGuideText(text, "pcm") : text;
+        targetLanguage !== "en"
+          ? await translateGuideText(text, targetLanguage as GuideLanguage)
+          : text;
+
+      message = `Generating ${langLabels[targetLanguage] ?? targetLanguage} audio…`;
+
       const response = await fetch(
         `${import.meta.env.VITE_API_URL ?? "http://localhost:8080"}/voice/guide`,
         {
@@ -38,12 +52,17 @@
       }
       const fallback = response.headers.get("X-Sabi-Audio-Fallback");
       audioUrl = URL.createObjectURL(await response.blob());
-      message =
-        fallback === "azure-original-english"
-          ? "Playing the guide in English because audio in your selected language is unavailable."
-          : targetLanguage === "pcm"
-            ? "Playing the guide in Nigerian Pidgin."
-            : "Audio is ready. Ask your health worker to clarify anything important.";
+
+      if (fallback === "azure-original-english") {
+        message = `Playing the guide in English because ${langLabels[targetLanguage] ?? targetLanguage} audio is temporarily unavailable.`;
+      } else if (fallback?.startsWith("9jalingo")) {
+        message = `Playing in ${langLabels[targetLanguage] ?? targetLanguage} via 9jaLingo Voice.`;
+      } else if (targetLanguage === "en") {
+        message = "Playing the guide in English.";
+      } else {
+        message = `Playing the guide in ${langLabels[targetLanguage] ?? targetLanguage}.`;
+      }
+
       await audioElement?.play();
     } catch (error) {
       if (targetLanguage === "en" && "speechSynthesis" in window) {
@@ -56,9 +75,9 @@
         window.speechSynthesis.speak(utterance);
       } else {
         message =
-          targetLanguage === "en"
-            ? "Audio is unavailable right now. Please try again later."
-            : "Audio in this language is temporarily unavailable. Please try again later.";
+          error instanceof Error && error.message
+            ? error.message
+            : `Audio in ${langLabels[targetLanguage] ?? targetLanguage} is temporarily unavailable. Please try again later.`;
       }
     } finally {
       loading = false;
