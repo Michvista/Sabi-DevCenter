@@ -52,10 +52,13 @@
   let visitInput = $state("");
   let visitSaving = $state(false);
   let visitMessage = $state("");
+  let weekInput = $state<number | "">(29); // direct week entry
+  let weekSaving = $state(false);
 
-  let week = $derived(dueDate ? pregnancyWeek(dueDate) : 29);
+  let week = $derived(dueDate ? pregnancyWeek(dueDate) : (typeof weekInput === "number" ? weekInput : 29));
   let days = $derived(dueDate ? daysUntil(dueDate) : null);
   let currentGuide = $derived(getPregnancyWeek(week ?? 29));
+
 
   // My pregnancy interactive state
   let selectedTrimester = $state<1 | 2 | 3>(3);
@@ -130,6 +133,7 @@
         dueDate = dueInput;
         dateMessage = "Your due date is saved.";
         const newW = pregnancyWeek(dueDate);
+        weekInput = newW;
         selectedWeek = newW;
         selectedTrimester = newW <= 12 ? 1 : newW <= 27 ? 2 : 3;
       })
@@ -138,6 +142,43 @@
       })
       .finally(() => (dateSaving = false));
   }
+
+  function saveWeekDirect() {
+    const w = typeof weekInput === "number" ? weekInput : parseInt(String(weekInput));
+    if (!w || w < 1 || w > 42) return;
+    // Compute due date: 40 weeks from LMP, LMP = conception - 2 weeks
+    // Due date = today + (40 - w) weeks
+    const due = new Date();
+    due.setDate(due.getDate() + (40 - w) * 7);
+    const dueDateStr = due.toISOString().slice(0, 10);
+    weekSaving = true;
+    dateMessage = "";
+    void fetch(
+      `${import.meta.env.VITE_API_URL ?? "http://localhost:8080"}/records/pregnancy`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionToken()}`,
+        },
+        body: JSON.stringify({ dueDate: dueDateStr }),
+      },
+    )
+      .then((response) => {
+        if (!response.ok) throw new Error("Could not save.");
+        dueDate = dueDateStr;
+        dueInput = dueDateStr;
+        selectedWeek = w;
+        selectedTrimester = w <= 12 ? 1 : w <= 27 ? 2 : 3;
+        dateMessage = `Week ${w} saved.`;
+      })
+      .catch(() => {
+        dateMessage = "Could not save your week. Please try again.";
+      })
+      .finally(() => (weekSaving = false));
+  }
+
+
 
   function saveNextVisit() {
     if (!dueDate) {
@@ -278,24 +319,47 @@
         {#if activeNav === "Today"}
           <!-- Summary Cards Row -->
           <section class="summary-grid" aria-label="Pregnancy summary">
-            <!-- Due Date Card -->
+            <!-- Due Date & Current Week Card -->
             <article class="summary-card due-card">
               <div class="summary-icon coral">
                 <HugeiconsIcon icon={Calendar03Icon} size={18} />
               </div>
               <div class="summary-content">
-                <span class="summary-label">ESTIMATED DUE DATE</span>
-                <strong>{dueDate ? formatDate(dueDate) : "Set your due date"}</strong>
+                <div class="flex items-center justify-between gap-2">
+                  <span class="summary-label">CURRENT WEEK &amp; DUE DATE</span>
+                  <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-[#af705a]/15 text-[#af705a]">Week {week}</span>
+                </div>
+                <strong>{dueDate ? formatDate(dueDate) : `Week ${week} (Around Trimester ${Math.min(3, Math.ceil(week / 13))})`}</strong>
                 <span class="summary-note">
                   {days !== null
                     ? `${days} days until you meet baby`
-                    : "Enter your date to personalize your timeline"}
+                    : "Enter your current week or due date to personalize your timeline"}
                 </span>
+
+                <div class="mt-3 pt-2 border-t border-[#e7e4dc] flex flex-wrap items-center gap-2">
+                  <label for="direct-week-input" class="text-xs text-[#525547] font-medium">I am on week:</label>
+                  <input
+                    id="direct-week-input"
+                    type="number"
+                    min="1"
+                    max="42"
+                    bind:value={weekInput}
+                    class="w-16 px-2 py-1 text-sm font-semibold rounded-md border border-[#d6d2c4] bg-white text-center focus:outline-none focus:ring-1 focus:ring-[#809474]"
+                  />
+                  <button
+                    type="button"
+                    onclick={saveWeekDirect}
+                    disabled={weekSaving}
+                    class="px-2.5 py-1 text-xs font-medium rounded-md bg-[#809474] text-white hover:bg-[#6c8060] transition-colors disabled:opacity-50"
+                  >
+                    {weekSaving ? "Updating…" : "Set Week"}
+                  </button>
+                </div>
               </div>
               <details class="edit-due">
                 <summary aria-label="Edit due date">···</summary>
                 <div class="due-popover">
-                  <label for="due-date">Due date</label>
+                  <label for="due-date">Or specify exact due date</label>
                   <input id="due-date" type="date" bind:value={dueInput} />
                   <button onclick={saveDueDate} disabled={dateSaving}>
                     {dateSaving ? "Saving…" : "Save date"}

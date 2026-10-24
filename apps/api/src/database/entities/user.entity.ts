@@ -32,6 +32,10 @@ export class UserEntity {
   @Column({ type: "varchar", length: 24, default: "PREGNANT_PERSON" })
   role!: UserRole;
 
+  @Index({ unique: true, sparse: true })
+  @Column({ name: "connection_code", type: "varchar", length: 8, nullable: true, default: null })
+  connectionCode!: string | null;
+
   @CreateDateColumn({ name: "created_at", type: "timestamptz" })
   createdAt!: Date;
 

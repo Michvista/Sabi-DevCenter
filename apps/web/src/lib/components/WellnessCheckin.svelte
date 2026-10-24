@@ -1,13 +1,20 @@
 <script lang="ts">
-  import { Cancel01Icon, FavouriteIcon } from "@hugeicons/core-free-icons";
-  import { HugeiconsIcon } from "@hugeicons/svelte";
   import { sessionToken } from "#lib/auth/session.ts";
   import { onMount } from "svelte";
+
   let mood = $state("");
-  let showCheckIn = $state(false);
   let saved = $state(false);
+  let saving = $state(false);
   let checkinCount = $state(0);
   let error = $state("");
+
+  const moods = [
+    { label: "Good", face: "☺", value: "good", color: "mood-good" },
+    { label: "Okay", face: "◡", value: "okay", color: "mood-okay" },
+    { label: "A little off", face: "﹏", value: "off", color: "mood-off" },
+    { label: "Need support", face: "♡", value: "support", color: "mood-support" },
+  ];
+
   onMount(() => {
     void fetch(
       `${import.meta.env.VITE_API_URL ?? "http://localhost:8080"}/records/check-ins`,
@@ -19,89 +26,93 @@
       })
       .catch(() => {});
   });
-  const moods = [
-    { label: "Good", face: "☺", value: "good" },
-    { label: "Okay", face: "◡", value: "okay" },
-    { label: "A little off", face: "﹏", value: "off" },
-    { label: "Need support", face: "♡", value: "support" },
-  ];
+
   async function saveCheckIn() {
-    if (!mood) return;
+    if (!mood || saving) return;
+    saving = true;
     error = "";
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL ?? "http://localhost:8080"}/records/check-ins`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionToken()}`,
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL ?? "http://localhost:8080"}/records/check-ins`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionToken()}`,
+          },
+          body: JSON.stringify({ mood, symptoms: [] }),
         },
-        body: JSON.stringify({ mood, symptoms: [] }),
-      },
-    );
-    if (!response.ok) {
-      error =
-        "Could not save your check-in. Please check your connection and try again.";
-      return;
+      );
+      if (!response.ok) {
+        error = "Could not save. Please check your connection.";
+        return;
+      }
+      checkinCount += 1;
+      const existing = JSON.parse(localStorage.getItem("sabi-checkins") || "[]");
+      localStorage.setItem(
+        "sabi-checkins",
+        JSON.stringify(
+          [{ mood, date: new Date().toISOString() }, ...existing].slice(0, 20),
+        ),
+      );
+      saved = true;
+      setTimeout(() => {
+        saved = false;
+        mood = "";
+      }, 2000);
+    } finally {
+      saving = false;
     }
-    checkinCount += 1;
-    const existing = JSON.parse(localStorage.getItem("sabi-checkins") || "[]");
-    localStorage.setItem(
-      "sabi-checkins",
-      JSON.stringify(
-        [{ mood, date: new Date().toISOString() }, ...existing].slice(0, 20),
-      ),
-    );
-    saved = true;
-    setTimeout(() => {
-      saved = false;
-      showCheckIn = false;
-      mood = "";
-    }, 1200);
   }
 </script>
 
-<section class="section-block checkin-section">
-  <div class="section-heading">
-    <div>
-      <div class="eyebrow small-eyebrow">PAUSE & NOTICE</div>
-      <h2>How are you feeling today?</h2>
-    </div>
-    <span class="gentle-tag"
-      ><HugeiconsIcon icon={FavouriteIcon} size={14} /> No judgement, just you</span
-    >
+<div class="flo-checkin-card">
+  <div class="flo-checkin-header">
+    <div class="flo-checkin-eyebrow">PAUSE &amp; NOTICE</div>
+    <h2 class="flo-checkin-title">How are you feeling today?</h2>
+    <p class="flo-checkin-sub">No judgement, just you</p>
   </div>
-  <div class="mood-row">
+
+  <div class="flo-mood-grid">
     {#each moods as option}
       <button
-        class="mood-option"
-        class:selected={mood === option.value}
-        onclick={() => {
-          mood = option.value;
-          showCheckIn = true;
-        }}
-        ><span class="mood-face {option.value}">{option.face}</span><span
-          >{option.label}</span
-        ></button
+        class="flo-mood-btn {option.color}"
+        class:flo-mood-selected={mood === option.value}
+        onclick={() => { mood = option.value; }}
+        type="button"
+        aria-pressed={mood === option.value}
       >
+        <span class="flo-mood-face">{option.face}</span>
+        <span class="flo-mood-label">{option.label}</span>
+      </button>
     {/each}
   </div>
-  <small class="checkin-count"
-    >{checkinCount} check-ins saved to your account</small
-  >
-  {#if error}<p role="alert" class="food-message">{error}</p>{/if}
-  {#if showCheckIn}<div class="checkin-action">
-      <span
-        >{saved
-          ? "Check-in saved. Thank you for sharing."
-          : "Would you like to save this check-in?"}</span
-      ><button class="text-action" onclick={() => void saveCheckIn()}
-        >{saved ? "Saved ✓" : "Save check-in"}</button
-      ><button
-        class="quiet-close"
-        aria-label="Close"
-        onclick={() => (showCheckIn = false)}
-        ><HugeiconsIcon icon={Cancel01Icon} size={16} /></button
+
+  <p class="flo-checkin-count">
+    {checkinCount} check-in{checkinCount !== 1 ? "s" : ""} saved to your account
+  </p>
+
+  {#if error}
+    <p class="flo-checkin-error" role="alert">{error}</p>
+  {/if}
+
+  {#if mood && !saved}
+    <div class="flo-checkin-save-row">
+      <span class="flo-save-prompt">Would you like to save this check-in?</span>
+      <button
+        class="flo-save-btn"
+        type="button"
+        onclick={() => void saveCheckIn()}
+        disabled={saving}
       >
-    </div>{/if}
-</section>
+        {saving ? "Saving…" : "Save check-in"}
+      </button>
+    </div>
+  {/if}
+
+  {#if saved}
+    <div class="flo-save-success">
+      <span>✓</span> Check-in saved. Thank you for sharing.
+    </div>
+  {/if}
+</div>

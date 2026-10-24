@@ -1,27 +1,11 @@
 <script lang="ts">
-  import {
-    Alert02Icon,
-    ArrowRight01Icon,
-    Location01Icon,
-  } from "@hugeicons/core-free-icons";
-  import { HugeiconsIcon } from "@hugeicons/svelte";
   let checkedSymptoms = $state<string[]>([]);
   let assessment = $state<{
     level: string;
     title: string;
     message: string;
   } | null>(null);
-  const options = [
-    "Vaginal bleeding",
-    "Severe headache",
-    "Blurred vision",
-    "High fever",
-    "Severe belly pain",
-    "Difficulty breathing",
-    "Baby moving less",
-    "Mild nausea",
-    "Back ache",
-  ];
+
   const urgentSymptoms = [
     "Vaginal bleeding",
     "Severe headache",
@@ -31,13 +15,28 @@
     "Difficulty breathing",
     "Baby moving less",
   ];
+
+  const options = [
+    { label: "Vaginal bleeding", urgent: true },
+    { label: "Severe headache", urgent: true },
+    { label: "Blurred vision", urgent: true },
+    { label: "High fever", urgent: true },
+    { label: "Severe belly pain", urgent: true },
+    { label: "Difficulty breathing", urgent: true },
+    { label: "Baby moving less", urgent: true },
+    { label: "Mild nausea", urgent: false },
+    { label: "Back ache", urgent: false },
+  ];
+
   const apiUrl = import.meta.env.VITE_API_URL;
+
   function toggle(symptom: string) {
     checkedSymptoms = checkedSymptoms.includes(symptom)
       ? checkedSymptoms.filter((item) => item !== symptom)
       : [...checkedSymptoms, symptom];
     assessment = null;
   }
+
   async function assess() {
     if (apiUrl) {
       try {
@@ -53,66 +52,86 @@
           return;
         }
       } catch {
-        /* Fall back to the same deterministic local safety rule when the API is offline. */
+        /* fall back to local rule */
       }
     }
-    const urgent = checkedSymptoms.some((symptom) =>
-      urgentSymptoms.includes(symptom),
-    );
+    const urgent = checkedSymptoms.some((s) => urgentSymptoms.includes(s));
     assessment = urgent
       ? {
           level: "urgent",
           title: "Please seek urgent medical care now",
           message:
-            "These symptoms can need immediate assessment during pregnancy. Contact your midwife or go to the nearest health facility now. Ask someone to help you get there if you feel very unwell.",
+            "These symptoms can need immediate assessment during pregnancy. Contact your midwife or go to the nearest health facility now.",
         }
       : {
           level: "contact-care-team",
           title: "Check in with your care team",
           message:
-            "I can’t tell what is causing a symptom. Contact your midwife or health worker, especially if it is new, worsening, or worrying you.",
+            "Contact your midwife or health worker, especially if this is new, worsening, or worrying you.",
         };
+  }
+
+  function clear() {
+    checkedSymptoms = [];
+    assessment = null;
   }
 </script>
 
-<section class="section-block safety-section">
-  <div class="section-heading">
-    <div>
-      <div class="eyebrow small-eyebrow">A QUICK CHECK-IN</div>
-      <h2>Something not feeling right?</h2>
-    </div>
-    <span class="safety-mark"
-      ><HugeiconsIcon icon={Alert02Icon} size={16} /></span
-    >
+<div class="flo-safety-card">
+  <div class="flo-safety-header">
+    <div class="flo-checkin-eyebrow">A QUICK CHECK-IN</div>
+    <h2 class="flo-checkin-title">Something not feeling right?</h2>
+    <p class="flo-checkin-sub">
+      Choose anything you're experiencing. We'll help you think about a next step.
+    </p>
   </div>
-  <p class="section-description">
-    Choose anything you're experiencing. We'll help you think about a next step.
-  </p>
-  <div class="symptom-list">
-    {#each options as symptom}<button
-        class="symptom-chip"
-        class:checked={checkedSymptoms.includes(symptom)}
-        onclick={() => toggle(symptom)}
-        >{#if checkedSymptoms.includes(symptom)}<span>✓</span
-          >{/if}{symptom}</button
-      >{/each}
-  </div>
-  {#if checkedSymptoms.length}<button class="check-button" onclick={assess}
-      >See guidance <HugeiconsIcon icon={ArrowRight01Icon} size={16} /></button
-    >{/if}
-  {#if assessment}<div
-      class="assessment"
-      class:urgent={assessment.level === "urgent"}
-    >
-      <strong>{assessment.title}</strong>
-      <p>{assessment.message}</p>
-      <a href="tel:112" class="help-link"
-        ><HugeiconsIcon icon={Location01Icon} size={15} /> Emergency help in Nigeria
-        · 112</a
+
+  <div class="flo-symptom-list">
+    {#each options as opt}
+      <button
+        class="flo-symptom-chip"
+        class:flo-symptom-checked={checkedSymptoms.includes(opt.label)}
+        class:flo-symptom-urgent={opt.urgent}
+        type="button"
+        onclick={() => toggle(opt.label)}
+        aria-pressed={checkedSymptoms.includes(opt.label)}
       >
-    </div>{/if}
-  <div class="safety-footnote">
-    <HugeiconsIcon icon={Alert02Icon} size={14} /> This check-in doesn't diagnose.
-    If you feel worried, contact your health worker.
+        {#if checkedSymptoms.includes(opt.label)}
+          <span class="flo-chip-check">✓</span>
+        {/if}
+        {opt.label}
+      </button>
+    {/each}
   </div>
-</section>
+
+  {#if checkedSymptoms.length > 0}
+    <div class="flo-safety-actions">
+      <button class="flo-assess-btn" type="button" onclick={assess}>
+        See guidance →
+      </button>
+      <button class="flo-clear-btn" type="button" onclick={clear}>
+        Clear
+      </button>
+    </div>
+  {/if}
+
+  {#if assessment}
+    <div
+      class="flo-assessment-result"
+      class:flo-assessment-urgent={assessment.level === "urgent"}
+      class:flo-assessment-mild={assessment.level !== "urgent"}
+    >
+      <strong class="flo-assessment-title">{assessment.title}</strong>
+      <p class="flo-assessment-msg">{assessment.message}</p>
+      {#if assessment.level === "urgent"}
+        <a href="tel:112" class="flo-emergency-link">
+          ☎ Emergency help in Nigeria · 112
+        </a>
+      {/if}
+    </div>
+  {/if}
+
+  <p class="flo-safety-footnote">
+    This check-in doesn't diagnose. If you feel worried, contact your health worker.
+  </p>
+</div>

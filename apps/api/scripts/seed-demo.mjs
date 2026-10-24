@@ -53,6 +53,10 @@ function dateOffset(days) {
 
 async function seed() {
   await client.connect();
+  await client.query(`
+    ALTER TABLE users ADD COLUMN IF NOT EXISTS connection_code VARCHAR(8);
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_users_connection_code ON users(connection_code) WHERE connection_code IS NOT NULL;
+  `);
   await client.query("BEGIN");
   try {
     const userResult = await client.query(
@@ -177,9 +181,40 @@ async function seed() {
 
     await client.query("COMMIT");
     console.log(`Seeded the synthetic judge account: ${email}`);
-    console.log(
-      "Synthetic check-ins, meal examples, a pregnancy record, and groceries are ready.",
+
+    // ── Seed demo midwife ──────────────────────────────────────────────────
+    await client.query("BEGIN");
+    const midwifeEmail = (
+      process.env.SABI_DEMO_MIDWIFE_EMAIL ?? "demo.midwife@sabi.health"
+    ).trim().toLowerCase();
+    const midwifePassword = process.env.SABI_DEMO_MIDWIFE_PASSWORD ?? "SabiDemo2026!";
+    const midwifeCode = "SABICRE"; // fixed demo code shown on midwife dashboard
+
+    const midwifeResult = await client.query(
+      `INSERT INTO users (id, email, display_name, password_hash, role, connection_code)
+       VALUES ($1, $2, 'Demo Midwife', $3, 'MIDWIFE', $4)
+       ON CONFLICT (email) DO UPDATE
+       SET display_name = EXCLUDED.display_name,
+           password_hash = EXCLUDED.password_hash,
+           role = 'MIDWIFE',
+           connection_code = EXCLUDED.connection_code
+       RETURNING id`,
+      [randomUUID(), midwifeEmail, hashPassword(midwifePassword), midwifeCode],
     );
+    const midwifeId = midwifeResult.rows[0].id;
+
+    // Upsert an active care_link between the demo patient and demo midwife
+    await client.query(
+      `INSERT INTO care_links (id, patient_id, midwife_id, status)
+       VALUES ($1, $2, $3, 'active')
+       ON CONFLICT (patient_id, midwife_id) DO UPDATE
+       SET status = 'active'`,
+      [randomUUID(), userId, midwifeId],
+    );
+
+    await client.query("COMMIT");
+    console.log(`Seeded demo midwife: ${midwifeEmail} (code: ${midwifeCode})`);
+    console.log("Active care_link between demo patient and midwife created.");
   } catch (error) {
     await client.query("ROLLBACK");
     throw error;
@@ -189,3 +224,4 @@ async function seed() {
 }
 
 await seed();
+

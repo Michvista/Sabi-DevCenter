@@ -8,85 +8,27 @@
   } from "@hugeicons/core-free-icons";
   import { HugeiconsIcon } from "@hugeicons/svelte";
 
-  let medFilter = $state<"all" | "safe" | "caution" | "avoid">("all");
+  import { comprehensiveMedications } from "../data/medications-data";
 
-  const medications = [
-    {
-      category: "safe",
-      name: "Paracetamol",
-      use: "Mild to moderate pain, headache, and fever reduction",
-      status: "Generally Safe",
-      guidance: "Widely considered the safest first-line pain reliever during pregnancy. Always use the lowest effective dose and do not exceed daily limits.",
-      tag: "First-line option",
-    },
-    {
-      category: "safe",
-      name: "Folic Acid & Iron Supplements",
-      use: "Neural tube defect prevention & maternal anaemia prevention",
-      status: "Essential Routine Care",
-      guidance: "Take daily as prescribed at your antenatal clinic. Best taken with water or citrus juice (Vitamin C enhances iron absorption).",
-      tag: "Antenatal standard",
-    },
-    {
-      category: "safe",
-      name: "Antacids (Calcium-based)",
-      use: "Occasional pregnancy heartburn and indigestion",
-      status: "Safe with Guidance",
-      guidance: "Calcium carbonate antacids are generally safe. Avoid formulations high in sodium or aluminium unless cleared by your midwife.",
-      tag: "Digestive comfort",
-    },
-    {
-      category: "caution",
-      name: "Antimalarials (ACTs / Coartem)",
-      use: "Treatment of confirmed malaria in pregnancy",
-      status: "Prescription Only",
-      guidance: "Malaria in pregnancy is dangerous and must be treated promptly. Artemisinin-based combinations (ACTs) are recommended in the 2nd and 3rd trimesters under medical oversight.",
-      tag: "Clinician oversight",
-    },
-    {
-      category: "caution",
-      name: "SP (Fansidar) for IPTp",
-      use: "Intermittent preventive treatment of malaria",
-      status: "Clinic Scheduled",
-      guidance: "Given directly by nurses/midwives at antenatal clinics starting from the second trimester (after quickening), spaced at least 4 weeks apart.",
-      tag: "Routine clinic dose",
-    },
-    {
-      category: "caution",
-      name: "Antihistamines (Chlorpheniramine)",
-      use: "Allergies and severe skin itching",
-      status: "Check with Doctor",
-      guidance: "Some older antihistamines have established safety records, but check with your doctor before taking, and avoid combination cold medicines containing decongestants.",
-      tag: "Doctor consult",
-    },
-    {
-      category: "avoid",
-      name: "Ibuprofen, Diclofenac & NSAIDs",
-      use: "Pain relief and inflammation",
-      status: "Strictly Avoid",
-      guidance: "Avoid, especially in the 3rd trimester. Can cause premature closure of the fetal ductus arteriosus and reduce amniotic fluid levels.",
-      tag: "Risk to baby",
-    },
-    {
-      category: "avoid",
-      name: "Tetracycline & Doxycycline",
-      use: "Certain bacterial infections",
-      status: "Strictly Avoid",
-      guidance: "Can cause permanent discolouration of developing fetal teeth and impair skeletal bone development.",
-      tag: "Bone/teeth harm",
-    },
-    {
-      category: "avoid",
-      name: "Herbal Concoctions (Agbo / Traditional Herbs)",
-      use: "Traditional remedies, cleansers, or teas",
-      status: "Strictly Avoid",
-      guidance: "Unstandardized doses, unknown chemical constituents, and potential uterine-stimulating herbs can trigger premature contractions, bleeding, or toxic effects.",
-      tag: "Unsafe in pregnancy",
-    },
-  ];
+  let medFilter = $state<"all" | "safe" | "caution" | "avoid">("all");
+  let searchQuery = $state("");
+
+  const medications = comprehensiveMedications;
+
+  let safeCount = $derived(medications.filter((m) => m.category === "safe").length);
+  let cautionCount = $derived(medications.filter((m) => m.category === "caution").length);
+  let avoidCount = $derived(medications.filter((m) => m.category === "avoid").length);
 
   let filteredMeds = $derived(
-    medFilter === "all" ? medications : medications.filter((m) => m.category === medFilter),
+    medications.filter((m) => {
+      const matchesCategory = medFilter === "all" || m.category === medFilter;
+      const matchesSearch =
+        !searchQuery.trim() ||
+        m.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        m.use.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        m.tag.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
+    }),
   );
 
   const foods = [
@@ -152,36 +94,57 @@
       </div>
     </div>
 
-    <!-- Filter Pills -->
-    <div class="med-filters" role="tablist" aria-label="Filter medications by safety level">
-      <button
-        class="filter-pill"
-        class:active={medFilter === "all"}
-        onclick={() => (medFilter = "all")}
-      >
-        All Common Medicines ({medications.length})
-      </button>
-      <button
-        class="filter-pill pill-safe"
-        class:active={medFilter === "safe"}
-        onclick={() => (medFilter = "safe")}
-      >
-        🟢 Generally Safe (3)
-      </button>
-      <button
-        class="filter-pill pill-caution"
-        class:active={medFilter === "caution"}
-        onclick={() => (medFilter = "caution")}
-      >
-        🟡 Caution / Clinic Only (3)
-      </button>
-      <button
-        class="filter-pill pill-avoid"
-        class:active={medFilter === "avoid"}
-        onclick={() => (medFilter = "avoid")}
-      >
-        🔴 Strictly Avoid (3)
-      </button>
+    <!-- Search & Filter Controls -->
+    <div class="mb-5 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
+      <div class="relative flex-1 max-w-md">
+        <input
+          type="text"
+          bind:value={searchQuery}
+          placeholder="Search 50+ medicines, supplements, or symptoms…"
+          class="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-[#e2dfd5] bg-white placeholder-[#8e9083] focus:outline-none focus:ring-2 focus:ring-[#809474]/40"
+        />
+        <span class="absolute left-3 top-2.5 text-xs text-[#8e9083]">🔍</span>
+        {#if searchQuery}
+          <button
+            type="button"
+            onclick={() => (searchQuery = "")}
+            class="absolute right-3 top-2.5 text-xs text-[#8e9083] hover:text-[#30312c]"
+          >
+            ✕
+          </button>
+        {/if}
+      </div>
+
+      <div class="med-filters" role="tablist" aria-label="Filter medications by safety level">
+        <button
+          class="filter-pill"
+          class:active={medFilter === "all"}
+          onclick={() => (medFilter = "all")}
+        >
+          All ({medications.length})
+        </button>
+        <button
+          class="filter-pill pill-safe"
+          class:active={medFilter === "safe"}
+          onclick={() => (medFilter = "safe")}
+        >
+          🟢 Safe ({safeCount})
+        </button>
+        <button
+          class="filter-pill pill-caution"
+          class:active={medFilter === "caution"}
+          onclick={() => (medFilter = "caution")}
+        >
+          🟡 Caution ({cautionCount})
+        </button>
+        <button
+          class="filter-pill pill-avoid"
+          class:active={medFilter === "avoid"}
+          onclick={() => (medFilter = "avoid")}
+        >
+          🔴 Avoid ({avoidCount})
+        </button>
+      </div>
     </div>
 
     <!-- Medication Cards Grid -->

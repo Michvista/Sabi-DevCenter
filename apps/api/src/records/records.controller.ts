@@ -57,7 +57,7 @@ class MealDto {
   @IsOptional() @IsString() @MaxLength(120) note?: string;
 }
 class LinkDto {
-  @IsString() email!: string;
+  @IsString() @MaxLength(8) code!: string;
 }
 class PlanDto {
   @IsDateString() planDate!: string;
@@ -362,6 +362,27 @@ export class RecordsController {
     return { deleted: result.affected === 1 };
   }
 
+  @Post("care-team/generate-code")
+  async generateCareCode(@Req() req: AuthenticatedRequest) {
+    if (req.auth.role !== "MIDWIFE")
+      throw new ForbiddenException("Only a midwife can generate a connection code.");
+    const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+    await this.database()
+      .getRepository(UserEntity)
+      .update({ id: req.auth.userId }, { connectionCode: code } as Partial<UserEntity>);
+    return { code };
+  }
+
+  @Get("care-team/my-code")
+  async getMyCareCode(@Req() req: AuthenticatedRequest) {
+    if (req.auth.role !== "MIDWIFE")
+      throw new ForbiddenException("Only a midwife can view their connection code.");
+    const user = await this.database()
+      .getRepository(UserEntity)
+      .findOne({ where: { id: req.auth.userId }, select: ["id", "connectionCode"] });
+    return { code: user?.connectionCode ?? null };
+  }
+
   @Post("care-links")
   async requestCareLink(
     @Req() req: AuthenticatedRequest,
@@ -371,9 +392,9 @@ export class RecordsController {
       return { message: "Only a pregnant person can request a care link." };
     const midwife = await this.database()
       .getRepository(UserEntity)
-      .findOneBy({ email: body.email.trim().toLowerCase(), role: "MIDWIFE" });
+      .findOneBy({ connectionCode: body.code.trim().toUpperCase(), role: "MIDWIFE" });
     if (!midwife)
-      return { message: "No care-team account was found for that email." };
+      return { message: "No care-team account was found for that code. Ask your midwife for their Sabi code." };
     const repo = this.database().getRepository(CareLinkEntity);
     const existing = await repo.findOneBy({
       patientId: req.auth.userId,
@@ -387,6 +408,7 @@ export class RecordsController {
       status: "pending",
     });
   }
+
 
   @Get("care-team/requests")
   async careRequests(@Req() req: AuthenticatedRequest) {

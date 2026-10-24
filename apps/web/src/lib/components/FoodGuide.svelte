@@ -13,7 +13,11 @@
   import GroceryList from "./GroceryList.svelte";
   import BarcodeScanner from "./BarcodeScanner.svelte";
   import RecipeNutrientBuilder from "./RecipeNutrientBuilder.svelte";
+  import { getPregnancyWeek } from "../data/pregnancy-weeks";
   let { week = 20 }: { week?: number } = $props();
+
+  let weekGuide = $derived(getPregnancyWeek(week));
+
 
   type Food = {
     id?: string;
@@ -251,6 +255,63 @@
     }
   }
 </script>
+
+<section class="mb-8 rounded-2xl bg-white border border-[#e7e4dc] p-6 shadow-xs">
+  <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+    <div class="flex items-center gap-2">
+      <span class="inline-block w-2.5 h-2.5 rounded-full bg-[#af705a]"></span>
+      <span class="text-xs font-bold tracking-wider text-[#af705a] uppercase">WEEK {week} NUTRITION INSIGHT</span>
+    </div>
+    <span class="text-xs text-[#77786f] bg-[#f4f2ec] px-2.5 py-1 rounded-full font-medium">Your Pregnancy Week by Week Guide</span>
+  </div>
+
+  <h3 class="text-xl font-serif text-[#30312c] font-semibold mb-2">
+    Key Nutrients &amp; Nigerian Foods for Week {week}
+  </h3>
+  
+  <p class="text-sm text-[#525547] leading-relaxed mb-4">
+    {weekGuide.nigerianFoodTip}
+  </p>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-[#f0ede6]">
+    <div class="rounded-xl bg-[#faf9f6] p-3.5 border border-[#edeae1]">
+      <div class="text-xs font-bold text-[#af705a] uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
+        <span>⭐</span> Priority Nutrients
+      </div>
+      <div class="flex flex-wrap gap-1.5">
+        {#each weekGuide.keyNutrients as nutrient}
+          <span class="text-xs font-medium bg-white text-[#30312c] px-2 py-0.5 rounded-md border border-[#e2dfd5]">{nutrient}</span>
+        {/each}
+      </div>
+    </div>
+
+    <div class="rounded-xl bg-[#f5f8f3] p-3.5 border border-[#e0e8dc]">
+      <div class="text-xs font-bold text-[#475842] uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
+        <span>🍲</span> Recommended Nigerian Foods
+      </div>
+      <ul class="text-xs text-[#3d4b39] space-y-1">
+        {#each weekGuide.recommendedFoods as foodItem}
+          <li class="flex items-center gap-1.5">
+            <span class="text-[#809474] font-bold">✓</span> {foodItem}
+          </li>
+        {/each}
+      </ul>
+    </div>
+
+    <div class="rounded-xl bg-[#fdf5f3] p-3.5 border border-[#f5ded9]">
+      <div class="text-xs font-bold text-[#b94a32] uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
+        <span>⚠️</span> Foods / Items to Limit
+      </div>
+      <ul class="text-xs text-[#6e2b1d] space-y-1">
+        {#each weekGuide.foodsToAvoid as avoidItem}
+          <li class="flex items-center gap-1.5">
+            <span class="text-[#af705a] font-bold">✕</span> {avoidItem}
+          </li>
+        {/each}
+      </ul>
+    </div>
+  </div>
+</section>
 
 <section class="food-card" aria-labelledby="food-guide-title">
   <div class="food-illustration" aria-hidden="true">
