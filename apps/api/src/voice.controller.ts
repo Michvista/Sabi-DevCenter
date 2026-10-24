@@ -14,7 +14,10 @@ import {
   YarnVoiceService,
 } from "./infrastructure/yarn-voice.service";
 import { AzureSpeechService } from "./infrastructure/azure-speech.service";
-import { NineJalingoSpeechService } from "./infrastructure/ninejalingo-speech.service";
+import {
+  NineJalingoSpeechService,
+  type NineJalingoLanguage,
+} from "./infrastructure/ninejalingo-speech.service";
 
 const AUDIO_LANGUAGE_CODES = [...YARN_LANGUAGE_CODES, "pcm"] as const;
 type AudioLanguageCode = (typeof AUDIO_LANGUAGE_CODES)[number];
@@ -43,6 +46,8 @@ export class VoiceController {
   ) {
     let result: { audio: Buffer; contentType: string };
     let fallback = "none";
+
+    // 1. Nigerian Pidgin always runs through 9jaLingo
     if (body.targetLanguage === "pcm") {
       result = await this.nineJalingo.synthesizeGuide(body.text, "pcm");
       response.setHeader("X-Sabi-Audio-Fallback", "9jalingo-pidgin");
@@ -51,20 +56,34 @@ export class VoiceController {
         disposition: 'inline; filename="sabi-week-guide.mp3"',
       });
     }
+
+    // 2. Try YarnGPT first for requested language
     try {
       result = await this.yarn.synthesizeGuide(
         body.text,
         body.targetLanguage as YarnLanguageCode,
       );
     } catch {
-      if (body.targetLanguage !== "en") {
-        throw new ServiceUnavailableException(
-          "Audio in this language is temporarily unavailable. Please try again later.",
-        );
+      // 3. Fallback: For Hausa, Igbo, Yoruba use 9jaLingo!
+      if (body.targetLanguage === "ha" || body.targetLanguage === "ig" || body.targetLanguage === "yo") {
+        try {
+          result = await this.nineJalingo.synthesizeGuide(
+            body.text,
+            body.targetLanguage as NineJalingoLanguage,
+          );
+          fallback = `9jalingo-${body.targetLanguage}`;
+        } catch {
+          // If 9jaLingo also fails, fall back to Azure English
+          result = await this.azure.synthesizeEnglishGuide(body.text);
+          fallback = "azure-original-english";
+        }
+      } else {
+        // For English, use Azure Nigerian English voice
+        result = await this.azure.synthesizeEnglishGuide(body.text);
+        fallback = "azure-original-english";
       }
-      result = await this.azure.synthesizeEnglishGuide(body.text);
-      fallback = "azure-original-english";
     }
+
     response.setHeader("X-Sabi-Audio-Fallback", fallback);
     return new StreamableFile(result.audio, {
       type: result.contentType,

@@ -1,16 +1,27 @@
 import { Injectable, ServiceUnavailableException } from "@nestjs/common";
 import { fetchWithDnsRetry } from "./fetch-with-dns-retry";
 
+export type NineJalingoLanguage = "pcm" | "ha" | "ig" | "yo" | "en";
+
 @Injectable()
 export class NineJalingoSpeechService {
-  async synthesizeGuide(text: string, language: "pcm") {
+  async synthesizeGuide(text: string, language: NineJalingoLanguage) {
     const apiKey = process.env.NINEJALINGO_API_KEY;
     if (!apiKey) {
       throw new ServiceUnavailableException(
-        "Pidgin audio is not configured yet.",
+        "Voice synthesis service is not configured yet.",
       );
     }
-    const voice = process.env.NINEJALINGO_PIDGIN_VOICE || "ada_pcm";
+
+    const voiceMap: Record<NineJalingoLanguage, string> = {
+      pcm: process.env.NINEJALINGO_PIDGIN_VOICE || "ada_pcm",
+      ha: process.env.NINEJALINGO_HAUSA_VOICE || "aisha_ha",
+      ig: process.env.NINEJALINGO_IGBO_VOICE || "adaeze_ig",
+      yo: process.env.NINEJALINGO_YORUBA_VOICE || "adeola_yo",
+      en: "ada_pcm",
+    };
+
+    const voice = voiceMap[language] || "ada_pcm";
     let response: Response;
     try {
       response = await fetchWithDnsRetry(
@@ -33,7 +44,7 @@ export class NineJalingoSpeechService {
       );
     } catch {
       throw new ServiceUnavailableException(
-        "Pidgin audio is temporarily unavailable. Please try again later.",
+        "Voice audio is temporarily unavailable. Please try again later.",
       );
     }
     if (
@@ -41,7 +52,7 @@ export class NineJalingoSpeechService {
       !response.headers.get("content-type")?.includes("audio")
     ) {
       throw new ServiceUnavailableException(
-        "Pidgin audio is temporarily unavailable. Please try again later.",
+        "Voice audio is temporarily unavailable. Please try again later.",
       );
     }
     const audio = Buffer.from(await response.arrayBuffer());
