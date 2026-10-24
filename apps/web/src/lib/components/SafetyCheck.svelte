@@ -1,10 +1,14 @@
 <script lang="ts">
+  import { sessionToken } from "#lib/auth/session.ts";
+
   let checkedSymptoms = $state<string[]>([]);
   let assessment = $state<{
     level: string;
     title: string;
     message: string;
   } | null>(null);
+  let sharedToMidwife = $state(false);
+  let sharing = $state(false);
 
   const urgentSymptoms = [
     "Vaginal bleeding",
@@ -28,16 +32,42 @@
     { label: "Back ache", urgent: false },
   ];
 
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiUrl = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
 
   function toggle(symptom: string) {
     checkedSymptoms = checkedSymptoms.includes(symptom)
       ? checkedSymptoms.filter((item) => item !== symptom)
       : [...checkedSymptoms, symptom];
     assessment = null;
+    sharedToMidwife = false;
   }
 
   async function assess() {
+    if (!checkedSymptoms.length) return;
+    sharing = true;
+
+    // Send check-in with symptoms to patient record so connected midwife receives it
+    const token = sessionToken();
+    if (token) {
+      try {
+        await fetch(`${apiUrl}/records/check-ins`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            mood: checkedSymptoms.some((s) => urgentSymptoms.includes(s)) ? "urgent_symptoms" : "reported_symptoms",
+            symptoms: checkedSymptoms,
+            note: "Reported via A Quick Check-in",
+          }),
+        });
+        sharedToMidwife = true;
+      } catch {
+        // Fall back gracefully
+      }
+    }
+
     if (apiUrl) {
       try {
         const response = await fetch(`${apiUrl}/pregnancy/assess`, {
@@ -49,12 +79,14 @@
         });
         if (response.ok) {
           assessment = await response.json();
+          sharing = false;
           return;
         }
       } catch {
         /* fall back to local rule */
       }
     }
+
     const urgent = checkedSymptoms.some((s) => urgentSymptoms.includes(s));
     assessment = urgent
       ? {
@@ -69,12 +101,15 @@
           message:
             "Contact your midwife or health worker, especially if this is new, worsening, or worrying you.",
         };
+    sharing = false;
   }
 
   function clear() {
     checkedSymptoms = [];
     assessment = null;
+    sharedToMidwife = false;
   }
+
 </script>
 
 <div class="flo-safety-card">
@@ -112,6 +147,13 @@
       <button class="flo-clear-btn" type="button" onclick={clear}>
         Clear
       </button>
+    </div>
+  {/if}
+
+  {#if sharedToMidwife}
+    <div class="mt-3 px-3 py-2 rounded-xl bg-[#809474]/15 border border-[#809474]/30 text-xs text-[#3d4b39] flex items-center gap-2">
+      <span class="font-bold text-[#475842]">✓ Shared with your midwife:</span>
+      <span>These symptoms have been logged to your connected care team's portal.</span>
     </div>
   {/if}
 

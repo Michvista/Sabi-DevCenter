@@ -447,16 +447,18 @@ export class RecordsController {
     if (req.auth.role !== "MIDWIFE") return [];
     return this.database().query(
       `SELECT u.id AS id, u.display_name AS "displayName", u.email AS email,
-              p.due_date AS "dueDate", c.created_at AS "checkInAt", c.mood AS mood
+              p.due_date AS "dueDate", c.created_at AS "checkInAt", c.mood AS mood,
+              c.symptoms AS symptoms
        FROM care_links l
        INNER JOIN users u ON u.id = l.patient_id
        LEFT JOIN pregnancies p ON p.user_id = u.id
        LEFT JOIN LATERAL (
-         SELECT created_at, mood FROM check_ins
+         SELECT created_at, mood, symptoms FROM check_ins
          WHERE user_id = u.id ORDER BY created_at DESC LIMIT 1
        ) c ON TRUE
        WHERE l.midwife_id = $1 AND l.status = 'active'`,
       [req.auth.userId],
     );
   }
+
 }

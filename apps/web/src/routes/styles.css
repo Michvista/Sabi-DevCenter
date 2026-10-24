@@ -3050,3 +3050,389 @@ p {
   padding: 2px 7px;
   border-radius: 99px;
 }
+
+/* ── Flo Check-in & Safety Check Styling ── */
+.flo-checkin-card,
+.flo-safety-card {
+  background: #ffffff;
+  border: 1px solid #e7e4dc;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.flo-checkin-header,
+.flo-safety-header {
+  margin-bottom: 20px;
+}
+
+.flo-checkin-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #888b7c;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.flo-checkin-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 600;
+  color: #30312c;
+  margin: 0 0 4px 0;
+}
+
+.flo-checkin-sub {
+  font-size: 13px;
+  color: #77786f;
+  margin: 0;
+}
+
+/* 2x2 Mood Grid */
+.flo-mood-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.flo-mood-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 12px;
+  border-radius: 16px;
+  border: 1.5px solid #eae6de;
+  background: #faf9f6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 84px;
+}
+
+.flo-mood-btn:hover {
+  background: #f4f2ec;
+  border-color: #d6d2c4;
+  transform: translateY(-1px);
+}
+
+.flo-mood-face {
+  font-size: 26px;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.flo-mood-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #30312c;
+}
+
+.flo-mood-selected {
+  border-color: #af705a !important;
+  background: #fdf6f3 !important;
+  box-shadow: 0 0 0 2px rgba(175, 112, 90, 0.2);
+}
+
+.flo-mood-selected .flo-mood-label {
+  color: #af705a;
+}
+
+.flo-checkin-count {
+  font-size: 12px;
+  color: #8e9083;
+  margin: 0 0 12px 0;
+}
+
+.flo-checkin-error {
+  font-size: 12px;
+  color: #b94a32;
+  margin: 0 0 12px 0;
+}
+
+.flo-checkin-save-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #f9f8f4;
+  border-radius: 12px;
+  border: 1px solid #edeae1;
+}
+
+.flo-save-prompt {
+  font-size: 13px;
+  font-weight: 500;
+  color: #525547;
+}
+
+.flo-save-btn {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 10px;
+  background: #809474;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.flo-save-btn:hover {
+  background: #6c8060;
+}
+
+.flo-save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.flo-save-success {
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #edf4ed;
+  color: #385a38;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Symptom Chips */
+.flo-symptom-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.flo-symptom-chip {
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 99px;
+  border: 1px solid #e2dfd5;
+  background: #faf9f6;
+  color: #525547;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.flo-symptom-chip:hover {
+  background: #f2efe7;
+  border-color: #d1cdc0;
+}
+
+.flo-symptom-checked {
+  background: #475842 !important;
+  color: #ffffff !important;
+  border-color: #475842 !important;
+}
+
+.flo-symptom-checked.flo-symptom-urgent {
+  background: #af705a !important;
+  border-color: #af705a !important;
+}
+
+.flo-chip-check {
+  font-weight: bold;
+}
+
+.flo-safety-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.flo-assess-btn {
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 12px;
+  background: #af705a;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.flo-assess-btn:hover {
+  background: #975c48;
+}
+
+.flo-clear-btn {
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 12px;
+  background: #faf9f6;
+  border: 1px solid #e2dfd5;
+  color: #686960;
+  cursor: pointer;
+}
+
+.flo-clear-btn:hover {
+  background: #f0ece2;
+}
+
+.flo-assessment-result {
+  padding: 16px;
+  border-radius: 14px;
+  margin-bottom: 14px;
+}
+
+.flo-assessment-urgent {
+  background: #fdf5f3;
+  border: 1px solid #f6ded9;
+}
+
+.flo-assessment-urgent .flo-assessment-title {
+  color: #b94a32;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.flo-assessment-mild {
+  background: #f5f8f3;
+  border: 1px solid #e0e8dc;
+}
+
+.flo-assessment-mild .flo-assessment-title {
+  color: #475842;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.flo-assessment-msg {
+  font-size: 13px;
+  color: #525547;
+  line-height: 1.5;
+  margin: 0 0 8px 0;
+}
+
+.flo-emergency-link {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #b94a32;
+  color: #ffffff !important;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.flo-emergency-link:hover {
+  background: #9d3923;
+}
+
+.flo-safety-footnote {
+  font-size: 11px;
+  color: #8e9083;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Care Connect Card */
+.flo-care-connect-card {
+  background: #ffffff;
+  border: 1px solid #e7e4dc;
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.flo-care-connect-header {
+  margin-bottom: 18px;
+}
+
+.flo-care-form {
+  margin-top: 12px;
+}
+
+.flo-care-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #525547;
+  margin-bottom: 6px;
+}
+
+.flo-care-input-row {
+  display: flex;
+  gap: 10px;
+}
+
+.flo-care-code-input {
+  flex: 1;
+  max-width: 220px;
+  padding: 10px 14px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 12px;
+  border: 1.5px solid #d6d2c4;
+  background: #faf9f6;
+}
+
+.flo-care-code-input:focus {
+  outline: none;
+  border-color: #809474;
+  background: #ffffff;
+}
+
+.flo-care-submit-btn {
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 12px;
+  background: #809474;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.flo-care-submit-btn:hover {
+  background: #6c8060;
+}
+
+.flo-care-submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.flo-care-hint {
+  display: block;
+  font-size: 11px;
+  color: #8e9083;
+  margin-top: 6px;
+}
+
+.flo-care-message {
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.flo-care-success {
+  background: #edf4ed;
+  border: 1px solid #d4e5d4;
+  color: #385a38;
+}
+
+.flo-care-error {
+  background: #fdf5f3;
+  border: 1px solid #f6ded9;
+  color: #b94a32;
+}

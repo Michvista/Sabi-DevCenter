@@ -204,7 +204,7 @@
             <h4>{food.name}</h4>
           </div>
           <div class="food-nutri-tag">
-            <span>✨ {food.nutrients}</span>
+            <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-[#3b5a3b]"></span>{food.nutrients}</span>
           </div>
           <p>{food.detail}</p>
         </article>

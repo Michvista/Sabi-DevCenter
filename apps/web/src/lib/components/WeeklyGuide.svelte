@@ -73,13 +73,13 @@
         <span class="dot"></span>
         TRIMESTER {guide.trimester} · WEEK {week}
       </div>
-      <span class="flo-pill-quiet">Flo-Style Companion</span>
+      <span class="flo-pill-quiet">Clinical Companion</span>
     </div>
 
     <div class="flo-hero-main">
       <div class="flo-size-visual">
         <div class="flo-fruit-circle">
-          <span class="flo-fruit-emoji">🌱</span>
+          <svg class="w-8 h-8 text-[#809474]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
         </div>
       </div>
       <div class="flo-size-meta">
@@ -114,35 +114,35 @@
       class:active={activeTab === "baby"}
       onclick={() => (activeTab = "baby")}
     >
-      <span>👶 Baby</span>
+      <span>Baby Growth</span>
     </button>
     <button
       class="flo-tab-btn"
       class:active={activeTab === "mom"}
       onclick={() => (activeTab = "mom")}
     >
-      <span>🌸 Your Body</span>
+      <span>Your Body</span>
     </button>
     <button
       class="flo-tab-btn"
       class:active={activeTab === "food"}
       onclick={() => (activeTab = "food")}
     >
-      <span>🍲 Nutrition</span>
+      <span>Nutrition</span>
     </button>
     <button
       class="flo-tab-btn"
       class:active={activeTab === "safety"}
       onclick={() => (activeTab = "safety")}
     >
-      <span>⚠️ Danger Signs</span>
+      <span>Danger Signs</span>
     </button>
     <button
       class="flo-tab-btn"
       class:active={activeTab === "questions"}
       onclick={() => (activeTab = "questions")}
     >
-      <span>📋 Clinic Questions</span>
+      <span>Clinic Questions</span>
     </button>
   </nav>
 

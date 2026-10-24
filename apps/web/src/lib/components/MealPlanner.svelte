@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { sessionToken } from "#lib/auth/session.ts";
+  import { getPregnancyWeek } from "../data/pregnancy-weeks";
   type Plan = {
     id: string;
     planDate: string;
@@ -10,6 +11,8 @@
   };
   let { pregnancyWeek = 20 }: { pregnancyWeek?: number } = $props();
   const api = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
+  let weekGuide = $derived(getPregnancyWeek(pregnancyWeek));
+
   let items = $state<Plan[]>([]);
   let date = $state(new Date().toISOString().slice(0, 10));
   let mealType = $state("Breakfast");
@@ -141,6 +144,38 @@
 </script>
 
 <section class="food-log planner" aria-labelledby="planner-title">
+  <!-- Weekly Book-Backed Suggested Meals Banner -->
+  <div class="mb-6 rounded-2xl bg-[#faf9f6] border border-[#e7e4dc] p-5 shadow-xs">
+    <div class="flex items-center justify-between gap-2 mb-2">
+      <span class="text-xs font-bold tracking-wider text-[#af705a] uppercase">SUGGESTED FOR WEEK {pregnancyWeek}</span>
+      <span class="text-xs bg-[#809474]/15 text-[#475842] font-semibold px-2.5 py-0.5 rounded-full">Book-backed Nutrition</span>
+    </div>
+    <h4 class="font-serif text-lg text-[#30312c] font-semibold mb-1">
+      Recommended Meals &amp; Nutrients for Your Current Week
+    </h4>
+    <p class="text-xs text-[#686960] mb-3">
+      {weekGuide.nigerianFoodTip}
+    </p>
+
+    <!-- One-click Meal Add Chips -->
+    <div class="pt-3 border-t border-[#eae6de]">
+      <div class="text-xs font-bold text-[#525547] mb-2 flex items-center gap-1.5">
+        <span>🍲</span> Tap any suggested dish to quickly add to your plan:
+      </div>
+      <div class="flex flex-wrap gap-2">
+        {#each weekGuide.recommendedFoods as dish}
+          <button
+            type="button"
+            onclick={() => (dishName = dish)}
+            class="text-xs font-medium px-3 py-1.5 rounded-xl bg-white border border-[#d6d2c4] text-[#30312c] hover:border-[#809474] hover:bg-[#f5f8f3] transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs"
+          >
+            <span>+</span> {dish}
+          </button>
+        {/each}
+      </div>
+    </div>
+  </div>
+
   <div class="food-log-heading">
     <div>
       <span class="food-kicker">PLAN AHEAD</span>
