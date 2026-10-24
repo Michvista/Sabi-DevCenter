@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
-  import { HugeiconsIcon } from "@hugeicons/svelte";
   let { week, onExplore }: { week: number; onExplore: () => void } = $props();
 </script>
 
@@ -14,7 +12,7 @@
     </p>
     <button class="hero-link" onclick={onExplore}
       >Explore week {week}
-      <HugeiconsIcon icon={ArrowRight01Icon} size={16} /></button
+      <i class="iconoir-nav-arrow-right text-base"></i></button
     >
   </div>
   <div class="hero-art" aria-hidden="true">

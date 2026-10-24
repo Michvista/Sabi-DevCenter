@@ -9,10 +9,10 @@
   let error = $state("");
 
   const moods = [
-    { label: "Good", face: "☺", value: "good", color: "mood-good" },
-    { label: "Okay", face: "◡", value: "okay", color: "mood-okay" },
-    { label: "A little off", face: "﹏", value: "off", color: "mood-off" },
-    { label: "Need support", face: "♡", value: "support", color: "mood-support" },
+    { label: "Good", icon: "iconoir-emoji-satisfied", value: "good", color: "text-[#3d6e3d]" },
+    { label: "Okay", icon: "iconoir-emoji-quite-flat", value: "okay", color: "text-[#8a6820]" },
+    { label: "A little off", icon: "iconoir-emoji-sad", value: "off", color: "text-[#af705a]" },
+    { label: "Need support", icon: "iconoir-heart", value: "support", color: "text-[#b94a32]" },
   ];
 
   onMount(() => {
@@ -76,13 +76,13 @@
   <div class="flo-mood-grid">
     {#each moods as option}
       <button
-        class="flo-mood-btn {option.color}"
+        class="flo-mood-btn"
         class:flo-mood-selected={mood === option.value}
         onclick={() => { mood = option.value; }}
         type="button"
         aria-pressed={mood === option.value}
       >
-        <span class="flo-mood-face">{option.face}</span>
+        <i class="{option.icon} text-2xl mb-1.5 {option.color}"></i>
         <span class="flo-mood-label">{option.label}</span>
       </button>
     {/each}

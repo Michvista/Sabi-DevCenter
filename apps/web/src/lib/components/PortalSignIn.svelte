@@ -1,11 +1,5 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { HugeiconsIcon } from "@hugeicons/svelte";
-  import {
-    ArrowLeft01Icon,
-    EyeIcon,
-    ViewOffIcon,
-  } from "@hugeicons/core-free-icons";
   import { authenticate, type PortalRole } from "#lib/auth/session.ts";
   let { role }: { role: PortalRole } = $props();
   let name = $state("");
@@ -104,7 +98,7 @@
 >
 <main class="signin-page">
   <a class="signin-back" href="/"
-    ><HugeiconsIcon icon={ArrowLeft01Icon} size={17} /> Back to Sabi</a
+    ><i class="iconoir-arrow-left text-base"></i> Back to Sabi</a
   >
   <section class="signin-card">
     <a class="signin-brand" href="/"
@@ -165,10 +159,7 @@
           aria-label={showPassword ? "Hide password" : "Show password"}
           aria-pressed={showPassword}
           onclick={() => (showPassword = !showPassword)}
-          ><HugeiconsIcon
-            icon={showPassword ? ViewOffIcon : EyeIcon}
-            size={18}
-          /></button
+          ><i class="{showPassword ? 'iconoir-eye-off' : 'iconoir-eye'} text-base text-[#888]"></i></button
         >
       </div>
       {#if isMidwife && createAccount}<label for="invite"
@@ -184,7 +175,7 @@
         >{/if}
       {#if message}<p class="signin-error" role="alert">{message}</p>{/if}
       <button
-        class="signin-submit !w-full !py-3.5 !px-5 !text-base !font-semibold !rounded-xl !bg-[#809474] !text-white hover:!bg-[#6d8262] active:!scale-[0.99] transition-all cursor-pointer shadow-sm min-h-[48px] flex items-center justify-center text-center"
+        class="signin-submit !w-full !py-2.5 !px-4 !text-sm !font-semibold !rounded-xl !bg-[#809474] !text-white hover:!bg-[#6d8262] active:!scale-[0.99] transition-all cursor-pointer shadow-xs flex items-center justify-center text-center"
         type="submit"
         disabled={submitting}
       >
@@ -196,26 +187,27 @@
       </button>
     </form>
     {#if demoEnabled}
-      <section class="judge-demo !border !border-[#af705a]/30 !bg-[#af705a]/5 !rounded-2xl !p-4 !mt-6" aria-label="Judge demo account">
+      <section class="judge-demo !border !border-[#af705a]/30 !bg-[#af705a]/5 !rounded-2xl !p-4 !mt-5" aria-label="Judge demo account">
         <div>
-          <strong class="!text-sm !font-bold !text-[#854530] flex items-center gap-1.5">
-            <span>✨</span> One-Click Judge Demo Access
+          <strong class="!text-xs !font-bold !text-[#854530] flex items-center gap-1.5">
+            <i class="iconoir-spark text-sm text-[#af705a]"></i> One-Click Judge Demo Access
           </strong>
-          <p class="!text-xs !text-[#686960] !mt-1">
-            Instantly explore the pregnancy portal with sample week 29 logs and midwife care link.
+          <p class="!text-[11px] !text-[#686960] !mt-1">
+            Explore the pregnancy portal with sample week 29 logs and pre-connected midwife.
           </p>
         </div>
         <button
-          class="judge-demo-button !mt-3 !w-full !py-3.5 !px-4 !text-sm !font-bold !rounded-xl !bg-[#af705a] !text-white hover:!bg-[#945844] active:!scale-[0.99] transition-all cursor-pointer shadow-sm min-h-[48px] flex items-center justify-center text-center tracking-wide"
+          class="judge-demo-button !mt-2.5 !w-full !py-2.5 !px-3 !text-xs !font-bold !rounded-xl !bg-[#af705a] !text-white hover:!bg-[#945844] active:!scale-[0.99] transition-all cursor-pointer shadow-2xs flex items-center justify-center gap-1.5"
           type="button"
           onclick={signInDemo}
           disabled={submitting}
         >
-          {submitting ? "Signing in…" : "Enter Pregnant Demo Portal →"}
+          <span>Enter Pregnant Demo Portal</span>
+          <i class="iconoir-arrow-right text-xs"></i>
         </button>
         <details class="!mt-2 !text-xs !text-[#77786f]">
-          <summary class="cursor-pointer hover:underline">Show demo credentials</summary>
-          <dl class="!mt-1 !space-y-0.5">
+          <summary class="cursor-pointer hover:underline text-[11px]">Show demo credentials</summary>
+          <dl class="!mt-1 !space-y-0.5 text-[11px]">
             <div>
               <dt class="inline font-medium">Email: </dt>
               <dd class="inline">{demoEmail}</dd>
@@ -229,26 +221,27 @@
       </section>
     {/if}
     {#if demoMidwifeEnabled}
-      <section class="judge-demo !border !border-[#809474]/30 !bg-[#809474]/5 !rounded-2xl !p-4 !mt-6" aria-label="Judge midwife demo account">
+      <section class="judge-demo !border !border-[#809474]/30 !bg-[#809474]/5 !rounded-2xl !p-4 !mt-4" aria-label="Judge midwife demo account">
         <div>
-          <strong class="!text-sm !font-bold !text-[#475842] flex items-center gap-1.5">
-            <span>🩺</span> One-Click Midwife Demo Access
+          <strong class="!text-xs !font-bold !text-[#475842] flex items-center gap-1.5">
+            <i class="iconoir-hospital text-sm text-[#809474]"></i> One-Click Midwife Demo Access
           </strong>
-          <p class="!text-xs !text-[#686960] !mt-1">
-            Open the care team portal with a pre-connected patient and connection code: <strong>SABICRE</strong>
+          <p class="!text-[11px] !text-[#686960] !mt-1">
+            Open the care team portal with a pre-connected patient and code: <strong>SABICRE</strong>
           </p>
         </div>
         <button
-          class="judge-demo-button !mt-3 !w-full !py-3.5 !px-4 !text-sm !font-bold !rounded-xl !bg-[#475842] !text-white hover:!bg-[#384634] active:!scale-[0.99] transition-all cursor-pointer shadow-sm min-h-[48px] flex items-center justify-center text-center tracking-wide"
+          class="judge-demo-button !mt-2.5 !w-full !py-2.5 !px-3 !text-xs !font-bold !rounded-xl !bg-[#475842] !text-white hover:!bg-[#384634] active:!scale-[0.99] transition-all cursor-pointer shadow-2xs flex items-center justify-center gap-1.5"
           type="button"
           onclick={signInMidwifeDemo}
           disabled={submitting}
         >
-          {submitting ? "Signing in…" : "Enter Midwife Demo Portal →"}
+          <span>Enter Midwife Demo Portal</span>
+          <i class="iconoir-arrow-right text-xs"></i>
         </button>
         <details class="!mt-2 !text-xs !text-[#77786f]">
-          <summary class="cursor-pointer hover:underline">Show midwife demo details</summary>
-          <dl class="!mt-1 !space-y-0.5">
+          <summary class="cursor-pointer hover:underline text-[11px]">Show midwife demo details</summary>
+          <dl class="!mt-1 !space-y-0.5 text-[11px]">
             <div>
               <dt class="inline font-medium">Email: </dt>
               <dd class="inline">{demoMidwifeEmail}</dd>

@@ -1,13 +1,4 @@
 <script lang="ts">
-  import {
-    Alert02Icon,
-    CheckmarkCircle02Icon,
-    Restaurant02Icon,
-    Shield01Icon,
-    InformationCircleIcon,
-  } from "@hugeicons/core-free-icons";
-  import { HugeiconsIcon } from "@hugeicons/svelte";
-
   import { comprehensiveMedications } from "../data/medications-data";
 
   let medFilter = $state<"all" | "safe" | "caution" | "avoid">("all");
@@ -82,7 +73,7 @@
   <section class="learning-section med-safety-section" aria-labelledby="meds-heading">
     <div class="learning-section-header">
       <div class="header-icon-wrap amber">
-        <HugeiconsIcon icon={Shield01Icon} size={22} />
+        <i class="iconoir-shield-check text-2xl text-[#b45309]"></i>
       </div>
       <div>
         <span class="hub-eyebrow">SAFETY FIRST</span>
@@ -169,7 +160,7 @@
 
     <div class="med-warning-banner">
       <div class="warning-icon">
-        <HugeiconsIcon icon={Alert02Icon} size={20} />
+        <i class="iconoir-warning-triangle text-xl text-[#b45309]"></i>
       </div>
       <div>
         <strong>A Crucial Clinical Note on Traditional Concoctions (Agbo)</strong>
@@ -186,7 +177,7 @@
   <section class="learning-section food-wisdom-section" aria-labelledby="food-wisdom-heading">
     <div class="learning-section-header">
       <div class="header-icon-wrap green">
-        <HugeiconsIcon icon={Restaurant02Icon} size={22} />
+        <i class="iconoir-apple-half text-2xl text-[#809474]"></i>
       </div>
       <div>
         <span class="hub-eyebrow">CULTURAL NUTRITION</span>

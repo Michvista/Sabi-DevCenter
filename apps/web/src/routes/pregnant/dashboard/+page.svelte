@@ -7,17 +7,6 @@
     sessionToken,
     sessionUser,
   } from "#lib/auth/session.ts";
-  import { HugeiconsIcon } from "@hugeicons/svelte";
-  import {
-    Home01Icon,
-    Calendar03Icon,
-    BookOpen01Icon,
-    UserMultiple02Icon,
-    ArrowRight01Icon,
-    Clock01Icon,
-    PlusSignIcon,
-    SparklesIcon,
-  } from "@hugeicons/core-free-icons";
   import { daysUntil, formatDate, pregnancyWeek } from "#lib/utils.ts";
   import { getPregnancyWeek } from "#lib/data/pregnancy-weeks.ts";
   import WellnessCheckin from "#lib/components/WellnessCheckin.svelte";
@@ -68,10 +57,10 @@
   let learnTab = $state<"foods" | "mealplan" | "meds">("foods");
 
   const navigation = [
-    { label: "Today" as const, href: "/pregnant/dashboard", icon: Home01Icon },
-    { label: "My pregnancy" as const, href: "#pregnancy", icon: Calendar03Icon },
-    { label: "Learn" as const, href: "#learn", icon: BookOpen01Icon },
-    { label: "My midwife" as const, href: "#care-team", icon: UserMultiple02Icon },
+    { label: "Today" as const, href: "/pregnant/dashboard", icon: "iconoir-home", color: "text-[#809474]" },
+    { label: "My pregnancy" as const, href: "#pregnancy", icon: "iconoir-calendar", color: "text-[#af705a]" },
+    { label: "Learn" as const, href: "#learn", icon: "iconoir-book", color: "text-[#3b82f6]" },
+    { label: "My midwife" as const, href: "#care-team", icon: "iconoir-hospital", color: "text-[#657c62]" },
   ];
 
   const formattedToday = new Intl.DateTimeFormat("en-NG", {
@@ -253,7 +242,7 @@
             class="nav-item"
             onclick={() => (activeNav = item.label)}
           >
-            <HugeiconsIcon icon={item.icon} size={19} strokeWidth={1.8} />
+            <i class="{item.icon} text-lg {item.color}"></i>
             <span>{item.label}</span>
             {#if item.label === "My pregnancy" && week}
               <span class="nav-week-badge">W{week}</span>
@@ -322,7 +311,7 @@
             <!-- Due Date & Current Week Card -->
             <article class="summary-card due-card">
               <div class="summary-icon coral">
-                <HugeiconsIcon icon={Calendar03Icon} size={18} />
+                <i class="iconoir-calendar text-lg text-[#af705a]"></i>
               </div>
               <div class="summary-content">
                 <div class="flex items-center justify-between gap-2">
@@ -372,7 +361,7 @@
             <!-- Antenatal Visit Card -->
             <article class="summary-card visit-card">
               <div class="summary-icon lilac-bg">
-                <HugeiconsIcon icon={Clock01Icon} size={18} />
+                <i class="iconoir-clock text-lg text-[#7b6fa0]"></i>
               </div>
               <div class="summary-content">
                 <span class="summary-label">NEXT ANTENATAL VISIT</span>
@@ -391,7 +380,7 @@
               </div>
               <details class="edit-due visit-editor">
                 <summary aria-label="Add or edit antenatal visit">
-                  <HugeiconsIcon icon={PlusSignIcon} size={17} />
+                  <i class="iconoir-plus text-base"></i>
                 </summary>
                 <div class="due-popover">
                   <label for="next-visit">Next clinic date</label>
@@ -407,7 +396,7 @@
             <!-- Care Team Card -->
             <article class="summary-card midwife-summary">
               <div class="summary-icon green-bg">
-                <HugeiconsIcon icon={UserMultiple02Icon} size={18} />
+                <i class="iconoir-user-circle text-lg text-[#809474]"></i>
               </div>
               <div class="summary-content">
                 <span class="summary-label">YOUR CARE TEAM</span>
@@ -419,7 +408,7 @@
                 aria-label="Open care team tab"
                 onclick={() => (activeNav = "My midwife")}
               >
-                <HugeiconsIcon icon={ArrowRight01Icon} size={17} />
+                <i class="iconoir-nav-arrow-right text-base text-[#525547]"></i>
               </button>
             </article>
           </section>
@@ -464,7 +453,7 @@
                   }}
                 >
                   <span>Explore Full Week {week} Guide</span>
-                  <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
+                  <i class="iconoir-nav-arrow-right text-base"></i>
                 </button>
               </div>
 
@@ -648,7 +637,7 @@
         class:active={activeNav === item.label}
         onclick={() => (activeNav = item.label)}
       >
-        <HugeiconsIcon icon={item.icon} size={20} />
+        <i class="{item.icon} {item.color} text-xl"></i>
         <span>{item.label}</span>
       </button>
     {/each}

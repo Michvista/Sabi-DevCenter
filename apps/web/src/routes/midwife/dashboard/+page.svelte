@@ -7,17 +7,6 @@
     sessionToken,
     sessionUser,
   } from "#lib/auth/session.ts";
-  import {
-    ArrowLeft01Icon,
-    ArrowRight01Icon,
-    Calendar03Icon,
-    Search01Icon,
-    UserMultiple02Icon,
-    Notification03Icon,
-    Add01Icon,
-    Activity01Icon,
-  } from "@hugeicons/core-free-icons";
-  import { HugeiconsIcon } from "@hugeicons/svelte";
   import { pregnancyWeek } from "#lib/utils.ts";
   import { getPregnancyWeek } from "#lib/data/pregnancy-weeks.ts";
 
@@ -184,10 +173,10 @@
       >
       <div class="mw-section-label">CLINIC</div>
       <a class="mw-nav active" href="/midwife/dashboard"
-        ><HugeiconsIcon icon={Activity01Icon} size={18} /> Patient overview</a
+        ><i class="iconoir-activity-rounded text-base text-[#809474]"></i> Patient overview</a
       >
       <a class="mw-nav" href="#follow-ups"
-        ><HugeiconsIcon icon={Calendar03Icon} size={18} /> Follow-ups</a
+        ><i class="iconoir-calendar text-base text-[#af705a]"></i> Follow-ups</a
       >
       <button class="mw-nav mw-signout" onclick={signOut}>Sign out</button>
       <div class="mw-side-foot">
@@ -197,13 +186,13 @@
     <main class="mw-main">
       <header class="mw-topbar">
         <a class="back-home" href="/"
-          ><HugeiconsIcon icon={ArrowLeft01Icon} size={16} /> Sabi home</a
+          ><i class="iconoir-arrow-left text-base"></i> Sabi home</a
         >
         <div class="mw-top-right">
           <span>Thursday, October 15</span><button
             class="mw-bell"
             aria-label="Notifications"
-            ><HugeiconsIcon icon={Notification03Icon} size={18} /><i
+            ><i class="iconoir-bell text-base"></i><i
             ></i></button
           >
           <div class="mw-clinician-avatar">{clinicianInitials}</div>
@@ -220,7 +209,7 @@
             <p>Stay close to the people in your care, between every visit.</p>
           </div>
           <button class="invite-button" onclick={() => void loadCareData()}
-            ><HugeiconsIcon icon={Add01Icon} size={16} /> Refresh care requests</button
+            ><i class="iconoir-refresh text-base"></i> Refresh care requests</button
           >
         </div>
         <div class="mw-metrics">
@@ -228,21 +217,21 @@
             <span>CONNECTED PATIENTS</span><strong
               >{String(roster.length).padStart(2, "0")}</strong
             ><small>Across your care list</small><i class="metric-icon"
-              ><HugeiconsIcon icon={UserMultiple02Icon} size={17} /></i
+              ><i class="iconoir-community text-lg text-[#809474]"></i></i
             >
           </article>
           <article>
             <span>CHECK-INS THIS WEEK</span><strong>—</strong><small
               >Check-in summaries load from linked records</small
             ><i class="metric-icon sage"
-              ><HugeiconsIcon icon={Activity01Icon} size={17} /></i
+              ><i class="iconoir-pulse text-lg text-[#657c62]"></i></i
             >
           </article>
           <article>
             <span>CONNECTION REQUESTS</span><strong
               >{String(requests.length).padStart(2, "0")}</strong
             ><small>Waiting for your review</small><i class="metric-icon amber"
-              ><HugeiconsIcon icon={Calendar03Icon} size={17} /></i
+              ><i class="iconoir-calendar text-lg text-[#af705a]"></i></i
             >
           </article>
         </div>
@@ -256,7 +245,7 @@
               <span class="patient-count">{roster.length} people</span>
             </div>
             <label class="mw-search"
-              ><HugeiconsIcon icon={Search01Icon} size={16} /><input
+              ><i class="iconoir-search text-base text-[#888]"></i><input
                 bind:value={query}
                 placeholder="Find a patient"
                 aria-label="Find a patient"
@@ -296,10 +285,7 @@
                   >{#if person.risk}<span
                       class="followup-dot"
                       title="Question to review"
-                    ></span>{/if}<HugeiconsIcon
-                    icon={ArrowRight01Icon}
-                    size={15}
-                  /></button
+                    ></span>{/if}<i class="iconoir-nav-arrow-right text-sm text-[#aaa]"></i></button>
                 >{/each}{#if filtered.length === 0}<p class="no-match">
                   No linked patient matches that search.
                 </p>{/if}
@@ -340,7 +326,7 @@
             <div class="latest-checkin">
               <div class="latest-title">
                 <span class="latest-icon"
-                  ><HugeiconsIcon icon={Activity01Icon} size={15} /></span
+                  ><i class="iconoir-pulse text-sm text-[#657c62]"></i></span
                 >
                 <div>
                   <strong>Latest check-in</strong><small>Today · 8:42 AM</small>
@@ -354,10 +340,7 @@
                 </div>{:else}<div class="wellbeing-callout">
                   <span>♡</span> No urgent concerns shared in this check-in.
                 </div>{/if}<button class="message-patient"
-                >View check-in history <HugeiconsIcon
-                  icon={ArrowRight01Icon}
-                  size={15}
-                /></button
+                >View check-in history <i class="iconoir-nav-arrow-right text-sm"></i></button
               >
             </div>
           </div>

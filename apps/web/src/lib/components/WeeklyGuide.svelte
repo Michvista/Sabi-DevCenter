@@ -1,12 +1,4 @@
 <script lang="ts">
-  import {
-    ArrowRight01Icon,
-    BookOpen01Icon,
-    Shield01Icon,
-    Leaf01Icon,
-    Clock01Icon,
-  } from "@hugeicons/core-free-icons";
-  import { HugeiconsIcon } from "@hugeicons/svelte";
   import GuideAudio from "./GuideAudio.svelte";
   import GuideTextTranslation from "./GuideTextTranslation.svelte";
   import {
@@ -79,7 +71,7 @@
     <div class="flo-hero-main">
       <div class="flo-size-visual">
         <div class="flo-fruit-circle">
-          <svg class="w-8 h-8 text-[#809474]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+          <i class="iconoir-sparks text-2xl text-[#809474]"></i>
         </div>
       </div>
       <div class="flo-size-meta">
@@ -114,6 +106,7 @@
       class:active={activeTab === "baby"}
       onclick={() => (activeTab = "baby")}
     >
+      <i class="iconoir-user text-[#af705a] text-base"></i>
       <span>Baby Growth</span>
     </button>
     <button
@@ -121,6 +114,7 @@
       class:active={activeTab === "mom"}
       onclick={() => (activeTab = "mom")}
     >
+      <i class="iconoir-heart text-[#b94a32] text-base"></i>
       <span>Your Body</span>
     </button>
     <button
@@ -128,6 +122,7 @@
       class:active={activeTab === "food"}
       onclick={() => (activeTab = "food")}
     >
+      <i class="iconoir-apple-half text-[#809474] text-base"></i>
       <span>Nutrition</span>
     </button>
     <button
@@ -135,6 +130,7 @@
       class:active={activeTab === "safety"}
       onclick={() => (activeTab = "safety")}
     >
+      <i class="iconoir-warning-triangle text-[#d97706] text-base"></i>
       <span>Danger Signs</span>
     </button>
     <button
@@ -142,6 +138,7 @@
       class:active={activeTab === "questions"}
       onclick={() => (activeTab = "questions")}
     >
+      <i class="iconoir-chat-bubble-check text-[#3b82f6] text-base"></i>
       <span>Clinic Questions</span>
     </button>
   </nav>
@@ -211,7 +208,7 @@
 
         <div class="flo-antenatal-banner">
           <div class="antenatal-icon">
-            <HugeiconsIcon icon={Clock01Icon} size={20} />
+            <i class="iconoir-clock text-xl text-[#7b6fa0]"></i>
           </div>
           <div>
             <strong>Antenatal Care Reminder</strong>

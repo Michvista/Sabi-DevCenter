@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
-  import { HugeiconsIcon } from "@hugeicons/svelte";
   import {
     createFoodLogEntry,
     readFoodLog,
@@ -276,7 +274,7 @@
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-[#f0ede6]">
     <div class="rounded-xl bg-[#faf9f6] p-3.5 border border-[#edeae1]">
       <div class="text-xs font-bold text-[#af705a] uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
-        <span>⭐</span> Priority Nutrients
+        <i class="iconoir-star text-sm text-[#af705a]"></i> Priority Nutrients
       </div>
       <div class="flex flex-wrap gap-1.5">
         {#each weekGuide.keyNutrients as nutrient}
@@ -287,7 +285,7 @@
 
     <div class="rounded-xl bg-[#f5f8f3] p-3.5 border border-[#e0e8dc]">
       <div class="text-xs font-bold text-[#475842] uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
-        <span>🍲</span> Recommended Nigerian Foods
+        <i class="iconoir-apple-half text-sm text-[#475842]"></i> Recommended Nigerian Foods
       </div>
       <ul class="text-xs text-[#3d4b39] space-y-1">
         {#each weekGuide.recommendedFoods as foodItem}
@@ -300,7 +298,7 @@
 
     <div class="rounded-xl bg-[#fdf5f3] p-3.5 border border-[#f5ded9]">
       <div class="text-xs font-bold text-[#b94a32] uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
-        <span>⚠️</span> Foods / Items to Limit
+        <i class="iconoir-warning-triangle text-sm text-[#b94a32]"></i> Foods / Items to Limit
       </div>
       <ul class="text-xs text-[#6e2b1d] space-y-1">
         {#each weekGuide.foodsToAvoid as avoidItem}
@@ -314,8 +312,9 @@
 </section>
 
 <section class="food-card" aria-labelledby="food-guide-title">
-  <div class="food-illustration" aria-hidden="true">
-    <span>🥬</span><span>🫘</span><span>🍲</span>
+  <div class="food-illustration flex items-center gap-2" aria-hidden="true">
+    <i class="iconoir-leaf text-2xl text-[#809474]"></i>
+    <i class="iconoir-apple-half text-2xl text-[#af705a]"></i>
   </div>
   <div class="food-copy">
     <span class="food-kicker">FOOD FROM ACROSS NIGERIA</span>
@@ -520,10 +519,7 @@
     <MealPlanner pregnancyWeek={week} />
     <GroceryList />
     <a href="#learn" class="food-learn-link"
-      >Explore the learning guide <HugeiconsIcon
-        icon={ArrowRight01Icon}
-        size={15}
-      /></a
+      >Explore the learning guide <i class="iconoir-nav-arrow-right text-sm"></i></a
     >
   </div>
 </section>

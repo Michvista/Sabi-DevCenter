@@ -160,7 +160,8 @@
     <!-- One-click Meal Add Chips -->
     <div class="pt-3 border-t border-[#eae6de]">
       <div class="text-xs font-bold text-[#525547] mb-2 flex items-center gap-1.5">
-        <span>🍲</span> Tap any suggested dish to quickly add to your plan:
+        <i class="iconoir-plus-circle text-sm text-[#809474]"></i>
+        <span>Tap any suggested dish to add to your plan:</span>
       </div>
       <div class="flex flex-wrap gap-2">
         {#each weekGuide.recommendedFoods as dish}
