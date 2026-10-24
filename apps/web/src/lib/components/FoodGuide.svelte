@@ -7,8 +7,6 @@
   } from "../data/food-log";
   import { sessionToken } from "#lib/auth/session.ts";
   import { onMount } from "svelte";
-  import MealPlanner from "./MealPlanner.svelte";
-  import GroceryList from "./GroceryList.svelte";
   import BarcodeScanner from "./BarcodeScanner.svelte";
   import RecipeNutrientBuilder from "./RecipeNutrientBuilder.svelte";
   import { getPregnancyWeek } from "../data/pregnancy-weeks";
@@ -254,56 +252,75 @@
   }
 </script>
 
-<section class="mb-8 rounded-2xl bg-white border border-[#e7e4dc] p-6 shadow-xs">
-  <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-    <div class="flex items-center gap-2">
-      <span class="inline-block w-2.5 h-2.5 rounded-full bg-[#af705a]"></span>
-      <span class="text-xs font-bold tracking-wider text-[#af705a] uppercase">WEEK {week} NUTRITION INSIGHT</span>
+<section class="mb-8 rounded-3xl bg-linear-to-br from-[#f8faf7] via-[#ffffff] to-[#f4f7f2] border border-[#dce8d9] p-6 sm:p-8 shadow-xs">
+  <!-- Banner Top Header -->
+  <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#809474]/15 border border-[#809474]/30">
+      <i class="iconoir-sparks text-xs text-[#475842]"></i>
+      <span class="text-xs font-bold tracking-wider text-[#475842] uppercase">WEEK {week} NUTRITION GUIDE</span>
     </div>
-    <span class="text-xs text-[#77786f] bg-[#f4f2ec] px-2.5 py-1 rounded-full font-medium">Your Pregnancy Week by Week Guide</span>
+    <span class="text-xs text-[#525547] bg-white border border-[#e2ded5] px-3 py-1 rounded-full font-medium shadow-2xs">
+      From <em>Your Pregnancy Week by Week</em> (Curtis &amp; Schuler)
+    </span>
   </div>
 
-  <h3 class="text-xl font-serif text-[#30312c] font-semibold mb-2">
-    Key Nutrients &amp; Nigerian Foods for Week {week}
-  </h3>
-  
-  <p class="text-sm text-[#525547] leading-relaxed mb-4">
-    {weekGuide.nigerianFoodTip}
-  </p>
+  <!-- Hero Headline & Excerpt -->
+  <div class="max-w-3xl mb-6">
+    <h3 class="text-2xl sm:text-3xl font-serif text-[#242b22] font-semibold mb-3">
+      Fueling Baby &amp; Mother at Week {week}
+    </h3>
+    <p class="text-base text-[#475244] leading-relaxed">
+      {weekGuide.nigerianFoodTip}
+    </p>
+  </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-[#f0ede6]">
-    <div class="rounded-xl bg-[#faf9f6] p-3.5 border border-[#edeae1]">
-      <div class="text-xs font-bold text-[#af705a] uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
-        <i class="iconoir-star text-sm text-[#af705a]"></i> Priority Nutrients
+  <!-- 3 Eggify-style Curated Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-5 border-t border-[#e5edd4]">
+    <!-- Card 1: Priority Nutrients -->
+    <div class="rounded-2xl bg-white p-5 border border-[#e1e9de] shadow-2xs hover:shadow-xs transition-shadow">
+      <div class="w-9 h-9 rounded-xl bg-[#af705a]/10 flex items-center justify-center mb-3">
+        <i class="iconoir-star text-lg text-[#af705a]"></i>
       </div>
+      <h4 class="text-xs font-bold text-[#af705a] uppercase tracking-wider mb-2">Priority Nutrients</h4>
+      <p class="text-xs text-[#72756a] mb-3">Key micronutrients baby requires right now for healthy development.</p>
       <div class="flex flex-wrap gap-1.5">
         {#each weekGuide.keyNutrients as nutrient}
-          <span class="text-xs font-medium bg-white text-[#30312c] px-2 py-0.5 rounded-md border border-[#e2dfd5]">{nutrient}</span>
+          <span class="text-xs font-semibold bg-[#faf8f5] text-[#30312c] px-2.5 py-1 rounded-lg border border-[#e7e3d8]">
+            {nutrient}
+          </span>
         {/each}
       </div>
     </div>
 
-    <div class="rounded-xl bg-[#f5f8f3] p-3.5 border border-[#e0e8dc]">
-      <div class="text-xs font-bold text-[#475842] uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
-        <i class="iconoir-apple-half text-sm text-[#475842]"></i> Recommended Nigerian Foods
+    <!-- Card 2: Recommended Nigerian Foods -->
+    <div class="rounded-2xl bg-white p-5 border border-[#d6e5d2] shadow-2xs hover:shadow-xs transition-shadow">
+      <div class="w-9 h-9 rounded-xl bg-[#809474]/15 flex items-center justify-center mb-3">
+        <i class="iconoir-apple-half text-lg text-[#385a38]"></i>
       </div>
-      <ul class="text-xs text-[#3d4b39] space-y-1">
+      <h4 class="text-xs font-bold text-[#385a38] uppercase tracking-wider mb-2">Recommended Dishes</h4>
+      <p class="text-xs text-[#72756a] mb-3">Familiar, readily available meals packed with this week's nutrients.</p>
+      <ul class="text-xs text-[#2e3b2c] space-y-2">
         {#each weekGuide.recommendedFoods as foodItem}
-          <li class="flex items-center gap-1.5">
-            <span class="text-[#809474] font-bold">✓</span> {foodItem}
+          <li class="flex items-start gap-2">
+            <span class="text-[#475842] font-bold text-sm leading-none mt-0.5">✓</span>
+            <span class="font-medium">{foodItem}</span>
           </li>
         {/each}
       </ul>
     </div>
 
-    <div class="rounded-xl bg-[#fdf5f3] p-3.5 border border-[#f5ded9]">
-      <div class="text-xs font-bold text-[#b94a32] uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
-        <i class="iconoir-warning-triangle text-sm text-[#b94a32]"></i> Foods / Items to Limit
+    <!-- Card 3: Items to Limit or Avoid -->
+    <div class="rounded-2xl bg-white p-5 border border-[#f5ded9] shadow-2xs hover:shadow-xs transition-shadow">
+      <div class="w-9 h-9 rounded-xl bg-[#b94a32]/10 flex items-center justify-center mb-3">
+        <i class="iconoir-warning-triangle text-lg text-[#b94a32]"></i>
       </div>
-      <ul class="text-xs text-[#6e2b1d] space-y-1">
+      <h4 class="text-xs font-bold text-[#b94a32] uppercase tracking-wider mb-2">Limit or Avoid</h4>
+      <p class="text-xs text-[#72756a] mb-3">Ingredients and preparations advised against for fetal safety.</p>
+      <ul class="text-xs text-[#6e2b1d] space-y-2">
         {#each weekGuide.foodsToAvoid as avoidItem}
-          <li class="flex items-center gap-1.5">
-            <span class="text-[#af705a] font-bold">✕</span> {avoidItem}
+          <li class="flex items-start gap-2">
+            <span class="text-[#af705a] font-bold text-sm leading-none mt-0.5">✕</span>
+            <span>{avoidItem}</span>
           </li>
         {/each}
       </ul>
@@ -516,8 +533,6 @@
       {/if}
     </aside>
     <RecipeNutrientBuilder />
-    <MealPlanner pregnancyWeek={week} />
-    <GroceryList />
     <a href="#learn" class="food-learn-link"
       >Explore the learning guide <i class="iconoir-nav-arrow-right text-sm"></i></a
     >

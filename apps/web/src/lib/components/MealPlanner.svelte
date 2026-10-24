@@ -143,141 +143,251 @@
   }
 </script>
 
-<section class="food-log planner" aria-labelledby="planner-title">
-  <!-- Weekly Book-Backed Suggested Meals Banner -->
-  <div class="mb-6 rounded-2xl bg-[#faf9f6] border border-[#e7e4dc] p-5 shadow-xs">
-    <div class="flex items-center justify-between gap-2 mb-2">
-      <span class="text-xs font-bold tracking-wider text-[#af705a] uppercase">SUGGESTED FOR WEEK {pregnancyWeek}</span>
-      <span class="text-xs bg-[#809474]/15 text-[#475842] font-semibold px-2.5 py-0.5 rounded-full">Book-backed Nutrition</span>
+<section class="rounded-3xl bg-white border border-[#e7e4dc] p-6 sm:p-8 shadow-xs" aria-labelledby="planner-title">
+  <!-- Top Eggify Hero Banner: Suggested for Week -->
+  <div class="mb-8 rounded-2xl bg-linear-to-br from-[#f8faf7] via-[#ffffff] to-[#f4f7f2] border border-[#dce8d9] p-6 shadow-2xs">
+    <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#809474]/15 border border-[#809474]/30">
+        <i class="iconoir-sparks text-xs text-[#475842]"></i>
+        <span class="text-xs font-bold tracking-wider text-[#475842] uppercase">CURATED FOR WEEK {pregnancyWeek}</span>
+      </div>
+      <span class="text-xs bg-white text-[#77786f] border border-[#e2dfd5] font-medium px-2.5 py-0.5 rounded-full">
+        Evidence-Based Recommendation
+      </span>
     </div>
-    <h4 class="font-serif text-lg text-[#30312c] font-semibold mb-1">
-      Recommended Meals &amp; Nutrients for Your Current Week
-    </h4>
-    <p class="text-xs text-[#686960] mb-3">
+    <h3 class="font-serif text-xl sm:text-2xl text-[#242b22] font-semibold mb-2">
+      What to Cook This Week
+    </h3>
+    <p class="text-sm text-[#475244] leading-relaxed mb-4">
       {weekGuide.nigerianFoodTip}
     </p>
 
-    <!-- One-click Meal Add Chips -->
-    <div class="pt-3 border-t border-[#eae6de]">
-      <div class="text-xs font-bold text-[#525547] mb-2 flex items-center gap-1.5">
+    <!-- One-click Quick Add Dishes -->
+    <div class="pt-4 border-t border-[#e2ebd9]">
+      <div class="text-xs font-bold text-[#475842] uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
         <i class="iconoir-plus-circle text-sm text-[#809474]"></i>
-        <span>Tap any suggested dish to add to your plan:</span>
+        <span>Tap any dish to quickly pre-fill your plan:</span>
       </div>
       <div class="flex flex-wrap gap-2">
         {#each weekGuide.recommendedFoods as dish}
           <button
             type="button"
             onclick={() => (dishName = dish)}
-            class="text-xs font-medium px-3 py-1.5 rounded-xl bg-white border border-[#d6d2c4] text-[#30312c] hover:border-[#809474] hover:bg-[#f5f8f3] transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs"
+            class="text-xs font-medium px-3.5 py-2 rounded-xl bg-white border border-[#d6e5d2] text-[#2c382a] hover:border-[#809474] hover:bg-[#edf5eb] active:scale-98 transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs"
           >
-            <span>+</span> {dish}
+            <span class="text-[#809474] font-bold">+</span> {dish}
           </button>
         {/each}
       </div>
     </div>
   </div>
 
-  <div class="food-log-heading">
-    <div>
-      <span class="food-kicker">PLAN AHEAD</span>
-      <h4 id="planner-title">Your meals this week</h4>
+  <!-- Main Section: Add Meal & Planned Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <!-- Left Column (5 cols): Add Meal Form -->
+    <div class="lg:col-span-5 bg-[#faf9f6] rounded-2xl p-6 border border-[#edeae1]">
+      <div class="flex items-center gap-2 mb-4">
+        <div class="w-8 h-8 rounded-lg bg-[#809474]/15 flex items-center justify-center text-[#475842]">
+          <i class="iconoir-calendar-plus text-base"></i>
+        </div>
+        <div>
+          <h4 id="planner-title" class="font-serif text-base font-semibold text-[#2b2c28]">Add to Schedule</h4>
+          <span class="text-xs text-[#77786f]">Record your upcoming dishes</span>
+        </div>
+      </div>
+
+      <form class="space-y-3.5" onsubmit={add}>
+        <div>
+          <label class="block text-xs font-bold text-[#55574f] uppercase tracking-wider mb-1" for="plan-date">Planned Date</label>
+          <input
+            id="plan-date"
+            type="date"
+            bind:value={date}
+            required
+            class="w-full px-3.5 py-2.5 text-sm rounded-xl border border-[#dcd7cb] bg-white focus:outline-none focus:ring-2 focus:ring-[#809474]/40"
+          />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-[#55574f] uppercase tracking-wider mb-1" for="plan-meal-type">Meal Time</label>
+          <select
+            id="plan-meal-type"
+            bind:value={mealType}
+            class="w-full px-3.5 py-2.5 text-sm rounded-xl border border-[#dcd7cb] bg-white focus:outline-none focus:ring-2 focus:ring-[#809474]/40"
+          >
+            <option>Breakfast</option>
+            <option>Lunch</option>
+            <option>Dinner</option>
+            <option>Snack</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-[#55574f] uppercase tracking-wider mb-1" for="plan-dish-name">Food or Dish Name</label>
+          <input
+            id="plan-dish-name"
+            bind:value={dishName}
+            maxlength="160"
+            placeholder="e.g. Beans with steamed plantain"
+            required
+            class="w-full px-3.5 py-2.5 text-sm rounded-xl border border-[#dcd7cb] bg-white focus:outline-none focus:ring-2 focus:ring-[#809474]/40 placeholder-[#9a988f]"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="w-full py-2.5 px-4 text-sm font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer shadow-xs flex items-center justify-center gap-1.5"
+        >
+          <i class="iconoir-plus text-sm"></i>
+          <span>Add to Meal Plan</span>
+        </button>
+      </form>
+
+      <!-- 7-Day Auto Builder in an accordion -->
+      <details class="mt-5 pt-4 border-t border-[#e5e1d5] text-xs text-[#686960]">
+        <summary class="font-bold text-[#475842] cursor-pointer hover:underline flex items-center gap-1">
+          <i class="iconoir-spark text-xs text-[#809474]"></i>
+          <span>Auto-generate a 7-day Nigerian meal plan</span>
+        </summary>
+        <p class="mt-2 text-xs leading-relaxed text-[#77786f]">
+          Filter dishes from our Nigerian food catalogue by region, budget, and dietary preference.
+        </p>
+
+        <form
+          class="mt-3 space-y-2.5"
+          onsubmit={(event) => {
+            event.preventDefault();
+            void generateIdeas();
+          }}
+        >
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[11px] font-medium text-[#55574f] mb-1" for="auto-week">Week</label>
+              <input
+                id="auto-week"
+                type="number"
+                min="1"
+                max="42"
+                bind:value={week}
+                class="w-full px-2.5 py-1.5 text-xs rounded-lg border border-[#dcd7cb] bg-white"
+              />
+            </div>
+            <div>
+              <label class="block text-[11px] font-medium text-[#55574f] mb-1" for="auto-budget">Budget</label>
+              <select id="auto-budget" bind:value={budget} class="w-full px-2.5 py-1.5 text-xs rounded-lg border border-[#dcd7cb] bg-white">
+                <option>Any</option>
+                <option>Affordable</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-medium text-[#55574f] mb-1" for="auto-region">Region</label>
+            <select id="auto-region" bind:value={region} class="w-full px-2.5 py-1.5 text-xs rounded-lg border border-[#dcd7cb] bg-white">
+              <option>Any</option>
+              <option value="North">North (Hausa / Fulani / Middle Belt)</option>
+              <option>South-East</option>
+              <option>South-South</option>
+              <option>South-West</option>
+            </select>
+          </div>
+
+          <label class="flex items-center gap-2 cursor-pointer pt-1">
+            <input type="checkbox" bind:checked={vegetarian} class="rounded border-[#dcd7cb]" />
+            <span class="text-xs text-[#525547]">Vegetarian preference only</span>
+          </label>
+
+          <button
+            type="submit"
+            disabled={generating}
+            class="w-full py-2 px-3 text-xs font-semibold rounded-lg bg-[#475842] text-white hover:bg-[#384634] disabled:opacity-50 transition-colors cursor-pointer"
+          >
+            {generating ? "Generating Ideas…" : "Build 7-Day Plan"}
+          </button>
+        </form>
+
+        {#if ideas.length}
+          <div class="mt-4 space-y-2 max-h-52 overflow-y-auto pr-1">
+            {#each ideas as day}
+              <div class="p-2.5 bg-white rounded-lg border border-[#e7e4dc]">
+                <strong class="text-xs text-[#af705a] block mb-1">Day {day.day}</strong>
+                {#each day.meals as m}
+                  <div class="text-[11px] text-[#333] mb-0.5">
+                    <span class="font-semibold text-[#555]">{m.mealType}:</span> {m.dishName}
+                  </div>
+                {/each}
+              </div>
+            {/each}
+          </div>
+          <button
+            class="w-full mt-2.5 py-2 px-3 text-xs font-semibold rounded-lg bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer disabled:opacity-50"
+            type="button"
+            disabled={savingIdeas}
+            onclick={() => void saveIdeas()}
+          >
+            {savingIdeas ? "Saving…" : "Save All Ideas to My Plan"}
+          </button>
+        {/if}
+      </details>
+    </div>
+
+    <!-- Right Column (7 cols): Planned Meals Card List -->
+    <div class="lg:col-span-7 flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between gap-2 mb-4">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-[#af705a]/10 flex items-center justify-center text-[#af705a]">
+              <i class="iconoir-book-stack text-base"></i>
+            </div>
+            <div>
+              <h4 class="font-serif text-base font-semibold text-[#2b2c28]">Your Planned Meals</h4>
+              <span class="text-xs text-[#77786f]">{items.length} dishes scheduled</span>
+            </div>
+          </div>
+
+          <button
+            class="text-xs font-semibold px-3 py-1.5 rounded-xl bg-[#809474]/15 text-[#475842] hover:bg-[#809474]/25 transition-colors cursor-pointer flex items-center gap-1.5"
+            type="button"
+            onclick={makeList}
+          >
+            <i class="iconoir-cart text-xs"></i>
+            <span>Export to Grocery List</span>
+          </button>
+        </div>
+
+        {#if items.length}
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[440px] overflow-y-auto pr-1">
+            {#each items as item (item.id)}
+              <div class="p-3.5 rounded-xl bg-white border border-[#e5e1d5] shadow-2xs hover:border-[#809474]/40 transition-colors">
+                <div class="flex items-center justify-between text-xs mb-1.5">
+                  <span class="font-bold text-[#809474] uppercase text-[10px] tracking-wider px-2 py-0.5 rounded-md bg-[#809474]/10">
+                    {item.mealType}
+                  </span>
+                  <span class="text-[11px] text-[#8e9083] font-medium">{item.planDate}</span>
+                </div>
+                <div class="font-medium text-sm text-[#30312c] leading-snug">{item.dishName}</div>
+              </div>
+            {/each}
+          </div>
+        {:else}
+          <div class="rounded-2xl border-2 border-dashed border-[#e2dfd5] p-8 text-center bg-[#faf9f6]">
+            <div class="w-12 h-12 rounded-full bg-white mx-auto flex items-center justify-center mb-3 shadow-2xs text-[#9a988f]">
+              <i class="iconoir-pot text-xl"></i>
+            </div>
+            <h5 class="text-sm font-semibold text-[#525547] mb-1">No meals planned yet</h5>
+            <p class="text-xs text-[#8e9083] max-w-sm mx-auto">
+              Add meals you plan to cook this week or use the quick suggestions above to get started.
+            </p>
+          </div>
+        {/if}
+      </div>
+
+      {#if message}
+        <div class="mt-4 p-3 rounded-xl bg-[#edf5eb] border border-[#d6e5d2] text-xs font-medium text-[#385a38] flex items-center gap-2" role="status">
+          <i class="iconoir-check-circle text-sm text-[#475842]"></i>
+          <span>{message}</span>
+        </div>
+      {/if}
     </div>
   </div>
-  <form class="planner-form" onsubmit={add}>
-    <label>Date<input type="date" bind:value={date} required /></label>
-    <label
-      >Meal<select bind:value={mealType}
-        ><option>Breakfast</option><option>Lunch</option><option>Dinner</option
-        ><option>Snack</option></select
-      ></label
-    >
-    <label
-      >Food or dish<input
-        bind:value={dishName}
-        maxlength="160"
-        placeholder="e.g. beans and plantain"
-        required
-      /></label
-    >
-    <button type="submit">Add to plan</button>
-  </form>
-  <details class="meal-ideas-builder">
-    <summary>Build a week of local meal ideas</summary>
-    <p>
-      Filter by pregnancy week, region, budget and food preferences. This uses
-      dish names and ingredients from the supplied Nigerian food catalogue; it
-      does not provide measured portions or nutrients.
-    </p>
-    <form
-      class="planner-form"
-      onsubmit={(event) => {
-        event.preventDefault();
-        void generateIdeas();
-      }}
-    >
-      <label
-        >Pregnancy week<input
-          type="number"
-          min="1"
-          max="42"
-          bind:value={week}
-        /></label
-      >
-      <label
-        >Region<select bind:value={region}
-          ><option>Any</option><option value="North"
-            >North (catalogue grouping)</option
-          ><option>South-East</option><option>South-South</option><option
-            >South-West</option
-          ></select
-        ></label
-      >
-      <label
-        >Budget<select bind:value={budget}
-          ><option>Any</option><option>Affordable</option></select
-        ></label
-      >
-      <label class="meal-ideas-check"
-        ><input type="checkbox" bind:checked={vegetarian} /> Vegetarian preferences</label
-      >
-      <label
-        >Exclude ingredient names<input
-          bind:value={avoidIngredients}
-          placeholder="Comma-separated; e.g. fish, groundnut"
-        /></label
-      >
-      <button type="submit" disabled={generating}
-        >{generating ? "Building ideas…" : "Build 7-day ideas"}</button
-      >
-    </form>
-    {#if ideas.length}<div class="meal-ideas-results">
-        {#each ideas as day}<article>
-            <strong>Day {day.day}</strong>{#each day.meals as meal}<p>
-                <b>{meal.mealType}:</b>
-                {meal.dishName}<small>{meal.ingredients}</small>
-              </p>{/each}
-          </article>{/each}
-      </div>
-      <p class="meal-ideas-disclaimer">{ideasDisclaimer}</p>
-      <button
-        class="planner-secondary"
-        type="button"
-        disabled={savingIdeas}
-        onclick={() => void saveIdeas()}
-        >{savingIdeas ? "Saving…" : "Save ideas to my week"}</button
-      >{/if}
-  </details>
-  {#if items.length}<ul class="planner-list">
-      {#each items as item (item.id)}<li>
-          <strong>{item.planDate}</strong><span
-            >{item.mealType} · {item.dishName}</span
-          >
-        </li>{/each}
-    </ul>{:else}<p class="food-log">
-      Add dishes you already plan to cook. This is not a prescribed diet.
-    </p>{/if}
-  <button class="planner-secondary" type="button" onclick={makeList}
-    >Build grocery list from plan</button
-  >
-  {#if message}<p class="food-message" role="status">{message}</p>{/if}
 </section>

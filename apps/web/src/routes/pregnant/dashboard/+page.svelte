@@ -562,21 +562,24 @@
                 class:active={learnTab === "foods"}
                 onclick={() => (learnTab = "foods")}
               >
-                <span>🍲 Nigerian Foods & Nutrients</span>
+                <i class="iconoir-apple-half text-sm text-[#809474]"></i>
+                <span>Nigerian Foods &amp; Nutrients</span>
               </button>
               <button
                 class="subnav-pill"
                 class:active={learnTab === "mealplan"}
                 onclick={() => (learnTab = "mealplan")}
               >
-                <span>📅 7-Day Meal Planner & Market List</span>
+                <i class="iconoir-calendar text-sm text-[#af705a]"></i>
+                <span>7-Day Meal Planner &amp; Market List</span>
               </button>
               <button
                 class="subnav-pill"
                 class:active={learnTab === "meds"}
                 onclick={() => (learnTab = "meds")}
               >
-                <span>💊 Medication Safety & Food Guides</span>
+                <i class="iconoir-shield-check text-sm text-[#3b82f6]"></i>
+                <span>Medication Safety &amp; Guides</span>
               </button>
             </div>
 
