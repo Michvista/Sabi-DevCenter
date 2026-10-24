@@ -12,6 +12,12 @@ describe("one-time pregnancy book index", () => {
         page: number;
         text: string;
         embedding: number[];
+        citationPages: number[];
+        sections: Array<{
+          title: string;
+          summary: string;
+          citationPages: number[];
+        }>;
       }>;
     };
     expect(index.model).toBe("gemini-embedding-001");
@@ -24,7 +30,16 @@ describe("one-time pregnancy book index", () => {
         (chunk) =>
           chunk.page > 0 &&
           chunk.text.length > 0 &&
-          chunk.embedding.length === 768,
+          chunk.embedding.length === 768 &&
+          chunk.sections.length >= 2 &&
+          chunk.sections.every(
+            (section) =>
+              section.summary.length > 20 &&
+              section.citationPages.length > 0 &&
+              section.citationPages.every((page) =>
+                chunk.citationPages.includes(page),
+              ),
+          ),
       ),
     ).toBe(true);
   });

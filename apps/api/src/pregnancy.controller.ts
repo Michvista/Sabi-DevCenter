@@ -88,6 +88,30 @@ export class PregnancyController {
           .getRepository(PregnancyBookChunkEntity)
           .findOneBy({ week: body.week })
       : null;
+    let bookSections: Array<{
+      title: string;
+      summary: string;
+      citationPages: number[];
+    }> = [];
+    if (bookChunk) {
+      try {
+        const decoded = JSON.parse(bookChunk.content) as {
+          sections?: typeof bookSections;
+        };
+        if (Array.isArray(decoded.sections)) bookSections = decoded.sections;
+      } catch {
+        // Continue to serve older one-paragraph rows until the bundled index refreshes them.
+      }
+      if (!bookSections.length) {
+        bookSections = [
+          {
+            title: "From the book",
+            summary: bookChunk.content.replace(/^Pregnancy week \d+\.\s*/, ""),
+            citationPages: [bookChunk.page],
+          },
+        ];
+      }
+    }
     return {
       week: body.week,
       trimester:
@@ -104,10 +128,13 @@ export class PregnancyController {
             : "Getting ready, one day at a time",
       guidance:
         "Keep attending antenatal care and ask your health worker about questions that matter to you. Seek urgent care for warning signs.",
-      ...(bookChunk
+      ...(bookChunk && bookSections.length
         ? {
-            bookNote: bookChunk.content.replace(/^Pregnancy week \d+\.\s*/, ""),
-            citationPages: [bookChunk.page],
+            bookNote: bookSections.map((section) => section.summary).join(" "),
+            bookSections,
+            citationPages: [
+              ...new Set(bookSections.flatMap((section) => section.citationPages)),
+            ].sort((a, b) => a - b),
             source: "Your Pregnancy Week by Week — Curtis & Schuler",
           }
         : {}),

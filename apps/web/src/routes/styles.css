@@ -991,15 +991,67 @@ p {
   max-width: 280px;
 }
 
-.today-guide > p.book-excerpt {
+.book-sections {
+  display: grid;
+  gap: 7px;
+  margin-top: 2px;
+  position: relative;
+  z-index: 1;
+}
+.book-section {
   border-left: 3px solid var(--sage, #78977a);
-  padding-left: 0.9rem;
-  font-style: italic;
+  padding: 1px 0 2px 9px;
+}
+.book-section strong {
+  display: block;
+  color: #656d5b;
+  font-size: 9px;
+  margin-bottom: 2px;
+}
+.book-section p {
+  color: #818177;
+  font-size: 9px;
+  line-height: 1.55;
+  margin: 0;
+}
+.book-section small {
+  display: block;
+  color: #9a998f;
+  font-size: 7px;
+  margin-top: 2px;
 }
 .guide-divider {
   height: 1px;
   background: #e1e0d6;
   margin: 13px 0 11px;
+}
+.guide-nutrition {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 12px;
+  padding: 9px 10px;
+  border-radius: 9px;
+  background: #f8f7f1;
+}
+.guide-nutrition strong {
+  display: block;
+  color: #656d5b;
+  font-size: 9px;
+  margin-bottom: 4px;
+}
+.guide-nutrition p {
+  color: #818177;
+  font-size: 8px;
+  line-height: 1.55;
+  margin: 0;
+}
+.guide-nutrition a {
+  display: inline-block;
+  margin-top: 5px;
+  color: #6f7d69;
+  font-size: 8px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 .guide-tip {
   position: relative;
@@ -1031,6 +1083,14 @@ p {
   font-size: 8px;
   color: #89877e;
   line-height: 1.45;
+}
+.guide-tip div a {
+  display: inline-block;
+  margin-top: 5px;
+  color: #6f7d69;
+  font-size: 8px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 .guide-button {
   position: relative;

@@ -396,10 +396,15 @@
           </label>
           <article class="mw-review-excerpt">
             <strong>{reviewWeekGuide.title}</strong>
-            <p>{reviewWeekGuide.bookNote ?? reviewWeekGuide.gentlePrompt}</p>
-            {#if reviewWeekGuide.citationPages.length}<small
-                >Book PDF page {reviewWeekGuide.citationPages.join(", ")}</small
-              >{/if}
+            {#if reviewWeekGuide.bookSections.length}
+              {#each reviewWeekGuide.bookSections as section}
+                <p><b>{section.title}</b> {section.summary}</p>
+                <small>Book PDF pages {section.citationPages.join(", ")}</small>
+              {/each}
+            {:else}
+              <p>{reviewWeekGuide.gentlePrompt}</p>
+            {/if}
+            <p><b>Antenatal care focus</b> {reviewWeekGuide.antenatalFocus}</p>
           </article>
           <label
             >Review notes<textarea

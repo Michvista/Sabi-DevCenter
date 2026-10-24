@@ -2,246 +2,1567 @@
   "model": "local-pdf-extraction",
   "source": "Your Pregnancy Week by Week — Glade B. Curtis and Judith Schuler",
   "citationNumbering": "PDF page numbers",
-  "generatedAt": "2026-10-20T22:53:56.565689+00:00",
+  "rights": "Used with permission as confirmed by the project owner.",
+  "generation": "one-time source extraction; no runtime Gemini generation",
   "notes": [
     {
       "week": 1,
-      "summary": "This is an exciting time for you—having a baby growing inside you is an incredible experience! Our goal is to help you understand and enjoy your pregnancy.",
-      "citationPages": [37],
+      "summary": "Pregnancy begins: This is an exciting time for you—having a baby growing inside you is an incredible experience! Our goal is to help you understand and enjoy your pregnancy. In this book, you will learn what is going on in your body and how your baby is growing and changing.\n\nHow pregnancy is dated: The beginning of a pregnancy is actually figured from the beginning of your last menstrual period. For your healthcare provider’s calculations, you are pregnant 2 weeks before you actually conceive! Pregnancy lasts about 280 days, or 40 weeks, from the beginning of the last menstrual period. This can be confusing, so let’s look at it more closely.\n\nPlanning care and wellbeing: Your health is one of the most important factors in your pregnancy and is important to the development and well-being of your baby. Healthy nutrition, proper exercise, sufficient rest and taking care of yourself all affect your pregnancy.",
+      "sections": [
+        {
+          "title": "Pregnancy begins",
+          "summary": "This is an exciting time for you—having a baby growing inside you is an incredible experience! Our goal is to help you understand and enjoy your pregnancy. In this book, you will learn what is going on in your body and how your baby is growing and changing.",
+          "citationPages": [
+            37
+          ]
+        },
+        {
+          "title": "How pregnancy is dated",
+          "summary": "The beginning of a pregnancy is actually figured from the beginning of your last menstrual period. For your healthcare provider’s calculations, you are pregnant 2 weeks before you actually conceive! Pregnancy lasts about 280 days, or 40 weeks, from the beginning of the last menstrual period. This can be confusing, so let’s look at it more closely.",
+          "citationPages": [
+            38
+          ]
+        },
+        {
+          "title": "Planning care and wellbeing",
+          "summary": "Your health is one of the most important factors in your pregnancy and is important to the development and well-being of your baby. Healthy nutrition, proper exercise, sufficient rest and taking care of yourself all affect your pregnancy.",
+          "citationPages": [
+            40
+          ]
+        }
+      ],
+      "citationPages": [
+        37,
+        38,
+        40
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 2,
-      "summary": "The beginning of a pregnancy is actually figured from the beginning of your last menstrual period. For your healthcare provider’s calculations, you are pregnant 2 weeks before you actually conceive!",
-      "citationPages": [38],
+      "summary": "How pregnancy is dated: The beginning of a pregnancy is actually figured from the beginning of your last menstrual period. For your healthcare provider’s calculations, you are pregnant 2 weeks before you actually conceive! Pregnancy lasts about 280 days, or 40 weeks, from the beginning of the last menstrual period. This can be confusing, so let’s look at it more closely.\n\nUnderstanding the menstrual cycle: Menstruation is the normal periodic discharge of blood, mucus and cellular debris from the uterus. Two important cycles occur during the menstrual cycle—the ovarian cycle and the endometrial cycle. The ovarian cycle provides an egg for fertilization, and the endometrial cycle provides a suitable site for implantation of the fertilized egg inside your uterus.\n\nPlanning care and wellbeing: Your health is one of the most important factors in your pregnancy and is important to the development and well-being of your baby. Healthy nutrition, proper exercise, sufficient rest and taking care of yourself all affect your pregnancy.",
+      "sections": [
+        {
+          "title": "How pregnancy is dated",
+          "summary": "The beginning of a pregnancy is actually figured from the beginning of your last menstrual period. For your healthcare provider’s calculations, you are pregnant 2 weeks before you actually conceive! Pregnancy lasts about 280 days, or 40 weeks, from the beginning of the last menstrual period. This can be confusing, so let’s look at it more closely.",
+          "citationPages": [
+            38
+          ]
+        },
+        {
+          "title": "Understanding the menstrual cycle",
+          "summary": "Menstruation is the normal periodic discharge of blood, mucus and cellular debris from the uterus. Two important cycles occur during the menstrual cycle—the ovarian cycle and the endometrial cycle. The ovarian cycle provides an egg for fertilization, and the endometrial cycle provides a suitable site for implantation of the fertilized egg inside your uterus.",
+          "citationPages": [
+            40
+          ]
+        },
+        {
+          "title": "Planning care and wellbeing",
+          "summary": "Your health is one of the most important factors in your pregnancy and is important to the development and well-being of your baby. Healthy nutrition, proper exercise, sufficient rest and taking care of yourself all affect your pregnancy.",
+          "citationPages": [
+            40
+          ]
+        }
+      ],
+      "citationPages": [
+        38,
+        40
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 3,
-      "summary": "The embryo is very small—at this point, it’s only a group of cells, but it’s growing rapidly.",
-      "citationPages": [52],
+      "summary": "Baby’s size: The embryo is very small—at this point, it’s only a group of cells, but it’s growing rapidly. It’s the size of the head of a pin and would be visible to the naked eye if it weren’t inside you.\n\nBook topic: Fertilization is the joining together of one sperm and an egg. We believe it occurs in the middle part of the Fallopian tube, called the ampulla, not inside the uterus. Sperm travel through the uterine cavity and out into the tube to meet the egg. When the sperm and egg join, the sperm passes through the outer layer of the ovum, then digests its way through another layer of the egg.\n\nChanges in you: It’s too soon to notice any changes. Few women know they have conceived. Remember, you haven’t even missed a period yet.\n\nNutrition in the book: Folic-Acid Use Folic acid, also referred to as folate, folacin or vitamin B9, is very important during pregnancy. Folate is the form of folic acid found in food. Folic acid is the synthetic version of this B vitamin. It’s important to take folic acid before trying to get pregnant and during early pregnancy because this is when it is most helpful. To help prevent neural-tube defects, take 400mcg (0.4mg) of folic acid a day, beginning before pregnancy and continuing through the first 13 weeks.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "The embryo is very small—at this point, it’s only a group of cells, but it’s growing rapidly. It’s the size of the head of a pin and would be visible to the naked eye if it weren’t inside you.",
+          "citationPages": [
+            52
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Fertilization is the joining together of one sperm and an egg. We believe it occurs in the middle part of the Fallopian tube, called the ampulla, not inside the uterus. Sperm travel through the uterine cavity and out into the tube to meet the egg. When the sperm and egg join, the sperm passes through the outer layer of the ovum, then digests its way through another layer of the egg.",
+          "citationPages": [
+            52
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "It’s too soon to notice any changes. Few women know they have conceived. Remember, you haven’t even missed a period yet.",
+          "citationPages": [
+            52
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Folic-Acid Use Folic acid, also referred to as folate, folacin or vitamin B9, is very important during pregnancy. Folate is the form of folic acid found in food. Folic acid is the synthetic version of this B vitamin. It’s important to take folic acid before trying to get pregnant and during early pregnancy because this is when it is most helpful. To help prevent neural-tube defects, take 400mcg (0.4mg) of folic acid a day, beginning before pregnancy and continuing through the first 13 weeks.",
+          "citationPages": [
+            58
+          ]
+        }
+      ],
+      "citationPages": [
+        52,
+        58
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 4,
-      "summary": "Your developing baby’s size varies from 0.014 inch to about 0.04 inch (0.36mm to about 1mm) in length. One millimeter is half the size of a letter “o” on this page.",
-      "citationPages": [64],
+      "summary": "Baby’s size: Your developing baby’s size varies from 0.014 inch to about 0.04 inch (0.36mm to about 1mm) in length. One millimeter is half the size of a letter “o” on this page.\n\nBook topic: Fetal development is in the very early stages, but great changes are taking place! The blastocyst is embedded more deeply into the lining of your uterus, and the amniotic sac, which will fill with amniotic fluid, is starting to form. The placenta is also forming; it plays an important role in hormone production and transport of oxygen and nutrients. Networks that contain maternal blood are becoming established.\n\nChanges in you: At this point, your pregnancy doesn’t show. The illustration on page 40 gives you an idea of how small your baby is, so you can see why you don’t notice any changes.\n\nNutrition in the book: You probably won’t be able to eat all you want during pregnancy, unless you are one of the lucky women who doesn’t have a problem with calories. Even then, you must pay strict attention to the types of foods you choose. To stay healthy during pregnancy, eat nutritious foods. Avoid those with empty calories (lots of sugar and fat). Choose fresh fruits and vegetables. Avoid caffeine when possible. We discuss many of these subjects in later weeks.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Your developing baby’s size varies from 0.014 inch to about 0.04 inch (0.36mm to about 1mm) in length. One millimeter is half the size of a letter “o” on this page.",
+          "citationPages": [
+            64
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Fetal development is in the very early stages, but great changes are taking place! The blastocyst is embedded more deeply into the lining of your uterus, and the amniotic sac, which will fill with amniotic fluid, is starting to form. The placenta is also forming; it plays an important role in hormone production and transport of oxygen and nutrients. Networks that contain maternal blood are becoming established.",
+          "citationPages": [
+            64
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "At this point, your pregnancy doesn’t show. The illustration on page 40 gives you an idea of how small your baby is, so you can see why you don’t notice any changes.",
+          "citationPages": [
+            64
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "You probably won’t be able to eat all you want during pregnancy, unless you are one of the lucky women who doesn’t have a problem with calories. Even then, you must pay strict attention to the types of foods you choose. To stay healthy during pregnancy, eat nutritious foods. Avoid those with empty calories (lots of sugar and fat). Choose fresh fruits and vegetables. Avoid caffeine when possible. We discuss many of these subjects in later weeks.",
+          "citationPages": [
+            68
+          ]
+        }
+      ],
+      "citationPages": [
+        64,
+        68
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 5,
-      "summary": "Your developing baby hasn’t grown a lot. By this week, it’s about 0.05 inch (1.25mm) long.",
-      "citationPages": [75],
+      "summary": "Baby’s size: Your developing baby hasn’t grown a lot. By this week, it’s about 0.05 inch (1.25mm) long.\n\nBook topic: As early as this week, a plate that will become the heart has developed. Two tubes join to form the heart and begin contracting by day 22 of development. A beating heart is visible as early as 5 to 6 weeks of pregnancy during an ultrasound examination. Eyes first appear around this time and look like a pair of shallow grooves on each side of the developing brain.\n\nChanges in you: There are still no big changes in you. Even if you are aware you’re pregnant, it will be awhile before others notice your changing figure.\n\nNutrition in the book: As discussed above, you may have to deal with nausea and vomiting during pregnancy. There are quite a few things you can try. Eat small meals frequently to keep your stomach from being overfull. Drink lots of fluid. Find out what foods, smells or situations nauseate you. Avoid them when possible. Avoid coffee because it stimulates stomach acid. A high- protein or high-carbohydrate snack before bed may help. Ask your partner to make you some dry toast in the morning before you get up; eat it in bed.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Your developing baby hasn’t grown a lot. By this week, it’s about 0.05 inch (1.25mm) long.",
+          "citationPages": [
+            75
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "As early as this week, a plate that will become the heart has developed. Two tubes join to form the heart and begin contracting by day 22 of development. A beating heart is visible as early as 5 to 6 weeks of pregnancy during an ultrasound examination. Eyes first appear around this time and look like a pair of shallow grooves on each side of the developing brain.",
+          "citationPages": [
+            75
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "There are still no big changes in you. Even if you are aware you’re pregnant, it will be awhile before others notice your changing figure.",
+          "citationPages": [
+            75
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "As discussed above, you may have to deal with nausea and vomiting during pregnancy. There are quite a few things you can try. Eat small meals frequently to keep your stomach from being overfull. Drink lots of fluid. Find out what foods, smells or situations nauseate you. Avoid them when possible. Avoid coffee because it stimulates stomach acid. A high- protein or high-carbohydrate snack before bed may help. Ask your partner to make you some dry toast in the morning before you get up; eat it in bed.",
+          "citationPages": [
+            81,
+            82
+          ]
+        }
+      ],
+      "citationPages": [
+        75,
+        81,
+        82
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 6,
-      "summary": "Crown-to-rump length is the sitting height or distance from the top of the baby’s head to its rump or buttocks.",
-      "citationPages": [89],
+      "summary": "Baby’s size: Crown-to-rump length is the sitting height or distance from the top of the baby’s head to its rump or buttocks. The crown-to-rump length of your baby by this week is 0.08 to 0.16 inch (2 to 4mm).\n\nBook topic: During the embryonic period (from conception to week 10 of pregnancy, or from conception to week 8 of fetal development), the embryo is most susceptible to things that can interfere with its development. Most birth defects happen during this critical period. As the illustration on page 60 shows, baby’s body has a head and tail area. Around this time, early brain chambers form. The forebrain, midbrain, hind-brain and spinal cord are established.\n\nChanges in you: You’ve been pregnant for 1 month, so you should have noticed a few changes in your body by now. You may have gained a few pounds. Or you may have lost weight. If this is your first pregnancy, your abdomen probably hasn’t changed much. You may be gaining weight in your breasts or other places.\n\nNutrition in the book: During your pregnancy, you need to be selective in the foods you choose. Eating the right foods, in the correct amounts, takes planning. Eat foods high in vitamins and minerals, especially iron, calcium, magnesium, folate and zinc. You also need fiber. Some of the foods you should eat, and the amounts of each, are listed below. Try to eat these foods every day. We discuss food groups in the following weeks. Check weekly discussions for nutrition tips.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Crown-to-rump length is the sitting height or distance from the top of the baby’s head to its rump or buttocks. The crown-to-rump length of your baby by this week is 0.08 to 0.16 inch (2 to 4mm).",
+          "citationPages": [
+            89
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "During the embryonic period (from conception to week 10 of pregnancy, or from conception to week 8 of fetal development), the embryo is most susceptible to things that can interfere with its development. Most birth defects happen during this critical period. As the illustration on page 60 shows, baby’s body has a head and tail area. Around this time, early brain chambers form. The forebrain, midbrain, hind-brain and spinal cord are established.",
+          "citationPages": [
+            89
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "You’ve been pregnant for 1 month, so you should have noticed a few changes in your body by now. You may have gained a few pounds. Or you may have lost weight. If this is your first pregnancy, your abdomen probably hasn’t changed much. You may be gaining weight in your breasts or other places.",
+          "citationPages": [
+            89
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "During your pregnancy, you need to be selective in the foods you choose. Eating the right foods, in the correct amounts, takes planning. Eat foods high in vitamins and minerals, especially iron, calcium, magnesium, folate and zinc. You also need fiber. Some of the foods you should eat, and the amounts of each, are listed below. Try to eat these foods every day. We discuss food groups in the following weeks. Check weekly discussions for nutrition tips.",
+          "citationPages": [
+            98
+          ]
+        }
+      ],
+      "citationPages": [
+        89,
+        98
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 7,
-      "summary": "Your baby goes through an incredible growth spurt around this time. At the beginning of this week, the crown-to-rump length is 0.16 to 0.2 inch (4 to 5mm), about the size of a BB pellet.",
-      "citationPages": [103],
+      "summary": "Baby’s size: Your baby goes through an incredible growth spurt around this time. At the beginning of this week, the crown-to-rump length is 0.16 to 0.2 inch (4 to 5mm), about the size of a BB pellet.\n\nBook topic: Leg buds are beginning to appear as short fins. As you can see on page 70, arm buds have divided into a hand segment and an arm-shoulder segment. The hand and foot have a plate where the fingers and toes will develop. The heart has divided into right and left chambers. An opening between the chambers called the foramen ovale appears. This opening lets blood pass from one chamber to the other, allowing it to bypass the lungs.\n\nChanges in you: Although you are probably quite anxious to show the world you’re pregnant, there still may be little noticeable change. Changes will come soon.\n\nNutrition in the book: Dairy products can be very important during pregnancy. They contain calcium and vitamin D; both are important to you and baby. Calcium helps keep your bones healthy; baby needs it to develop strong bones and teeth. Adequate levels of vitamin D may help decrease your chances of developing pre-eclampsia during pregnancy. A pregnant woman should take in 1200mg of calcium a day (1½ times the recommended amount for nonpregnant women). Your prenatal",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Your baby goes through an incredible growth spurt around this time. At the beginning of this week, the crown-to-rump length is 0.16 to 0.2 inch (4 to 5mm), about the size of a BB pellet.",
+          "citationPages": [
+            103
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Leg buds are beginning to appear as short fins. As you can see on page 70, arm buds have divided into a hand segment and an arm-shoulder segment. The hand and foot have a plate where the fingers and toes will develop. The heart has divided into right and left chambers. An opening between the chambers called the foramen ovale appears. This opening lets blood pass from one chamber to the other, allowing it to bypass the lungs.",
+          "citationPages": [
+            103
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Although you are probably quite anxious to show the world you’re pregnant, there still may be little noticeable change. Changes will come soon.",
+          "citationPages": [
+            103
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Dairy products can be very important during pregnancy. They contain calcium and vitamin D; both are important to you and baby. Calcium helps keep your bones healthy; baby needs it to develop strong bones and teeth. Adequate levels of vitamin D may help decrease your chances of developing pre-eclampsia during pregnancy. A pregnant woman should take in 1200mg of calcium a day (1½ times the recommended amount for nonpregnant women). Your prenatal",
+          "citationPages": [
+            108
+          ]
+        }
+      ],
+      "citationPages": [
+        103,
+        108
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 8,
-      "summary": "By this week of pregnancy, the crown-to-rump length of baby is ½ to ¾ inch (1.4 to 2cm). This is about the size of a pinto bean.",
-      "citationPages": [117],
+      "summary": "Baby’s size: By this week of pregnancy, the crown-to-rump length of baby is ½ to ¾ inch (1.4 to 2cm). This is about the size of a pinto bean.\n\nBook topic: Your baby continues to grow and to change. Compare the illustration on page 82 with illustrations in the previous weeks. Can you see the changes? Eyes are moving toward the middle of the face. Eyelid folds appear on the face, and nerve cells in the eye are beginning to develop. The tip of the nose is present. Internal and external ears are forming. The body’s trunk area is getting longer and straightening out.\n\nChanges in you: Your uterus is getting bigger, so you should be noticing a change in your waistline and the fit of your clothes. If you have a pelvic exam, your healthcare provider will be able to feel your enlarged uterus.\n\nNutrition in the book: It’s hard to eat nutritiously for every meal. You may not always get the nutrients you need in the amounts you need. On page 86 is a chart showing where you can get the various nutrients you should be eating every day. In each meal during pregnancy, try to include a whole-grain product, fruits and/or veggies, a lean protein and a healthy fat. Your prenatal vitamin is not a substitute for food, so don’t count on it to supply you with all the essential vitamins and minerals you need.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "By this week of pregnancy, the crown-to-rump length of baby is ½ to ¾ inch (1.4 to 2cm). This is about the size of a pinto bean.",
+          "citationPages": [
+            117
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Your baby continues to grow and to change. Compare the illustration on page 82 with illustrations in the previous weeks. Can you see the changes? Eyes are moving toward the middle of the face. Eyelid folds appear on the face, and nerve cells in the eye are beginning to develop. The tip of the nose is present. Internal and external ears are forming. The body’s trunk area is getting longer and straightening out.",
+          "citationPages": [
+            117
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Your uterus is getting bigger, so you should be noticing a change in your waistline and the fit of your clothes. If you have a pelvic exam, your healthcare provider will be able to feel your enlarged uterus.",
+          "citationPages": [
+            117
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "It’s hard to eat nutritiously for every meal. You may not always get the nutrients you need in the amounts you need. On page 86 is a chart showing where you can get the various nutrients you should be eating every day. In each meal during pregnancy, try to include a whole-grain product, fruits and/or veggies, a lean protein and a healthy fat. Your prenatal vitamin is not a substitute for food, so don’t count on it to supply you with all the essential vitamins and minerals you need.",
+          "citationPages": [
+            124
+          ]
+        }
+      ],
+      "citationPages": [
+        117,
+        124
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 9,
-      "summary": "The crown-to-rump length of the embryo is 1 to 1¼ inches (2.2 to 3cm). This is close to the size of a medium green olive.",
-      "citationPages": [130],
+      "summary": "Baby’s size: The crown-to-rump length of the embryo is 1 to 1¼ inches (2.2 to 3cm). This is close to the size of a medium green olive.\n\nBook topic: If you could look inside your uterus, you’d see many\n\nChanges in you: Your waistline may be growing thicker. This occurs as your uterus fills your pelvic area and starts to grow up into the abdomen.\n\nNutrition in the book: . Don’t cut out foods— add fresh food to your meal plan. Wait until you’re back on your feet after baby’s birth to think about detoxing. Some General Lifestyle Precautions Some women have questions about using saunas, hot tubs and spas during pregnancy. They want to know if it is OK to relax this way. We recommend you don’t take a chance with a sauna, hot tub or spa. Your baby relies on you to maintain correct body temperature.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "The crown-to-rump length of the embryo is 1 to 1¼ inches (2.2 to 3cm). This is close to the size of a medium green olive.",
+          "citationPages": [
+            130
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "If you could look inside your uterus, you’d see many",
+          "citationPages": [
+            130
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Your waistline may be growing thicker. This occurs as your uterus fills your pelvic area and starts to grow up into the abdomen.",
+          "citationPages": [
+            130
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": ". Don’t cut out foods— add fresh food to your meal plan. Wait until you’re back on your feet after baby’s birth to think about detoxing. Some General Lifestyle Precautions Some women have questions about using saunas, hot tubs and spas during pregnancy. They want to know if it is OK to relax this way. We recommend you don’t take a chance with a sauna, hot tub or spa. Your baby relies on you to maintain correct body temperature.",
+          "citationPages": [
+            134
+          ]
+        }
+      ],
+      "citationPages": [
+        130,
+        134
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 10,
-      "summary": "By this week, crown-to-rump length of baby is about 1¼ to 1¾ inches (3.1 to 4.2cm). Baby is starting to put on a little weight, so we’ll add weight in this section.",
-      "citationPages": [142],
+      "summary": "Baby’s size: By this week, crown-to-rump length of baby is about 1¼ to 1¾ inches (3.1 to 4.2cm). Baby is starting to put on a little weight, so we’ll add weight in this section. Before this week, weight was too small to measure weekly differences.\n\nBook topic: The end of this week is the end of the embryonic period. During the embryonic period, the baby has been most susceptible to things that could harm it. Most birth defects occur then. It’s good to know a vital part of your baby’s development is behind you. Few birth defects happen after this time. However, drugs and other harmful exposures, such as radiation (X-ray), can hurt the baby at any time during pregnancy.\n\nChanges in you: A condition that can make you grow too big too fast is a molar pregnancy, sometimes called gestational trophoblastic neoplasia (GTN) or hydatidiform mole. A molar pregnancy develops from an abnormally fertilized egg, but an embryo does not usually develop. Abnormal placental tissue grows instead. The most common symptom is bleeding during the first trimester.\n\nNutrition in the book: Pregnancy increases your protein needs, which is important for you and baby. Try to eat 6 ounces of protein each day during the first trimester and 8 ounces a day during the second and third trimesters. But don’t eat too much protein; it should only make up about 15% of your total calorie intake. Many protein sources are high in fat. If you need to watch your calories, choose low-fat protein sources.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "By this week, crown-to-rump length of baby is about 1¼ to 1¾ inches (3.1 to 4.2cm). Baby is starting to put on a little weight, so we’ll add weight in this section. Before this week, weight was too small to measure weekly differences.",
+          "citationPages": [
+            142
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "The end of this week is the end of the embryonic period. During the embryonic period, the baby has been most susceptible to things that could harm it. Most birth defects occur then. It’s good to know a vital part of your baby’s development is behind you. Few birth defects happen after this time. However, drugs and other harmful exposures, such as radiation (X-ray), can hurt the baby at any time during pregnancy.",
+          "citationPages": [
+            143
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "A condition that can make you grow too big too fast is a molar pregnancy, sometimes called gestational trophoblastic neoplasia (GTN) or hydatidiform mole. A molar pregnancy develops from an abnormally fertilized egg, but an embryo does not usually develop. Abnormal placental tissue grows instead. The most common symptom is bleeding during the first trimester.",
+          "citationPages": [
+            142
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Pregnancy increases your protein needs, which is important for you and baby. Try to eat 6 ounces of protein each day during the first trimester and 8 ounces a day during the second and third trimesters. But don’t eat too much protein; it should only make up about 15% of your total calorie intake. Many protein sources are high in fat. If you need to watch your calories, choose low-fat protein sources.",
+          "citationPages": [
+            149
+          ]
+        }
+      ],
+      "citationPages": [
+        142,
+        143,
+        149
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 11,
-      "summary": "Crown-to-rump length of baby is 1½ to 2½ inches (4.4 to 6cm). Fetal weight is about 0.3 ounce (8g).",
-      "citationPages": [156],
+      "summary": "Baby’s size: Crown-to-rump length of baby is 1½ to 2½ inches (4.4 to 6cm). Fetal weight is about 0.3 ounce (8g). Your baby is about the size of a large lime.\n\nBook topic: Fetal growth is rapid now. As you can see in the illustration on page 112, the head is almost half the baby’s entire length. As the head moves backward toward the spine, the chin rises from the chest, and the neck develops and lengthens. Fingernails appear. External genitalia are beginning to show distinguishing features. Development into a male or female is complete in another 3 weeks.\n\nChanges in you: You’re near the end of the first trimester! Your uterus is almost big enough to fill your pelvis and may be felt in your lower abdomen, above the middle of your pubic bone.\n\nNutrition in the book: Carbohydrate foods provide the primary source of energy for your growing baby. These foods also help your body use protein efficiently. Foods from this group are almost interchangeable, so it should be easy to get all the servings you need. Some carbohydrate foods you may choose, and their serving sizes, include the following: • tortilla—1 large • pasta, cereal or rice, cooked—½ cup • cereal, ready-to-eat—1 ounce • bagel—½ small • bread—1 slice • roll—1 medium If you’re feeling down, look at your carbohydrate intake.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Crown-to-rump length of baby is 1½ to 2½ inches (4.4 to 6cm). Fetal weight is about 0.3 ounce (8g). Your baby is about the size of a large lime.",
+          "citationPages": [
+            156
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Fetal growth is rapid now. As you can see in the illustration on page 112, the head is almost half the baby’s entire length. As the head moves backward toward the spine, the chin rises from the chest, and the neck develops and lengthens. Fingernails appear. External genitalia are beginning to show distinguishing features. Development into a male or female is complete in another 3 weeks.",
+          "citationPages": [
+            156
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "You’re near the end of the first trimester! Your uterus is almost big enough to fill your pelvis and may be felt in your lower abdomen, above the middle of your pubic bone.",
+          "citationPages": [
+            156
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Carbohydrate foods provide the primary source of energy for your growing baby. These foods also help your body use protein efficiently. Foods from this group are almost interchangeable, so it should be easy to get all the servings you need. Some carbohydrate foods you may choose, and their serving sizes, include the following: • tortilla—1 large • pasta, cereal or rice, cooked—½ cup • cereal, ready-to-eat—1 ounce • bagel—½ small • bread—1 slice • roll—1 medium If you’re feeling down, look at your carbohydrate intake.",
+          "citationPages": [
+            162,
+            163
+          ]
+        }
+      ],
+      "citationPages": [
+        156,
+        162,
+        163
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 12,
-      "summary": "Your baby weighs between ⅓ and ½ ounce (8 to 14g), and crown-to- rump length is almost 2½ inches (6.1cm).",
-      "citationPages": [170],
+      "summary": "Baby’s size: Your baby weighs between ⅓ and ½ ounce (8 to 14g), and crown-to- rump length is almost 2½ inches (6.1cm). As you can see on page 122, your baby’s size has almost doubled in the past 3 weeks!\n\nBook topic: Few structures in the baby are formed after this week, but the structures already formed continue to grow and to develop. At your 12-week visit (or near then), you’ll probably be able to hear your baby’s heartbeat! It can be heard with Doppler, a special listening machine (not a stethoscope) that magnifies the sound of baby’s heartbeat so you can hear it. Bones are forming. Fingers and toes have separated, and nails are growing.\n\nChanges in you: Around this time, you may be able to feel your uterus above your pubic bone (pubic symphysis). Before pregnancy, your uterus holds ⅓ ounce (10ml) or less. During pregnancy, it becomes a muscular container big enough to hold the baby, placenta and amniotic fluid. The uterus increases its capacity 500 to 1000 times during pregnancy!\n\nNutrition in the book: Some women don’t understand the concept of increasing their caloric intake during pregnancy. Don’t fall into this trap! It’s unhealthy for you and baby if you gain too much weight, especially early in pregnancy. It makes carrying your baby more uncomfortable, and delivery may be more difficult. It may also be hard to shed the extra pounds after pregnancy. After baby’s birth, most women are anxious to return to “normal” clothes and to look the way they did before pregnancy.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Your baby weighs between ⅓ and ½ ounce (8 to 14g), and crown-to- rump length is almost 2½ inches (6.1cm). As you can see on page 122, your baby’s size has almost doubled in the past 3 weeks!",
+          "citationPages": [
+            170
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Few structures in the baby are formed after this week, but the structures already formed continue to grow and to develop. At your 12-week visit (or near then), you’ll probably be able to hear your baby’s heartbeat! It can be heard with Doppler, a special listening machine (not a stethoscope) that magnifies the sound of baby’s heartbeat so you can hear it. Bones are forming. Fingers and toes have separated, and nails are growing.",
+          "citationPages": [
+            170
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Around this time, you may be able to feel your uterus above your pubic bone (pubic symphysis). Before pregnancy, your uterus holds ⅓ ounce (10ml) or less. During pregnancy, it becomes a muscular container big enough to hold the baby, placenta and amniotic fluid. The uterus increases its capacity 500 to 1000 times during pregnancy!",
+          "citationPages": [
+            170
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Some women don’t understand the concept of increasing their caloric intake during pregnancy. Don’t fall into this trap! It’s unhealthy for you and baby if you gain too much weight, especially early in pregnancy. It makes carrying your baby more uncomfortable, and delivery may be more difficult. It may also be hard to shed the extra pounds after pregnancy. After baby’s birth, most women are anxious to return to “normal” clothes and to look the way they did before pregnancy.",
+          "citationPages": [
+            179
+          ]
+        }
+      ],
+      "citationPages": [
+        170,
+        179
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 13,
-      "summary": "Your baby continues to grow rapidly! Its crown-to-rump length is 2½ to 3 inches (6.5 to 7.8cm), and it weighs between ½ and ¾ ounce (13 to 20g).",
-      "citationPages": [183],
+      "summary": "Baby’s size: Your baby continues to grow rapidly! Its crown-to-rump length is 2½ to 3 inches (6.5 to 7.8cm), and it weighs between ½ and ¾ ounce (13 to 20g). It is about the size of a peach.\n\nBook topic: Fetal growth is particularly striking from now through about 24 weeks of pregnancy. The baby has doubled in length since the 7th week. Changes in fetal weight have also been dramatic. There is a relative slowdown in the growth of your baby’s head compared to the rest of its body. In week 13, the head is about half the crown-to-rump length. By week 21, the head is about ⅓ of baby’s body.\n\nChanges in you: You can probably feel the upper edge of your uterus about 4 inches (10cm) below your bellybutton. Your uterus fills your pelvis and is growing upward into your abdomen. It feels like a soft, smooth ball. You have probably gained some weight by now. If morning sickness has been a problem, you may not have gained much.\n\nNutrition in the book: Caffeine is a stimulant found in many beverages and foods, including coffee, tea, various soft drinks and chocolate. It may also be found in some medicine, such as headache remedies. If a woman takes in a lot of caffeine, it may affect her baby’s respiratory system. One study showed exposure before birth might be linked to sudden infant death syndrome (SIDS). Tip for Week 13 When cutting down on caffeine during pregnancy, read labels. More than 200 foods, beverages and over-the-counter medicines contain caffeine!",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Your baby continues to grow rapidly! Its crown-to-rump length is 2½ to 3 inches (6.5 to 7.8cm), and it weighs between ½ and ¾ ounce (13 to 20g). It is about the size of a peach.",
+          "citationPages": [
+            183
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Fetal growth is particularly striking from now through about 24 weeks of pregnancy. The baby has doubled in length since the 7th week. Changes in fetal weight have also been dramatic. There is a relative slowdown in the growth of your baby’s head compared to the rest of its body. In week 13, the head is about half the crown-to-rump length. By week 21, the head is about ⅓ of baby’s body.",
+          "citationPages": [
+            183
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "You can probably feel the upper edge of your uterus about 4 inches (10cm) below your bellybutton. Your uterus fills your pelvis and is growing upward into your abdomen. It feels like a soft, smooth ball. You have probably gained some weight by now. If morning sickness has been a problem, you may not have gained much.",
+          "citationPages": [
+            183
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Caffeine is a stimulant found in many beverages and foods, including coffee, tea, various soft drinks and chocolate. It may also be found in some medicine, such as headache remedies. If a woman takes in a lot of caffeine, it may affect her baby’s respiratory system. One study showed exposure before birth might be linked to sudden infant death syndrome (SIDS). Tip for Week 13 When cutting down on caffeine during pregnancy, read labels. More than 200 foods, beverages and over-the-counter medicines contain caffeine!",
+          "citationPages": [
+            190
+          ]
+        }
+      ],
+      "citationPages": [
+        183,
+        190
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 14,
-      "summary": "Crown-to-rump length is 3¼ to 4 inches (8 to 9.3cm). Your baby is about the size of your fist and weighs almost 1 ounce (25g).",
-      "citationPages": [196],
+      "summary": "Baby’s size: Crown-to-rump length is 3¼ to 4 inches (8 to 9.3cm). Your baby is about the size of your fist and weighs almost 1 ounce (25g).\n\nBook topic: As you can see in the illustration on page 142, baby’s ears have moved to the sides of its head. The neck has grown, so the chin no longer rests on the chest.\n\nChanges in you: Maternity clothes may be a “must” by now. Some women try to get by for a while by not buttoning or zipping their pants all the way or using rubber bands or safety pins to increase the size of their waistbands. Others wear their partner’s clothing, but that usually works for only a short time.\n\nNutrition in the book: Being overweight when pregnancy begins may present special problems for you. Your healthcare provider may advise you to gain less weight than the average 25 to 35 pounds recommended for a normal-weight woman. You will probably have to choose lower-calorie, lower-fat foods to eat. A visit with a nutritionist may be necessary to help you develop a healthful food plan. You will be advised not to diet during pregnancy. See the following discussion dealing with obesity during pregnancy.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Crown-to-rump length is 3¼ to 4 inches (8 to 9.3cm). Your baby is about the size of your fist and weighs almost 1 ounce (25g).",
+          "citationPages": [
+            196
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "As you can see in the illustration on page 142, baby’s ears have moved to the sides of its head. The neck has grown, so the chin no longer rests on the chest.",
+          "citationPages": [
+            196
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Maternity clothes may be a “must” by now. Some women try to get by for a while by not buttoning or zipping their pants all the way or using rubber bands or safety pins to increase the size of their waistbands. Others wear their partner’s clothing, but that usually works for only a short time.",
+          "citationPages": [
+            196
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Being overweight when pregnancy begins may present special problems for you. Your healthcare provider may advise you to gain less weight than the average 25 to 35 pounds recommended for a normal-weight woman. You will probably have to choose lower-calorie, lower-fat foods to eat. A visit with a nutritionist may be necessary to help you develop a healthful food plan. You will be advised not to diet during pregnancy. See the following discussion dealing with obesity during pregnancy.",
+          "citationPages": [
+            201
+          ]
+        }
+      ],
+      "citationPages": [
+        196,
+        201
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 15,
-      "summary": "The fetal crown-to-rump length by this week is 4 to 4½ inches (9.3 to 10.3cm). The fetus weighs about 1¾ ounces (50g).",
-      "citationPages": [210],
+      "summary": "Baby’s size: The fetal crown-to-rump length by this week is 4 to 4½ inches (9.3 to 10.3cm). The fetus weighs about 1¾ ounces (50g). It’s close to the size of a softball.\n\nBook topic: It’s still a little early to feel movement, although you should feel your baby move in the next few weeks! Baby’s skin is thin, and you can see blood vessels through the skin. Baby may be sucking its thumb. This has been seen with ultrasound examination. As you can see in the illustration on page 154, ears now look more normal. In fact, your baby looks more human every day.\n\nChanges in you: Changes in your lower abdomen change the way your clothes fit. Your pregnancy may not be obvious to other people when you wear regular clothes. But it may become obvious if you start wearing maternity clothes or put on a swimsuit. You may be able to feel your uterus about 3 or 4 inches (7.6 to 10cm) below your bellybutton.\n\nNutrition in the book: About this time, you may need to start adding extra calories to your meal plan to meet the needs of your growing baby and your changing body. If you’re a normal-weight woman, eat between 2200 and 2500 calories a day during the first trimester. During the second trimester, increase that amount by about 300 calories a day. In the third trimester, add only an additional 100 calories (beyond the 300 calories you added during the second trimester).",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "The fetal crown-to-rump length by this week is 4 to 4½ inches (9.3 to 10.3cm). The fetus weighs about 1¾ ounces (50g). It’s close to the size of a softball.",
+          "citationPages": [
+            210
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "It’s still a little early to feel movement, although you should feel your baby move in the next few weeks! Baby’s skin is thin, and you can see blood vessels through the skin. Baby may be sucking its thumb. This has been seen with ultrasound examination. As you can see in the illustration on page 154, ears now look more normal. In fact, your baby looks more human every day.",
+          "citationPages": [
+            210
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Changes in your lower abdomen change the way your clothes fit. Your pregnancy may not be obvious to other people when you wear regular clothes. But it may become obvious if you start wearing maternity clothes or put on a swimsuit. You may be able to feel your uterus about 3 or 4 inches (7.6 to 10cm) below your bellybutton.",
+          "citationPages": [
+            210
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "About this time, you may need to start adding extra calories to your meal plan to meet the needs of your growing baby and your changing body. If you’re a normal-weight woman, eat between 2200 and 2500 calories a day during the first trimester. During the second trimester, increase that amount by about 300 calories a day. In the third trimester, add only an additional 100 calories (beyond the 300 calories you added during the second trimester).",
+          "citationPages": [
+            214
+          ]
+        }
+      ],
+      "citationPages": [
+        210,
+        214
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 16,
-      "summary": "Baby’s crown-to-rump length by this week is 4⅓ to 4⅔ inches (10.8 to 11.6cm). Weight is about 2¾ ounces (80g).",
-      "citationPages": [223],
+      "summary": "Baby’s size: Baby’s crown-to-rump length by this week is 4⅓ to 4⅔ inches (10.8 to 11.6cm). Weight is about 2¾ ounces (80g).\n\nBook topic: Fine hair covers baby’s head. The illustration on page 164 shows soft hair, called lanugo. The umbilical cord is attached to the abdomen; this attachment has moved lower on the body of the fetus. Fingernails are well formed. Arms and legs are moving; you can see movement on an ultrasound exam.\n\nChanges in you: Six weeks ago, your uterus weighed about 5 ounces (140g). It weighs about 8¾ ounces (250g) now. The amount of amniotic fluid around the baby has increased to about 7½ ounces (250ml) of fluid. You can easily feel your uterus about 3 inches (7.6cm) below your bellybutton.\n\nNutrition in the book: Good news—pregnant women should snack often, particularly during the second half of pregnancy! You should have three or four snacks a day, in addition to your regular meals. There are a couple of catches, though. First, snacks must be nutritious. Second, meals may need to be smaller so you can eat those snacks. One nutritional goal in pregnancy is to eat enough food so nutrients are always available for your body’s use and for use by the growing fetus. Usually you want a snack to be quick and easy.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Baby’s crown-to-rump length by this week is 4⅓ to 4⅔ inches (10.8 to 11.6cm). Weight is about 2¾ ounces (80g).",
+          "citationPages": [
+            223
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Fine hair covers baby’s head. The illustration on page 164 shows soft hair, called lanugo. The umbilical cord is attached to the abdomen; this attachment has moved lower on the body of the fetus. Fingernails are well formed. Arms and legs are moving; you can see movement on an ultrasound exam.",
+          "citationPages": [
+            223
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Six weeks ago, your uterus weighed about 5 ounces (140g). It weighs about 8¾ ounces (250g) now. The amount of amniotic fluid around the baby has increased to about 7½ ounces (250ml) of fluid. You can easily feel your uterus about 3 inches (7.6cm) below your bellybutton.",
+          "citationPages": [
+            223
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Good news—pregnant women should snack often, particularly during the second half of pregnancy! You should have three or four snacks a day, in addition to your regular meals. There are a couple of catches, though. First, snacks must be nutritious. Second, meals may need to be smaller so you can eat those snacks. One nutritional goal in pregnancy is to eat enough food so nutrients are always available for your body’s use and for use by the growing fetus. Usually you want a snack to be quick and easy.",
+          "citationPages": [
+            229
+          ]
+        }
+      ],
+      "citationPages": [
+        223,
+        229
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 17,
-      "summary": "The crown-to-rump length of your baby is 4½ to 4¾ inches (11 to 12cm). Fetal weight has doubled in 2 weeks and is now about 3½ ounces (100g).",
-      "citationPages": [237],
+      "summary": "Baby’s size: The crown-to-rump length of your baby is 4½ to 4¾ inches (11 to 12cm). Fetal weight has doubled in 2 weeks and is now about 3½ ounces (100g). By this week, your baby is about the size of your hand spread open wide.\n\nBook topic: If you look at the illustration on page 174, then look at earlier weeks, you’ll see the incredible changes occurring in your baby. Fat, also called adipose tissue, begins to form this week. It’s important to baby’s heat production and metabolism. At birth, fat makes up about 5¼ pounds (2.4kg) of the total average weight of 7¾ pounds (3.5kg). You have felt your baby move, or you will soon. You may not feel it every day.\n\nChanges in you: Your uterus is to 2 inches (3.8 to 5cm) below your bellybutton. You now have an obvious swelling in your lower abdomen. Maternity clothing is a must for comfort’s sake. When your partner gives you a hug, he may feel the difference in your lower abdomen.\n\nNutrition in the book: Are You a Vegetarian? Some women choose to eat a vegetarian diet because of personal or religious preferences. Other women are nauseated by meat during pregnancy. Is it safe to eat a vegetarian diet while you’re pregnant? It can be, if you pay close attention to the types and combinations of foods you eat. Research shows most women who eat a vegetarian diet eat a more nutrient-rich variety of foods than those who eat meat.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "The crown-to-rump length of your baby is 4½ to 4¾ inches (11 to 12cm). Fetal weight has doubled in 2 weeks and is now about 3½ ounces (100g). By this week, your baby is about the size of your hand spread open wide.",
+          "citationPages": [
+            237
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "If you look at the illustration on page 174, then look at earlier weeks, you’ll see the incredible changes occurring in your baby. Fat, also called adipose tissue, begins to form this week. It’s important to baby’s heat production and metabolism. At birth, fat makes up about 5¼ pounds (2.4kg) of the total average weight of 7¾ pounds (3.5kg). You have felt your baby move, or you will soon. You may not feel it every day.",
+          "citationPages": [
+            237
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Your uterus is to 2 inches (3.8 to 5cm) below your bellybutton. You now have an obvious swelling in your lower abdomen. Maternity clothing is a must for comfort’s sake. When your partner gives you a hug, he may feel the difference in your lower abdomen.",
+          "citationPages": [
+            237
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Are You a Vegetarian? Some women choose to eat a vegetarian diet because of personal or religious preferences. Other women are nauseated by meat during pregnancy. Is it safe to eat a vegetarian diet while you’re pregnant? It can be, if you pay close attention to the types and combinations of foods you eat. Research shows most women who eat a vegetarian diet eat a more nutrient-rich variety of foods than those who eat meat.",
+          "citationPages": [
+            241,
+            242
+          ]
+        }
+      ],
+      "citationPages": [
+        237,
+        241,
+        242
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 18,
-      "summary": "Baby’s crown-to-rump length is 5 to 5½ inches (12.5 to 14cm) by this week. Weight of the fetus is about 5¼ ounces (150g).",
-      "citationPages": [250],
+      "summary": "Baby’s size: Baby’s crown-to-rump length is 5 to 5½ inches (12.5 to 14cm) by this week. Weight of the fetus is about 5¼ ounces (150g).\n\nBook topic: Baby continues to develop, but the rapid growth rate slows. As you can see in the illustration on page 184, your baby has a human appearance now. Blood from your baby flows to the placenta through the umbilical cord. In the placenta, oxygen and nutrients are carried from your blood to fetal blood. At birth, baby must go rapidly from depending on you for oxygen to depending on its own heart and lungs.\n\nChanges in you: If you put your fingers sideways and measure, your uterus is about two fingerwidths (1 inch) below your bellybutton. It’s the size of a cantaloupe or a little larger. Total weight gain to this point should be 10 to 13 pounds (4.5 to 5.8kg), but this can vary. If you’ve gained more weight than this, talk to your healthcare provider.\n\nNutrition in the book: You need about 30mg of iron a day to meet the increased needs of pregnancy. Baby draws on your iron stores to create its own stores for its first few months of life. This helps protect baby from iron deficiency if you breastfeed. Your prenatal vitamin contains about 60mg of iron, which should be enough for you. If you must take iron supplements, take your iron pill with a glass of orange juice or grapefruit juice to increase the iron absorption.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Baby’s crown-to-rump length is 5 to 5½ inches (12.5 to 14cm) by this week. Weight of the fetus is about 5¼ ounces (150g).",
+          "citationPages": [
+            250
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Baby continues to develop, but the rapid growth rate slows. As you can see in the illustration on page 184, your baby has a human appearance now. Blood from your baby flows to the placenta through the umbilical cord. In the placenta, oxygen and nutrients are carried from your blood to fetal blood. At birth, baby must go rapidly from depending on you for oxygen to depending on its own heart and lungs.",
+          "citationPages": [
+            250
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "If you put your fingers sideways and measure, your uterus is about two fingerwidths (1 inch) below your bellybutton. It’s the size of a cantaloupe or a little larger. Total weight gain to this point should be 10 to 13 pounds (4.5 to 5.8kg), but this can vary. If you’ve gained more weight than this, talk to your healthcare provider.",
+          "citationPages": [
+            250
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "You need about 30mg of iron a day to meet the increased needs of pregnancy. Baby draws on your iron stores to create its own stores for its first few months of life. This helps protect baby from iron deficiency if you breastfeed. Your prenatal vitamin contains about 60mg of iron, which should be enough for you. If you must take iron supplements, take your iron pill with a glass of orange juice or grapefruit juice to increase the iron absorption.",
+          "citationPages": [
+            256
+          ]
+        }
+      ],
+      "citationPages": [
+        250,
+        256
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 19,
-      "summary": "Crown-to-rump length of the growing fetus is 5¼ to 6 inches (13 to 15cm) by this week. Your baby weighs about 7 ounces (200g).",
-      "citationPages": [262],
+      "summary": "Baby’s size: Crown-to-rump length of the growing fetus is 5¼ to 6 inches (13 to 15cm) by this week. Your baby weighs about 7 ounces (200g). It’s incredible to think your baby will increase its weight more than 15 times between now and delivery!\n\nBook topic: Around this time, your baby begins hearing sounds from you—your beating heart, lungs filling with air, swishing blood and digesting food. “Hearing” in a fetus is really a matter of feeling vibrations in the skull that are transmitted to baby’s inner ear. Baby “hears” your voice as it vibrates through your bones. Research shows lower-pitched sounds are heard more clearly in utero than high-pitched ones. Hydrocephalus With hydrocephalus, fluid accumulates in baby’s skull, causing enlargement of baby’s head.\n\nChanges in you: You can feel your uterus about ½ inch (1.3cm) below your bellybutton. The illustration on page 192 gives you an idea of the relative size of you, your uterus and your growing baby. A side view really shows the changes in you! Your total weight gain at this point should be between 8 and 14 pounds (3.6 and 6.3kg).\n\nNutrition in the book: Herbal Use in Pregnancy If you normally use herbs and botanicals—in the forms of teas, tinctures, pills or powders—to treat various medical and health problems, stop! Don’t use any herbal remedy during pregnancy without checking first with your healthcare provider! You may believe an herbal remedy is OK, but it could be dangerous during pregnancy. For example, if you’re constipated, you may decide to use senna as a laxative. However, senna may cause a miscarriage. Or you may have used St. John’s wort before pregnancy.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Crown-to-rump length of the growing fetus is 5¼ to 6 inches (13 to 15cm) by this week. Your baby weighs about 7 ounces (200g). It’s incredible to think your baby will increase its weight more than 15 times between now and delivery!",
+          "citationPages": [
+            262
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Around this time, your baby begins hearing sounds from you—your beating heart, lungs filling with air, swishing blood and digesting food. “Hearing” in a fetus is really a matter of feeling vibrations in the skull that are transmitted to baby’s inner ear. Baby “hears” your voice as it vibrates through your bones. Research shows lower-pitched sounds are heard more clearly in utero than high-pitched ones. Hydrocephalus With hydrocephalus, fluid accumulates in baby’s skull, causing enlargement of baby’s head.",
+          "citationPages": [
+            262,
+            263
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "You can feel your uterus about ½ inch (1.3cm) below your bellybutton. The illustration on page 192 gives you an idea of the relative size of you, your uterus and your growing baby. A side view really shows the changes in you! Your total weight gain at this point should be between 8 and 14 pounds (3.6 and 6.3kg).",
+          "citationPages": [
+            262
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Herbal Use in Pregnancy If you normally use herbs and botanicals—in the forms of teas, tinctures, pills or powders—to treat various medical and health problems, stop! Don’t use any herbal remedy during pregnancy without checking first with your healthcare provider! You may believe an herbal remedy is OK, but it could be dangerous during pregnancy. For example, if you’re constipated, you may decide to use senna as a laxative. However, senna may cause a miscarriage. Or you may have used St. John’s wort before pregnancy.",
+          "citationPages": [
+            267,
+            268
+          ]
+        }
+      ],
+      "citationPages": [
+        262,
+        263,
+        267,
+        268
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 20,
-      "summary": "At this midpoint in your pregnancy, crown-to-rump length is 5⅔ to 6½ inches (14 to 16cm). Your baby weighs about 9 ounces (260g).",
-      "citationPages": [276],
+      "summary": "Baby’s size: At this midpoint in your pregnancy, crown-to-rump length is 5⅔ to 6½ inches (14 to 16cm). Your baby weighs about 9 ounces (260g).\n\nBook topic: Your Baby’s Skin: Your Baby’s Skin The skin covering your baby began growing from two layers, the epidermis, which is on the surface, and the dermis, which is the deeper layer. By this point, there are four layers. One of these layers contains ridges, which are responsible for patterns on fingertips, palms and soles. They are genetically determined. When a baby is born, its skin is covered by a white substance that looks like paste, called vernix.\n\nChanges in you: Congratulations—20 weeks marks the midpoint. You’re halfway through your pregnancy! Your uterus is probably about even with your bellybutton. Your healthcare provider has been watching your growth and the enlargement of your uterus. Growth to this point may have been irregular but usually becomes more regular after the 20th week.\n\nNutrition in the book: Many women use sugar and/or artificial sweeteners before pregnancy. Are they safe during pregnancy? Caloric sweeteners include processed and unprocessed sugars, such as granulated sugar, brown sugar, corn syrup, honey, agave nectar and raw sugar. Caloric content ranges from 16 to 22 calories per teaspoon. If you use caloric sweeteners, you’re adding empty calories to your meal plan. Artificial (noncaloric) sweeteners help a woman cut calories. Some common artificial sweeteners include aspartame, acesulfame K, sucralose, stevia and saccharin.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "At this midpoint in your pregnancy, crown-to-rump length is 5⅔ to 6½ inches (14 to 16cm). Your baby weighs about 9 ounces (260g).",
+          "citationPages": [
+            276
+          ]
+        },
+        {
+          "title": "Book topic: Your Baby’s Skin",
+          "summary": "Your Baby’s Skin The skin covering your baby began growing from two layers, the epidermis, which is on the surface, and the dermis, which is the deeper layer. By this point, there are four layers. One of these layers contains ridges, which are responsible for patterns on fingertips, palms and soles. They are genetically determined. When a baby is born, its skin is covered by a white substance that looks like paste, called vernix.",
+          "citationPages": [
+            277
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Congratulations—20 weeks marks the midpoint. You’re halfway through your pregnancy! Your uterus is probably about even with your bellybutton. Your healthcare provider has been watching your growth and the enlargement of your uterus. Growth to this point may have been irregular but usually becomes more regular after the 20th week.",
+          "citationPages": [
+            276
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Many women use sugar and/or artificial sweeteners before pregnancy. Are they safe during pregnancy? Caloric sweeteners include processed and unprocessed sugars, such as granulated sugar, brown sugar, corn syrup, honey, agave nectar and raw sugar. Caloric content ranges from 16 to 22 calories per teaspoon. If you use caloric sweeteners, you’re adding empty calories to your meal plan. Artificial (noncaloric) sweeteners help a woman cut calories. Some common artificial sweeteners include aspartame, acesulfame K, sucralose, stevia and saccharin.",
+          "citationPages": [
+            283,
+            284
+          ]
+        }
+      ],
+      "citationPages": [
+        276,
+        277,
+        283,
+        284
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 21,
-      "summary": "Your baby now weighs about 10½ ounces (300g); its crown-to-rump length is about 7¼ inches (18cm). It’s about the size of a large banana.",
-      "citationPages": [287],
+      "summary": "Baby’s size: Your baby now weighs about 10½ ounces (300g); its crown-to-rump length is about 7¼ inches (18cm). It’s about the size of a large banana.\n\nBook topic: Rapid growth rate of your baby has slowed. However, the baby continues to grow and to develop as different organ systems within the baby mature. Baby’s digestive system is functioning in a simple way, and baby swallows amniotic fluid. Researchers believe swallowing may help develop the digestive system. It may also condition the digestive system to function after birth. After swallowing fluid, baby absorbs much of it and passes unabsorbed matter as far as the large bowel.\n\nChanges in you: When your healthcare provider measures your uterus, it’s almost 8½ inches (21cm) from the pubic symphysis. Your total weight gain should be between 10 and 15 pounds (4.5 and 6.3kg). By this week, your waistline is definitely gone. Friends and relatives—and strangers—can tell you’re pregnant. It would be hard to hide your condition!\n\nNutrition in the book: Cravings Some women experience food cravings during pregnancy. Food cravings have long been considered a nonspecific sign of pregnancy. We don’t understand all the reasons you might crave a food while you’re pregnant, but we believe hormonal and emotional changes add to the situation. Some believe cravings may indicate your body needs the nutrients a particular food contains, but research shows there is no proven connection between the foods you crave and nutrients you may need.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Your baby now weighs about 10½ ounces (300g); its crown-to-rump length is about 7¼ inches (18cm). It’s about the size of a large banana.",
+          "citationPages": [
+            287
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Rapid growth rate of your baby has slowed. However, the baby continues to grow and to develop as different organ systems within the baby mature. Baby’s digestive system is functioning in a simple way, and baby swallows amniotic fluid. Researchers believe swallowing may help develop the digestive system. It may also condition the digestive system to function after birth. After swallowing fluid, baby absorbs much of it and passes unabsorbed matter as far as the large bowel.",
+          "citationPages": [
+            287
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "When your healthcare provider measures your uterus, it’s almost 8½ inches (21cm) from the pubic symphysis. Your total weight gain should be between 10 and 15 pounds (4.5 and 6.3kg). By this week, your waistline is definitely gone. Friends and relatives—and strangers—can tell you’re pregnant. It would be hard to hide your condition!",
+          "citationPages": [
+            287
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Cravings Some women experience food cravings during pregnancy. Food cravings have long been considered a nonspecific sign of pregnancy. We don’t understand all the reasons you might crave a food while you’re pregnant, but we believe hormonal and emotional changes add to the situation. Some believe cravings may indicate your body needs the nutrients a particular food contains, but research shows there is no proven connection between the foods you crave and nutrients you may need.",
+          "citationPages": [
+            295
+          ]
+        }
+      ],
+      "citationPages": [
+        287,
+        295
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 22,
-      "summary": "Your baby weighs about 12¼ ounces (350g). Crown-to-rump length at this time is about 7⅔ inches (19cm).",
-      "citationPages": [301],
+      "summary": "Baby’s size: Your baby weighs about 12¼ ounces (350g). Crown-to-rump length at this time is about 7⅔ inches (19cm).\n\nBook topic: Your baby’s body grows every day. As you can see by looking at the illustration on page 224, eyelids and eyebrows are developed. Fingernails are also visible. Your baby’s organ systems are becoming specialized for their particular functions. Consider the liver. An important function of the liver is managing bilirubin, which is produced by the breakdown of blood cells.\n\nChanges in you: Your uterus is about ¾ inch (2cm) above your bellybutton. Your growing tummy doesn’t get in your way much; you may feel pretty good. You’re still able to bend over and to sit comfortably. Walking shouldn’t be an effort. Morning sickness has probably passed. It’s kind of fun being pregnant now!\n\nNutrition in the book: You need to drink water during pregnancy—lots of it! Fluid helps you in many ways, and you may feel better during your pregnancy if you drink more water than you normally do. When you don’t drink water, you can become dehydrated and tire more easily. When you’re dehydrated, it may reduce the amount of nutrients baby receives from you. Dehydration may also increase your risk of problems. Grandma’s Remedy If you want to avoid using medication, try a folk remedy.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Your baby weighs about 12¼ ounces (350g). Crown-to-rump length at this time is about 7⅔ inches (19cm).",
+          "citationPages": [
+            301
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Your baby’s body grows every day. As you can see by looking at the illustration on page 224, eyelids and eyebrows are developed. Fingernails are also visible. Your baby’s organ systems are becoming specialized for their particular functions. Consider the liver. An important function of the liver is managing bilirubin, which is produced by the breakdown of blood cells.",
+          "citationPages": [
+            301
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Your uterus is about ¾ inch (2cm) above your bellybutton. Your growing tummy doesn’t get in your way much; you may feel pretty good. You’re still able to bend over and to sit comfortably. Walking shouldn’t be an effort. Morning sickness has probably passed. It’s kind of fun being pregnant now!",
+          "citationPages": [
+            301
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "You need to drink water during pregnancy—lots of it! Fluid helps you in many ways, and you may feel better during your pregnancy if you drink more water than you normally do. When you don’t drink water, you can become dehydrated and tire more easily. When you’re dehydrated, it may reduce the amount of nutrients baby receives from you. Dehydration may also increase your risk of problems. Grandma’s Remedy If you want to avoid using medication, try a folk remedy.",
+          "citationPages": [
+            306
+          ]
+        }
+      ],
+      "citationPages": [
+        301,
+        306
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 23,
-      "summary": "By this week, baby weighs almost 1 pound (455g)! Its crown-to-rump length is 8 inches (20cm).",
-      "citationPages": [315],
+      "summary": "Baby’s size: By this week, baby weighs almost 1 pound (455g)! Its crown-to-rump length is 8 inches (20cm). Your baby is about the size of a small doll.\n\nBook topic: Baby’s body is getting plumper but skin is still wrinkled; see the illustration on page 234. Lanugo hair on the body occasionally turns darker at this time. The baby’s face and body begin to assume more of the appearance of an infant at birth. Your baby’s pancreas is important in insulin production, which is necessary for the body to break down and to use sugar.\n\nChanges in you: Your uterus extends about 1½ inches (3.75cm) above your bellybutton or about 9¼ inches (23cm) from the pubic symphysis. Your total weight gain should be between 12 and 15 pounds (5.5 and 6.8kg).\n\nNutrition in the book: You may need to be careful with your sodium intake during pregnancy. Taking in too much sodium may cause you to retain water, which can contribute to swelling and bloating. However, you do need some sodium every day to help deal with your increased blood volume. Aim for between 1500 and 2300mg of sodium a day. Eat potassium-rich foods, such as raisins and bananas; potassium helps the body get rid of sodium faster. Avoid foods that contain lots of",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "By this week, baby weighs almost 1 pound (455g)! Its crown-to-rump length is 8 inches (20cm). Your baby is about the size of a small doll.",
+          "citationPages": [
+            315
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Baby’s body is getting plumper but skin is still wrinkled; see the illustration on page 234. Lanugo hair on the body occasionally turns darker at this time. The baby’s face and body begin to assume more of the appearance of an infant at birth. Your baby’s pancreas is important in insulin production, which is necessary for the body to break down and to use sugar.",
+          "citationPages": [
+            315
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Your uterus extends about 1½ inches (3.75cm) above your bellybutton or about 9¼ inches (23cm) from the pubic symphysis. Your total weight gain should be between 12 and 15 pounds (5.5 and 6.8kg).",
+          "citationPages": [
+            315
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "You may need to be careful with your sodium intake during pregnancy. Taking in too much sodium may cause you to retain water, which can contribute to swelling and bloating. However, you do need some sodium every day to help deal with your increased blood volume. Aim for between 1500 and 2300mg of sodium a day. Eat potassium-rich foods, such as raisins and bananas; potassium helps the body get rid of sodium faster. Avoid foods that contain lots of",
+          "citationPages": [
+            323
+          ]
+        }
+      ],
+      "citationPages": [
+        315,
+        323
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 24,
-      "summary": "By this week, baby weighs about 1¼ pounds (540g). Its crown-to-rump length is about 8½ inches (21cm).",
-      "citationPages": [328],
+      "summary": "Baby’s size: By this week, baby weighs about 1¼ pounds (540g). Its crown-to-rump length is about 8½ inches (21cm).\n\nBook topic: Baby is filling out. Its face and body look more like that of an infant at the time of birth. Although it weighs a little over 1 pound at this point, it is still very tiny. The baby grows in amniotic fluid inside the amniotic sac. See the illustration on page 244. Amniotic fluid has several important functions. It provides an environment in which the baby can move easily and cushions the fetus against injury.\n\nChanges in you: Your uterus is now about 1½ to 2 inches (3.8 to 5.1cm) above the bellybutton. It measures almost 10 inches (24cm) above the pubic symphysis.\n\nNutrition in the book: Many pregnant women are concerned about eating out. Some want to know if they can eat certain types of food, such as Mexican, Vietnamese, Thai or Greek food. They’re concerned spicy or rich foods could be harmful to the baby. It’s OK to eat out, but you might find certain foods don’t agree with you. The best types of food to eat at restaurants are those you tolerate well at home. Chicken, fish, fresh vegetables and salads are good choices.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "By this week, baby weighs about 1¼ pounds (540g). Its crown-to-rump length is about 8½ inches (21cm).",
+          "citationPages": [
+            328
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Baby is filling out. Its face and body look more like that of an infant at the time of birth. Although it weighs a little over 1 pound at this point, it is still very tiny. The baby grows in amniotic fluid inside the amniotic sac. See the illustration on page 244. Amniotic fluid has several important functions. It provides an environment in which the baby can move easily and cushions the fetus against injury.",
+          "citationPages": [
+            328
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Your uterus is now about 1½ to 2 inches (3.8 to 5.1cm) above the bellybutton. It measures almost 10 inches (24cm) above the pubic symphysis.",
+          "citationPages": [
+            328
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Many pregnant women are concerned about eating out. Some want to know if they can eat certain types of food, such as Mexican, Vietnamese, Thai or Greek food. They’re concerned spicy or rich foods could be harmful to the baby. It’s OK to eat out, but you might find certain foods don’t agree with you. The best types of food to eat at restaurants are those you tolerate well at home. Chicken, fish, fresh vegetables and salads are good choices.",
+          "citationPages": [
+            334
+          ]
+        }
+      ],
+      "citationPages": [
+        328,
+        334
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 25,
-      "summary": "Your baby now weighs about 1½ pounds (700g), and crown-to-rump length is about 8¾ inches (22cm).",
-      "citationPages": [339],
+      "summary": "Baby’s size: Your baby now weighs about 1½ pounds (700g), and crown-to-rump length is about 8¾ inches (22cm). These are average lengths and weights, and can vary from one baby to another and from one pregnancy to another.\n\nBook topic: Survival of a Premature Baby It may be hard to believe, but if your baby were delivered now, it would have a chance of surviving. A baby born at this time probably weighs less than 2 pounds and is extremely small. Survival can be difficult, and the baby would probably spend several months in the hospital. See the discussion of Premature Labor in Week 29. Is Baby a Boy? A Girl?\n\nChanges in you: Look at the illustration on page 254. Your uterus has grown to about the size of a soccer ball. When you look at a side view, you’re much bigger. Your baby will have growth spurts, which may slightly affect your weight gain at certain times.\n\nNutrition in the book: Pregnancy increases your need for vitamins and minerals. It’s best if you can meet most of these needs through the foods you eat. However, being realistic, we know that can be hard to do. That’s one reason your healthcare provider prescribes a prenatal vitamin for you—to help you meet nutritional needs. A Balanced Meal Plan Below is a list of some foods to choose from each group and an appropriate serving size for each. There are many different foods to choose from.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Your baby now weighs about 1½ pounds (700g), and crown-to-rump length is about 8¾ inches (22cm). These are average lengths and weights, and can vary from one baby to another and from one pregnancy to another.",
+          "citationPages": [
+            339
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Survival of a Premature Baby It may be hard to believe, but if your baby were delivered now, it would have a chance of surviving. A baby born at this time probably weighs less than 2 pounds and is extremely small. Survival can be difficult, and the baby would probably spend several months in the hospital. See the discussion of Premature Labor in Week 29. Is Baby a Boy? A Girl?",
+          "citationPages": [
+            339,
+            340
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Look at the illustration on page 254. Your uterus has grown to about the size of a soccer ball. When you look at a side view, you’re much bigger. Your baby will have growth spurts, which may slightly affect your weight gain at certain times.",
+          "citationPages": [
+            339
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Pregnancy increases your need for vitamins and minerals. It’s best if you can meet most of these needs through the foods you eat. However, being realistic, we know that can be hard to do. That’s one reason your healthcare provider prescribes a prenatal vitamin for you—to help you meet nutritional needs. A Balanced Meal Plan Below is a list of some foods to choose from each group and an appropriate serving size for each. There are many different foods to choose from.",
+          "citationPages": [
+            345
+          ]
+        }
+      ],
+      "citationPages": [
+        339,
+        340,
+        345
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 26,
-      "summary": "Baby now weighs almost 2 pounds (.91kg). By this week, crown-to-rump length is about 9¼ inches (23cm).",
-      "citationPages": [351],
+      "summary": "Baby’s size: Baby now weighs almost 2 pounds (.91kg). By this week, crown-to-rump length is about 9¼ inches (23cm). See the illustration on page 264.\n\nBook topic: The fetus has distinct sleeping and waking cycles. You may find a pattern; at certain times of the day baby is very active, while at other times he or she is asleep. In addition, all five senses are now fully developed. Heart Arrhythmia By now you’ve heard baby’s heartbeat at several visits. When listening to your baby’s heartbeat, you may be startled to hear a skipped beat. An irregular heartbeat is called an arrhythmia.\n\nChanges in you: Your uterus is about 2½ inches (6cm) above your bellybutton or nearly 10½ inches (26cm) from your pubic symphysis. During the second half of pregnancy, you’ll grow nearly ½ inch (1cm) each week. If you’ve been following a balanced meal plan, your total weight gain is probably between 16 and 22 pounds (7.2 to 9.9kg).\n\nNutrition in the book: Fish Can Be Healthy during Pregnancy Eating fish is healthy, especially during pregnancy. Pregnant women who eat fish may have longer pregnancies and give birth to babies with higher birth weights. Studies show the omega-3 fatty acids found in fish may help protect you from premature labor and other problems. Remember— the longer a baby stays in the uterus, the better its chances are of being strong and healthy at delivery.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Baby now weighs almost 2 pounds (.91kg). By this week, crown-to-rump length is about 9¼ inches (23cm). See the illustration on page 264.",
+          "citationPages": [
+            351
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "The fetus has distinct sleeping and waking cycles. You may find a pattern; at certain times of the day baby is very active, while at other times he or she is asleep. In addition, all five senses are now fully developed. Heart Arrhythmia By now you’ve heard baby’s heartbeat at several visits. When listening to your baby’s heartbeat, you may be startled to hear a skipped beat. An irregular heartbeat is called an arrhythmia.",
+          "citationPages": [
+            351
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Your uterus is about 2½ inches (6cm) above your bellybutton or nearly 10½ inches (26cm) from your pubic symphysis. During the second half of pregnancy, you’ll grow nearly ½ inch (1cm) each week. If you’ve been following a balanced meal plan, your total weight gain is probably between 16 and 22 pounds (7.2 to 9.9kg).",
+          "citationPages": [
+            351
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Fish Can Be Healthy during Pregnancy Eating fish is healthy, especially during pregnancy. Pregnant women who eat fish may have longer pregnancies and give birth to babies with higher birth weights. Studies show the omega-3 fatty acids found in fish may help protect you from premature labor and other problems. Remember— the longer a baby stays in the uterus, the better its chances are of being strong and healthy at delivery.",
+          "citationPages": [
+            355,
+            356
+          ]
+        }
+      ],
+      "citationPages": [
+        351,
+        355,
+        356
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 27,
-      "summary": "This week marks the beginning of the third trimester. We’ll be adding total length of baby’s body from head to toe.",
-      "citationPages": [362],
+      "summary": "Baby’s size: This week marks the beginning of the third trimester. We’ll be adding total length of baby’s body from head to toe. This will give you a better idea of how big your baby is during this last part of your pregnancy.\n\nBook topic: The retina, the part of the eye where light images come into focus at the back of the eye, is beginning to be sensitive to light. It develops layers around this time that receive light and light information and transmits them to the brain for interpretation—what we know as “sight.” From here on, baby will probably be able to sense bright light.\n\nChanges in you: Your uterus is about 2¾ inches (7cm) above your bellybutton. Measured from the pubic symphysis, it is more than 10½ inches (27cm) to the top of the uterus.\n\nNutrition in the book: Vitamin A, vitamin B and vitamin E are important vitamins you may need during pregnancy. Let’s examine each vitamin and how it can help you. Vitamin A is essential to human reproduction. Fortunately, deficiency in North America is rare. What is more concerning is the excessive use of the vitamin before conception and in early pregnancy. (This discussion concerns only the retinol forms of vitamin A, usually derived from fish oils.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "This week marks the beginning of the third trimester. We’ll be adding total length of baby’s body from head to toe. This will give you a better idea of how big your baby is during this last part of your pregnancy.",
+          "citationPages": [
+            362
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "The retina, the part of the eye where light images come into focus at the back of the eye, is beginning to be sensitive to light. It develops layers around this time that receive light and light information and transmits them to the brain for interpretation—what we know as “sight.” From here on, baby will probably be able to sense bright light.",
+          "citationPages": [
+            362
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Your uterus is about 2¾ inches (7cm) above your bellybutton. Measured from the pubic symphysis, it is more than 10½ inches (27cm) to the top of the uterus.",
+          "citationPages": [
+            362
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Vitamin A, vitamin B and vitamin E are important vitamins you may need during pregnancy. Let’s examine each vitamin and how it can help you. Vitamin A is essential to human reproduction. Fortunately, deficiency in North America is rare. What is more concerning is the excessive use of the vitamin before conception and in early pregnancy. (This discussion concerns only the retinol forms of vitamin A, usually derived from fish oils.",
+          "citationPages": [
+            368
+          ]
+        }
+      ],
+      "citationPages": [
+        362,
+        368
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 28,
-      "summary": "Your baby weighs nearly 2¼ pounds (1kg). Crown-to-rump length is close to 10 inches (25cm).",
-      "citationPages": [373],
+      "summary": "Baby’s size: Your baby weighs nearly 2¼ pounds (1kg). Crown-to-rump length is close to 10 inches (25cm). Total length is 14¾ inches (37cm).\n\nBook topic: Until this time, the surface of baby’s developing brain has appeared smooth. Around week 28, the brain begins to form characteristic grooves and indentations on the surface. The amount of brain tissue also increases. Your baby’s eyebrows and eyelashes may be present. Hair on baby’s head is growing longer. The baby’s body is becoming plumper and rounder because of increased fat underneath the skin. Before this time, baby had a thin appearance.\n\nChanges in you: Your uterus is about 3¾ inches (8cm) above your bellybutton. If you measure from the pubic symphysis, it’s about 11 inches (28cm) to the top of the uterus. Your weight gain by this time should be between 17 and 24 pounds (7.7 and 10.8kg).\n\nNutrition in the book: If you take vitamin D, keep your intake to about 600IU/day. Super-high levels, such as 2000IU/day, are not recommended. You can get vitamin D from various food sources, including milk, eggs, beef liver and some fish, or by supplementation, such as vitamin-D-fortified cereals. The FDA has also approved a program to allow most cheeses to be fortified with up to 20% of the daily allotment for the vitamin. Other foods are also fortified with vitamin D, such as some orange juice, yogurt and margarine.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Your baby weighs nearly 2¼ pounds (1kg). Crown-to-rump length is close to 10 inches (25cm). Total length is 14¾ inches (37cm).",
+          "citationPages": [
+            373
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Until this time, the surface of baby’s developing brain has appeared smooth. Around week 28, the brain begins to form characteristic grooves and indentations on the surface. The amount of brain tissue also increases. Your baby’s eyebrows and eyelashes may be present. Hair on baby’s head is growing longer. The baby’s body is becoming plumper and rounder because of increased fat underneath the skin. Before this time, baby had a thin appearance.",
+          "citationPages": [
+            373
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Your uterus is about 3¾ inches (8cm) above your bellybutton. If you measure from the pubic symphysis, it’s about 11 inches (28cm) to the top of the uterus. Your weight gain by this time should be between 17 and 24 pounds (7.7 and 10.8kg).",
+          "citationPages": [
+            373
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "If you take vitamin D, keep your intake to about 600IU/day. Super-high levels, such as 2000IU/day, are not recommended. You can get vitamin D from various food sources, including milk, eggs, beef liver and some fish, or by supplementation, such as vitamin-D-fortified cereals. The FDA has also approved a program to allow most cheeses to be fortified with up to 20% of the daily allotment for the vitamin. Other foods are also fortified with vitamin D, such as some orange juice, yogurt and margarine.",
+          "citationPages": [
+            379
+          ]
+        }
+      ],
+      "citationPages": [
+        373,
+        379
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 29,
-      "summary": "By this time, baby weighs about 2½ pounds (1.2kg). Crown-to-rump length is almost 10½ inches (26cm).",
-      "citationPages": [384],
+      "summary": "Baby’s size: By this time, baby weighs about 2½ pounds (1.2kg). Crown-to-rump length is almost 10½ inches (26cm). Total fetal length is 15¼ inches (38cm).\n\nBook topic: Each week, we’ve noted the change in your baby’s size. We use average weights to give you an idea of how large baby may be at a particular time. However, these are only averages; babies vary greatly in size and weight. The average baby’s birthweight at full term is 7 to 7½ pounds (3.28kg to 3.4kg). Because growth is rapid during pregnancy, infants born prematurely may be tiny.\n\nChanges in you: Measuring from the bellybutton, your uterus is 3½ to 4 inches (7.6 to 10.2cm) above it. Your uterus is about 11½ inches (29cm) above the pubic symphysis. Your total weight gain by this week should be between 19 and 25 pounds (8.55 and 11.25kg).\n\nNutrition in the book: Potassium-rich foods, such as raisins and bananas, may help reduce your risk of premature labor. Potassium helps the body get rid of sodium faster. We hope you’ve been listening to your body during pregnancy. When you feel hungry or thirsty, eat or drink something. Eating smaller, more frequent meals provides a constant supply of nutrients to your growing baby. Keep nourishing snacks near at hand. Dried fruit and nuts are good choices when you’re on the go. Know what time of day or night hunger strikes you.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "By this time, baby weighs about 2½ pounds (1.2kg). Crown-to-rump length is almost 10½ inches (26cm). Total fetal length is 15¼ inches (38cm).",
+          "citationPages": [
+            384
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Each week, we’ve noted the change in your baby’s size. We use average weights to give you an idea of how large baby may be at a particular time. However, these are only averages; babies vary greatly in size and weight. The average baby’s birthweight at full term is 7 to 7½ pounds (3.28kg to 3.4kg). Because growth is rapid during pregnancy, infants born prematurely may be tiny.",
+          "citationPages": [
+            384
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Measuring from the bellybutton, your uterus is 3½ to 4 inches (7.6 to 10.2cm) above it. Your uterus is about 11½ inches (29cm) above the pubic symphysis. Your total weight gain by this week should be between 19 and 25 pounds (8.55 and 11.25kg).",
+          "citationPages": [
+            384
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Potassium-rich foods, such as raisins and bananas, may help reduce your risk of premature labor. Potassium helps the body get rid of sodium faster. We hope you’ve been listening to your body during pregnancy. When you feel hungry or thirsty, eat or drink something. Eating smaller, more frequent meals provides a constant supply of nutrients to your growing baby. Keep nourishing snacks near at hand. Dried fruit and nuts are good choices when you’re on the go. Know what time of day or night hunger strikes you.",
+          "citationPages": [
+            391
+          ]
+        }
+      ],
+      "citationPages": [
+        384,
+        391
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 30,
-      "summary": "By week 30, baby weighs about 3 pounds (1.3kg). Its crown-to-rump length is a little over 10¾ inches (27cm), and total length is 15¾ inches (40cm).",
-      "citationPages": [396],
+      "summary": "Baby’s size: By week 30, baby weighs about 3 pounds (1.3kg). Its crown-to-rump length is a little over 10¾ inches (27cm), and total length is 15¾ inches (40cm).\n\nBook topic: The illustration on page 300 shows a fetus and its umbilical cord. Can you see the knot in the cord? You may wonder how a knot like this can occur. We do not believe the cord grows in a knot. A baby is usually very active during pregnancy. We believe these knots occur as baby moves around in early pregnancy. A loop forms in the umbilical cord; the baby moves through the loop, and a knot results.\n\nChanges in you: It may be hard to believe you still have 10 weeks to go! You may feel like you’re running out of room. Measuring from your bellybutton, your uterus is about 4 inches (10cm) above it. From the pubic symphysis, the top of your uterus measures about 12 inches (30cm). You should be gaining about 1 pound a week.\n\nNutrition in the book: Some women ask if herbal teas are safe to drink during pregnancy. Some herbal teas are probably safe to drink and include chamomile, dandelion, ginger root, lemon-balm, peppermint and nettle leaf. You may have heard warnings about drinking peppermint tea during pregnancy. Many experts agree it’s OK if you only drink one or two 6- to 8-ounce cups a day to help relieve morning sickness or upset stomach. However, it may worsen heartburn and/or GERD. Look for products that contain 100% pure peppermint leaves.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "By week 30, baby weighs about 3 pounds (1.3kg). Its crown-to-rump length is a little over 10¾ inches (27cm), and total length is 15¾ inches (40cm).",
+          "citationPages": [
+            396
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "The illustration on page 300 shows a fetus and its umbilical cord. Can you see the knot in the cord? You may wonder how a knot like this can occur. We do not believe the cord grows in a knot. A baby is usually very active during pregnancy. We believe these knots occur as baby moves around in early pregnancy. A loop forms in the umbilical cord; the baby moves through the loop, and a knot results.",
+          "citationPages": [
+            396
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "It may be hard to believe you still have 10 weeks to go! You may feel like you’re running out of room. Measuring from your bellybutton, your uterus is about 4 inches (10cm) above it. From the pubic symphysis, the top of your uterus measures about 12 inches (30cm). You should be gaining about 1 pound a week.",
+          "citationPages": [
+            396
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Some women ask if herbal teas are safe to drink during pregnancy. Some herbal teas are probably safe to drink and include chamomile, dandelion, ginger root, lemon-balm, peppermint and nettle leaf. You may have heard warnings about drinking peppermint tea during pregnancy. Many experts agree it’s OK if you only drink one or two 6- to 8-ounce cups a day to help relieve morning sickness or upset stomach. However, it may worsen heartburn and/or GERD. Look for products that contain 100% pure peppermint leaves.",
+          "citationPages": [
+            401
+          ]
+        }
+      ],
+      "citationPages": [
+        396,
+        401
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 31,
-      "summary": "Your baby weighs about 3⅓ pounds (1.5kg), and crown-to-rump length is 11¾ inches (28cm). Its total length is nearly 16 inches (41cm).",
-      "citationPages": [407],
+      "summary": "Baby’s size: Your baby weighs about 3⅓ pounds (1.5kg), and crown-to-rump length is 11¾ inches (28cm). Its total length is nearly 16 inches (41cm).\n\nBook topic: Your healthcare provider measures you at each visit to see how your uterus and baby are growing. A problem is usually found by measuring the uterus over a period of time and finding little or no change. If you measured 10¾ inches (27cm) at 27 weeks gestation and at 31 weeks you measure only 11 inches (28cm), there might be concern about IUGR, and tests may be ordered.\n\nChanges in you: There is now a little more than 12 inches (31cm) from the pubic symphysis to the top of the uterus. From your bellybutton, the uterus is almost 4½ inches (11cm). Your total pregnancy weight gain should be between 21 and 27 pounds (9.45 and 12.15kg).\n\nNutrition in the book: Salmonella bacteria can cause a lot of problems for you. Salmonella bacteria has many sources—there are over 1400 different strains! They’re found in raw eggs and raw poultry. The bacteria is destroyed when a food is cooked, but it’s wise to take additional precautions. Keep in mind the following measures to stay safe. Tip for Week 31 Wearing rings and watches may cause circulation problems. Sometimes a ring becomes so tight on a pregnant woman’s finger that the ring must be cut off by a jeweler.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Your baby weighs about 3⅓ pounds (1.5kg), and crown-to-rump length is 11¾ inches (28cm). Its total length is nearly 16 inches (41cm).",
+          "citationPages": [
+            407
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Your healthcare provider measures you at each visit to see how your uterus and baby are growing. A problem is usually found by measuring the uterus over a period of time and finding little or no change. If you measured 10¾ inches (27cm) at 27 weeks gestation and at 31 weeks you measure only 11 inches (28cm), there might be concern about IUGR, and tests may be ordered.",
+          "citationPages": [
+            407
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "There is now a little more than 12 inches (31cm) from the pubic symphysis to the top of the uterus. From your bellybutton, the uterus is almost 4½ inches (11cm). Your total pregnancy weight gain should be between 21 and 27 pounds (9.45 and 12.15kg).",
+          "citationPages": [
+            407
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Salmonella bacteria can cause a lot of problems for you. Salmonella bacteria has many sources—there are over 1400 different strains! They’re found in raw eggs and raw poultry. The bacteria is destroyed when a food is cooked, but it’s wise to take additional precautions. Keep in mind the following measures to stay safe. Tip for Week 31 Wearing rings and watches may cause circulation problems. Sometimes a ring becomes so tight on a pregnant woman’s finger that the ring must be cut off by a jeweler.",
+          "citationPages": [
+            413
+          ]
+        }
+      ],
+      "citationPages": [
+        407,
+        413
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 32,
-      "summary": "By this week, baby weighs almost 3¾ pounds (1.7kg). Crown-to-rump length is over 11½ inches (29cm), and total length is nearly 16¾ inches (42cm).",
-      "citationPages": [419],
+      "summary": "Baby’s size: By this week, baby weighs almost 3¾ pounds (1.7kg). Crown-to-rump length is over 11½ inches (29cm), and total length is nearly 16¾ inches (42cm).\n\nBook topic: Twins? Triplets? More?: Twins? Triplets? More? The rate of multiple births is going up—since 1980, the rate of twin births has increased 70%. Statistics show that close to 4% of all births in the United States are multiple births. If you’re expecting more than one baby, you’re not alone! When talking about pregnancies of more than one baby, in most cases we refer to twins.\n\nChanges in you: Measurement to the top of the uterus from the pubic symphysis is about 12¾ inches (32cm). Measuring from the bellybutton, it now measures about 5 inches (12cm).\n\nNutrition in the book: If you’re expecting more than one baby, your nutrition and weight gain are very important during pregnancy. Food is your best source for nutrients, but take your prenatal vitamin every day. The ingredients in prenatal vitamins are essential to your well-being and the well-being of your baby or babies. Tip for Week 32 Your requirements for calories, protein, vitamins and minerals increase if you carry more than one baby. You’ll need to eat about 300 calories a day more per baby than for a singleton pregnancy.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "By this week, baby weighs almost 3¾ pounds (1.7kg). Crown-to-rump length is over 11½ inches (29cm), and total length is nearly 16¾ inches (42cm).",
+          "citationPages": [
+            419
+          ]
+        },
+        {
+          "title": "Book topic: Twins? Triplets? More?",
+          "summary": "Twins? Triplets? More? The rate of multiple births is going up—since 1980, the rate of twin births has increased 70%. Statistics show that close to 4% of all births in the United States are multiple births. If you’re expecting more than one baby, you’re not alone! When talking about pregnancies of more than one baby, in most cases we refer to twins.",
+          "citationPages": [
+            419
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Measurement to the top of the uterus from the pubic symphysis is about 12¾ inches (32cm). Measuring from the bellybutton, it now measures about 5 inches (12cm).",
+          "citationPages": [
+            419
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "If you’re expecting more than one baby, your nutrition and weight gain are very important during pregnancy. Food is your best source for nutrients, but take your prenatal vitamin every day. The ingredients in prenatal vitamins are essential to your well-being and the well-being of your baby or babies. Tip for Week 32 Your requirements for calories, protein, vitamins and minerals increase if you carry more than one baby. You’ll need to eat about 300 calories a day more per baby than for a singleton pregnancy.",
+          "citationPages": [
+            426
+          ]
+        }
+      ],
+      "citationPages": [
+        419,
+        426
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 33,
-      "summary": "Your baby weighs about 4¼ pounds (1.9kg) by this week. Its crown-to- rump length is about 12 inches (30cm), and total length is nearly 17¼ inches (44cm).",
-      "citationPages": [431],
+      "summary": "Baby’s size: Your baby weighs about 4¼ pounds (1.9kg) by this week. Its crown-to- rump length is about 12 inches (30cm), and total length is nearly 17¼ inches (44cm).\n\nBook topic: Placental Abruption: Placental Abruption The illustration on page 328 shows placental abruption—premature separation of the placenta from the uterine wall. Normally, the placenta doesn’t separate from the uterus until after baby is delivered. Placental abruption occurs in about 1 in every 80 pregnancies. The time of separation can vary. If it separates at the time of delivery and the infant is delivered without incident, it’s not as significant as a placenta separating during pregnancy.\n\nChanges in you: Measuring from the pubic symphysis, it’s about 13¼ inches (33cm) to the top of the uterus. Measurement from your bellybutton to the top of your uterus is about 5¼ inches (13cm). Total weight gain should be between 22 and 28 pounds (9.9 and 12.6kg).\n\nNutrition in the book: Eating a well-balanced diet of fresh fruits and vegetables, dairy products, whole-grain products and protein contributes to baby’s healthy development. You may be concerned about what foods to avoid. Some foods may be OK to eat when you’re not pregnant but should be avoided or treated with more care now. When possible, avoid food additives. We aren’t certain how they can affect a developing baby, but if you can avoid them, do so. Don’t eat alfalfa sprouts, radish sprouts or mung beans during pregnancy; they often have germs.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Your baby weighs about 4¼ pounds (1.9kg) by this week. Its crown-to- rump length is about 12 inches (30cm), and total length is nearly 17¼ inches (44cm).",
+          "citationPages": [
+            431
+          ]
+        },
+        {
+          "title": "Book topic: Placental Abruption",
+          "summary": "Placental Abruption The illustration on page 328 shows placental abruption—premature separation of the placenta from the uterine wall. Normally, the placenta doesn’t separate from the uterus until after baby is delivered. Placental abruption occurs in about 1 in every 80 pregnancies. The time of separation can vary. If it separates at the time of delivery and the infant is delivered without incident, it’s not as significant as a placenta separating during pregnancy.",
+          "citationPages": [
+            431
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Measuring from the pubic symphysis, it’s about 13¼ inches (33cm) to the top of the uterus. Measurement from your bellybutton to the top of your uterus is about 5¼ inches (13cm). Total weight gain should be between 22 and 28 pounds (9.9 and 12.6kg).",
+          "citationPages": [
+            431
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Eating a well-balanced diet of fresh fruits and vegetables, dairy products, whole-grain products and protein contributes to baby’s healthy development. You may be concerned about what foods to avoid. Some foods may be OK to eat when you’re not pregnant but should be avoided or treated with more care now. When possible, avoid food additives. We aren’t certain how they can affect a developing baby, but if you can avoid them, do so. Don’t eat alfalfa sprouts, radish sprouts or mung beans during pregnancy; they often have germs.",
+          "citationPages": [
+            437
+          ]
+        }
+      ],
+      "citationPages": [
+        431,
+        437
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 34,
-      "summary": "Your baby weighs almost 4¾ pounds (2.15kg) by this week. Its crown- to-rump length is about 12¾ (32cm).",
-      "citationPages": [443],
+      "summary": "Baby’s size: Your baby weighs almost 4¾ pounds (2.15kg) by this week. Its crown- to-rump length is about 12¾ (32cm). Total length is 17¾ inches (45cm).\n\nBook topic: An ideal test to do before delivery would be able to detect fetal stress, which could indicate a problem. Ultrasound enables healthcare providers to see the baby inside the uterus, as well as to evaluate the brain, heart and other organs. Along with ultrasound, a nonstress test (NST) and a contraction stress test (CST) can indicate well-being and/or problems.\n\nChanges in you: Measuring from your bellybutton, it’s about 5½ inches (14cm) to the top of your uterus. From the pubic symphysis, it measures about 13½ inches (34cm). When your uterus grows larger at an appropriate rate, it’s a sign of normal growth of baby. By this time, baby may turn its head in the direction of a noise.\n\nNutrition in the book: It’s a waste of time to have your cholesterol level checked during pregnancy. The level of cholesterol in your blood rises during pregnancy due to hormonal changes. Wait until after baby’s birth or you stop breastfeeding to check your cholesterol. A Vitamin-Rich Snack When you’re looking for something to snack on, you might not think of a baked potato, but it’s an excellent snack! You get protein, fiber, calcium, iron, B vitamins and vitamin C when you eat one. Bake up a few, and store them in the refrigerator.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Your baby weighs almost 4¾ pounds (2.15kg) by this week. Its crown- to-rump length is about 12¾ (32cm). Total length is 17¾ inches (45cm).",
+          "citationPages": [
+            443
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "An ideal test to do before delivery would be able to detect fetal stress, which could indicate a problem. Ultrasound enables healthcare providers to see the baby inside the uterus, as well as to evaluate the brain, heart and other organs. Along with ultrasound, a nonstress test (NST) and a contraction stress test (CST) can indicate well-being and/or problems.",
+          "citationPages": [
+            443
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Measuring from your bellybutton, it’s about 5½ inches (14cm) to the top of your uterus. From the pubic symphysis, it measures about 13½ inches (34cm). When your uterus grows larger at an appropriate rate, it’s a sign of normal growth of baby. By this time, baby may turn its head in the direction of a noise.",
+          "citationPages": [
+            443
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "It’s a waste of time to have your cholesterol level checked during pregnancy. The level of cholesterol in your blood rises during pregnancy due to hormonal changes. Wait until after baby’s birth or you stop breastfeeding to check your cholesterol. A Vitamin-Rich Snack When you’re looking for something to snack on, you might not think of a baked potato, but it’s an excellent snack! You get protein, fiber, calcium, iron, B vitamins and vitamin C when you eat one. Bake up a few, and store them in the refrigerator.",
+          "citationPages": [
+            448
+          ]
+        }
+      ],
+      "citationPages": [
+        443,
+        448
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 35,
-      "summary": "Your baby now weighs over 5¼ pounds (2.4kg). Crown-to-rump length is about 13¼ inches (33cm), and total length is 18¼ inches (46cm).",
-      "citationPages": [455],
+      "summary": "Baby’s size: Your baby now weighs over 5¼ pounds (2.4kg). Crown-to-rump length is about 13¼ inches (33cm), and total length is 18¼ inches (46cm).\n\nChanges in you: It’s about 6 inches (15cm) to the top of your uterus from your bellybutton. From the pubic symphysis, the distance is about 14 inches (35cm). By this week, your total weight gain should be between 24 and 29 pounds (10.8 and 13kg). How Your Baby Is Growing and Changing How Much Does Your Baby Weigh?\n\nNutrition in the book: Your body continues to need lots of vitamins and minerals for baby. You’ll need even more of them if you breastfeed! Above is a chart showing your daily vitamin-and-mineral requirements during pregnancy and breastfeeding. It’s important to realize how necessary your continued good nutrition is for you and your baby. Nutrient Requirements during Pregnancy and Breastfeeding",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Your baby now weighs over 5¼ pounds (2.4kg). Crown-to-rump length is about 13¼ inches (33cm), and total length is 18¼ inches (46cm).",
+          "citationPages": [
+            455
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "It’s about 6 inches (15cm) to the top of your uterus from your bellybutton. From the pubic symphysis, the distance is about 14 inches (35cm). By this week, your total weight gain should be between 24 and 29 pounds (10.8 and 13kg). How Your Baby Is Growing and Changing How Much Does Your Baby Weigh?",
+          "citationPages": [
+            455
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "Your body continues to need lots of vitamins and minerals for baby. You’ll need even more of them if you breastfeed! Above is a chart showing your daily vitamin-and-mineral requirements during pregnancy and breastfeeding. It’s important to realize how necessary your continued good nutrition is for you and your baby. Nutrient Requirements during Pregnancy and Breastfeeding",
+          "citationPages": [
+            460,
+            461
+          ]
+        }
+      ],
+      "citationPages": [
+        455,
+        460,
+        461
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 36,
-      "summary": "By this week, your baby weighs about 5¾ pounds (2.6kg). Its crown-to- rump length is over 13½ inches (34cm), and total length is 18⅔ inches (47cm).",
-      "citationPages": [465],
+      "summary": "Baby’s size: By this week, your baby weighs about 5¾ pounds (2.6kg). Its crown-to- rump length is over 13½ inches (34cm), and total length is 18⅔ inches (47cm).\n\nBook topic: An important part of baby’s development is maturing of its lungs and respiratory system. The respiratory system is the last system to mature. Knowing how mature a baby’s lungs are helps in deciding about early delivery if it must be considered. Tests can predict whether baby will be able to breathe without assistance. Respiratory-distress syndrome (RDS), also called hyaline membrane disease, occurs when lungs aren’t mature, and baby can’t breathe on its own after birth.\n\nChanges in you: From the pubic symphysis, it’s about 14½ inches (36cm) to the top of the uterus. From your bellybutton, it’s more than 5½ inches (14cm) to the top of the uterus.\n\nNutrition in the book: You may be having a harder time with your food plan than you had earlier in pregnancy. You may be bored with the food you’ve been eating. Baby is getting bigger, and you don’t seem to have much room for food. Heartburn or indigestion may be more challenging now. Don’t give up on good nutrition! Continue to pay attention to what you eat so you can give your baby the best nutrition you can before its birth.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "By this week, your baby weighs about 5¾ pounds (2.6kg). Its crown-to- rump length is over 13½ inches (34cm), and total length is 18⅔ inches (47cm).",
+          "citationPages": [
+            465
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "An important part of baby’s development is maturing of its lungs and respiratory system. The respiratory system is the last system to mature. Knowing how mature a baby’s lungs are helps in deciding about early delivery if it must be considered. Tests can predict whether baby will be able to breathe without assistance. Respiratory-distress syndrome (RDS), also called hyaline membrane disease, occurs when lungs aren’t mature, and baby can’t breathe on its own after birth.",
+          "citationPages": [
+            465
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "From the pubic symphysis, it’s about 14½ inches (36cm) to the top of the uterus. From your bellybutton, it’s more than 5½ inches (14cm) to the top of the uterus.",
+          "citationPages": [
+            465
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "You may be having a harder time with your food plan than you had earlier in pregnancy. You may be bored with the food you’ve been eating. Baby is getting bigger, and you don’t seem to have much room for food. Heartburn or indigestion may be more challenging now. Don’t give up on good nutrition! Continue to pay attention to what you eat so you can give your baby the best nutrition you can before its birth.",
+          "citationPages": [
+            470
+          ]
+        }
+      ],
+      "citationPages": [
+        465,
+        470
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 37,
-      "summary": "Your baby weighs almost 6⅓ pounds (2.8kg). Crown-to-rump length is 14 inches (35cm).",
-      "citationPages": [478],
+      "summary": "Baby’s size: Your baby weighs almost 6⅓ pounds (2.8kg). Crown-to-rump length is 14 inches (35cm). Its total length is around 19 inches (48cm).\n\nBook topic: Your baby is gaining weight, even during these last few weeks. Baby’s head is usually directed down into the pelvis around this time. But in about 3% of pregnancies, the baby’s bottom or legs enter the pelvis first, called a breech presentation; see Week 38. A change in pressure on your tummy, such as laying a book there, may cause baby to react by kicking vigorously.\n\nChanges in you: Measuring from the pubic symphysis, the top of the uterus is about 14¾ inches (37cm). From the bellybutton, it is 6½ to 6¾ inches (16 to 17cm). Your total weight gain by this time should be about as high as it will go at 25 to 35 pounds (11.3 to 15.9kg).\n\nNutrition in the book: You and your partner have been invited to a big party. You’ve been careful about your nutrition, and your pregnancy is almost over. Should you let yourself go and eat and drink whatever you want? Probably not. Maintain your good eating habits, and party healthfully. Before you go, eat or drink something to take the edge off your appetite. It may be easier to avoid high-fat, high-calorie foods if you’re not ravenous.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Your baby weighs almost 6⅓ pounds (2.8kg). Crown-to-rump length is 14 inches (35cm). Its total length is around 19 inches (48cm).",
+          "citationPages": [
+            478
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Your baby is gaining weight, even during these last few weeks. Baby’s head is usually directed down into the pelvis around this time. But in about 3% of pregnancies, the baby’s bottom or legs enter the pelvis first, called a breech presentation; see Week 38. A change in pressure on your tummy, such as laying a book there, may cause baby to react by kicking vigorously.",
+          "citationPages": [
+            478
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "Measuring from the pubic symphysis, the top of the uterus is about 14¾ inches (37cm). From the bellybutton, it is 6½ to 6¾ inches (16 to 17cm). Your total weight gain by this time should be about as high as it will go at 25 to 35 pounds (11.3 to 15.9kg).",
+          "citationPages": [
+            478
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "You and your partner have been invited to a big party. You’ve been careful about your nutrition, and your pregnancy is almost over. Should you let yourself go and eat and drink whatever you want? Probably not. Maintain your good eating habits, and party healthfully. Before you go, eat or drink something to take the edge off your appetite. It may be easier to avoid high-fat, high-calorie foods if you’re not ravenous.",
+          "citationPages": [
+            486
+          ]
+        }
+      ],
+      "citationPages": [
+        478,
+        486
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 38,
-      "summary": "At this time, your baby weighs about 6¾ pounds (3.1kg). Crown-to-rump length is still about 14 inches (35cm).",
-      "citationPages": [490],
+      "summary": "Baby’s size: At this time, your baby weighs about 6¾ pounds (3.1kg). Crown-to-rump length is still about 14 inches (35cm). Total length is around 19⅔ inches (49.5cm).\n\nBook topic: Specific cells in the lungs produce chemicals needed for breathing immediately after birth; an important one is surfactant. A baby born before its lungs are mature may not have surfactant in its lungs. But it can be introduced directly into a newborn’s lungs and baby can use it immediately. Many premature babies who receive surfactant do not have to be put on respirators—they can breathe on their own!\n\nChanges in you: You may feel uncomfortable during the last weeks of pregnancy because your uterus is so large. It’s about 14½ to 15¼ inches (36 to 38cm) between your uterus and the pubic symphysis. From your bellybutton to the top of your uterus is about 6½ to 7¼ inches (16 to 18cm).\n\nNutrition in the book: You may not feel much like eating now, but it’s important to eat healthfully. Snacks might be the answer—eat small snacks throughout the day to keep your energy levels up and to help avoid heartburn. You may also be tired of the foods you’ve been eating. The list below offers some smart snacks for your healthy nutrition: Dad Tip Ask your partner if there are things she’d like you to bring to the hospital for her, such as an iPod or special CDs and a CD player.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "At this time, your baby weighs about 6¾ pounds (3.1kg). Crown-to-rump length is still about 14 inches (35cm). Total length is around 19⅔ inches (49.5cm).",
+          "citationPages": [
+            490
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Specific cells in the lungs produce chemicals needed for breathing immediately after birth; an important one is surfactant. A baby born before its lungs are mature may not have surfactant in its lungs. But it can be introduced directly into a newborn’s lungs and baby can use it immediately. Many premature babies who receive surfactant do not have to be put on respirators—they can breathe on their own!",
+          "citationPages": [
+            490
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "You may feel uncomfortable during the last weeks of pregnancy because your uterus is so large. It’s about 14½ to 15¼ inches (36 to 38cm) between your uterus and the pubic symphysis. From your bellybutton to the top of your uterus is about 6½ to 7¼ inches (16 to 18cm).",
+          "citationPages": [
+            490
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "You may not feel much like eating now, but it’s important to eat healthfully. Snacks might be the answer—eat small snacks throughout the day to keep your energy levels up and to help avoid heartburn. You may also be tired of the foods you’ve been eating. The list below offers some smart snacks for your healthy nutrition: Dad Tip Ask your partner if there are things she’d like you to bring to the hospital for her, such as an iPod or special CDs and a CD player.",
+          "citationPages": [
+            493
+          ]
+        }
+      ],
+      "citationPages": [
+        490,
+        493
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 39,
-      "summary": "Your baby weighs about 7¼ pounds (3.3kg). Crown-to-rump length is about 14½ inches (36cm).",
-      "citationPages": [499],
+      "summary": "Baby’s size: Your baby weighs about 7¼ pounds (3.3kg). Crown-to-rump length is about 14½ inches (36cm). The baby’s total length is close to 20 inches (50.5cm).\n\nBook topic: Your baby continues to gain weight. It doesn’t have much room to move. All the organ systems are developed. The last organ to mature is the lungs. Can Baby Get Tangled in the Cord? You may have been told by friends not to raise your arms over your head or to reach high because it may cause the cord to wrap around the baby’s neck. There doesn’t seem to be much truth to this old wives’ tale.\n\nChanges in you: The illustration on page 380 shows a side view of a woman’s uterus with baby inside it. She’s about as big as she can get. You probably are too! Your weight gain should remain between 25 and 35 pounds (11.4 and 15.9kg) until delivery.\n\nNutrition in the book: If you’re going to breastfeed, you need to think about your nutrition because it can affect the quality of your milk. You may have to avoid some foods because they can pass into breast milk and cause baby stomach distress. You’ll need to continue to drink lots of fluids and keep up your calcium intake. Ask your healthcare provider about any vitamins you should take. If you choose to bottlefeed, you have a few more options. However, it’s still important to follow a nutritious eating plan.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Your baby weighs about 7¼ pounds (3.3kg). Crown-to-rump length is about 14½ inches (36cm). The baby’s total length is close to 20 inches (50.5cm).",
+          "citationPages": [
+            499
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Your baby continues to gain weight. It doesn’t have much room to move. All the organ systems are developed. The last organ to mature is the lungs. Can Baby Get Tangled in the Cord? You may have been told by friends not to raise your arms over your head or to reach high because it may cause the cord to wrap around the baby’s neck. There doesn’t seem to be much truth to this old wives’ tale.",
+          "citationPages": [
+            499
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "The illustration on page 380 shows a side view of a woman’s uterus with baby inside it. She’s about as big as she can get. You probably are too! Your weight gain should remain between 25 and 35 pounds (11.4 and 15.9kg) until delivery.",
+          "citationPages": [
+            499
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "If you’re going to breastfeed, you need to think about your nutrition because it can affect the quality of your milk. You may have to avoid some foods because they can pass into breast milk and cause baby stomach distress. You’ll need to continue to drink lots of fluids and keep up your calcium intake. Ask your healthcare provider about any vitamins you should take. If you choose to bottlefeed, you have a few more options. However, it’s still important to follow a nutritious eating plan.",
+          "citationPages": [
+            502
+          ]
+        }
+      ],
+      "citationPages": [
+        499,
+        502
+      ],
       "reviewStatus": "clinician-review-required"
     },
     {
       "week": 40,
-      "summary": "Your baby weighs about 7⅔ pounds (3.5kg). Its crown-to-rump length is about 14¾ to 15¼ inches (37 to 38cm).",
-      "citationPages": [511],
+      "summary": "Baby’s size: Your baby weighs about 7⅔ pounds (3.5kg). Its crown-to-rump length is about 14¾ to 15¼ inches (37 to 38cm). Total length is 20⅔ inches (51cm). Baby fills your uterus and has little room to move. See the illustration on page 388.\n\nBook topic: Your baby is fully grown at this point. If you were correct about the date of your last period and your due date is this week, baby may be born very soon. However, it’s helpful to realize only 5% of all babies are born on their due date. Don’t get frustrated if you see your due date come and go. Baby will be here soon!\n\nChanges in you: You probably don’t care an awful lot about how much you measure. You feel you’re as big as you could ever be, and you’re ready to have your baby. From the pubic symphysis to the top of the uterus, you probably measure between 14½ and 16 inches (36 to 40cm).\n\nNutrition in the book: In the past, women were not allowed to eat or drink during labor. One of the major concerns was if a woman needed general anesthesia at any time, any food or liquid in the stomach could be aspirated into her lungs. However, general anesthesia is used less frequently today; when it is necessary, administration has improved greatly, which has reduced risks. In addition, many women choose epidural for anesthesia—with an epidural, aspiration isn’t a concern.",
+      "sections": [
+        {
+          "title": "Baby’s size",
+          "summary": "Your baby weighs about 7⅔ pounds (3.5kg). Its crown-to-rump length is about 14¾ to 15¼ inches (37 to 38cm). Total length is 20⅔ inches (51cm). Baby fills your uterus and has little room to move. See the illustration on page 388.",
+          "citationPages": [
+            511
+          ]
+        },
+        {
+          "title": "Book topic",
+          "summary": "Your baby is fully grown at this point. If you were correct about the date of your last period and your due date is this week, baby may be born very soon. However, it’s helpful to realize only 5% of all babies are born on their due date. Don’t get frustrated if you see your due date come and go. Baby will be here soon!",
+          "citationPages": [
+            511
+          ]
+        },
+        {
+          "title": "Changes in you",
+          "summary": "You probably don’t care an awful lot about how much you measure. You feel you’re as big as you could ever be, and you’re ready to have your baby. From the pubic symphysis to the top of the uterus, you probably measure between 14½ and 16 inches (36 to 40cm).",
+          "citationPages": [
+            511
+          ]
+        },
+        {
+          "title": "Nutrition in the book",
+          "summary": "In the past, women were not allowed to eat or drink during labor. One of the major concerns was if a woman needed general anesthesia at any time, any food or liquid in the stomach could be aspirated into her lungs. However, general anesthesia is used less frequently today; when it is necessary, administration has improved greatly, which has reduced risks. In addition, many women choose epidural for anesthesia—with an epidural, aspiration isn’t a concern.",
+          "citationPages": [
+            518
+          ]
+        }
+      ],
+      "citationPages": [
+        511,
+        518
+      ],
       "reviewStatus": "clinician-review-required"
     }
   ]

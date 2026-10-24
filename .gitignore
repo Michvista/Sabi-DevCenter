@@ -21,6 +21,7 @@ coverage/
 *.xls
 *.xlsx
 secrets/
+tmp/
 *.pdf
 apps/api/prisma/*.db
 *.log

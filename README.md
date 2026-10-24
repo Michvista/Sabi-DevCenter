@@ -18,7 +18,7 @@ Sabi is a Nigeria-focused pregnancy companion for the time between antenatal vis
 
 ### Pregnancy book notice
 
-The user confirms they have rights to use the supplied edition of Curtis & Schuler's _Your Pregnancy Week by Week_. The site contains short, cached excerpts from the local PDF, matched to weeks 1–40 and cited by PDF page number. They are copyrighted educational excerpts used with permission as confirmed by the project owner, and require qualified maternity-care review before use as health guidance. The app does not replace antenatal care.
+The user confirms they have rights to use the supplied edition of Curtis & Schuler's _Your Pregnancy Week by Week_. The site contains original, precomputed summaries of the relevant chapter for weeks 1–40, with per-section PDF page citations. The source is credited and the summaries require qualified maternity-care review before use as health guidance. The app does not replace antenatal care.
 
 ## Food data, calculations and limits
 
@@ -40,7 +40,9 @@ Sources:
 - [9jaLingo API](https://www.9jalingo.org/api-documentation) — Pidgin text-to-speech after on-screen text translation.
 - The Kaggle CSV and copyrighted pregnancy-book PDF were supplied inside this project; their original public URLs/licensing are not included here.
 
-The week-by-week book pipeline is a one-time local PDF extraction plus Gemini embedding step. `npm run rag:extract-weeks` creates short, exact-page-cited excerpts in `apps/web/src/lib/data/pregnancy-week-book-notes.json`; `npm run rag:embed-book` embeds those 40 excerpts with `gemini-embedding-001` and writes `apps/api/src/data/pregnancy-week-book-index.json`. On API startup, an idempotent seed stores each weekly chunk, page citation and embedding in the Rumpty `pregnancy_book_chunks` table. The week guide retrieves its exact week from PostgreSQL; opening or refreshing a guide makes no Gemini call. The app serves the cached source excerpt rather than generating a new AI-written clinical summary. Weeks 41–42 use original prompts and are not presented as book-derived. These excerpts focus on the book's baby-size section, not a complete weekly medical guide; qualified clinical review is still required.
+The week-by-week guide pipeline is development-time preprocessing. Run `npm run rag:extract-weeks` to extract selected passages about baby size, development and changes in the pregnant person from the 40 relevant chapter sections, each with its exact PDF page citation. The passages are written to `apps/web/src/lib/data/pregnancy-week-book-notes.json`; source pages are kept only in ignored `tmp/pdfs`. `npm run rag:embed-book` creates a `gemini-embedding-001` embedding per prepared weekly note and writes `apps/api/src/data/pregnancy-week-book-index.json`. The API seed compares the bundled guide content with Rumpty PostgreSQL and inserts or refreshes rows only when the content changes. Opening or refreshing a guide makes no Gemini call. The API looks up the exact week number in PostgreSQL; embeddings are stored but the current week endpoint does not perform vector-similarity retrieval. Weeks 41–42 use original prompts and are not presented as book-derived. Book passages are paired with static, current WHO antenatal-care and nutrition references; none of this content is clinician-reviewed or a complete clinical protocol.
+
+Each week page also includes a static antenatal-care focus based on current WHO recommendations, with a source link and a reminder that local clinicians set the individual schedule. These reminders are prebuilt site content and do not trigger AI requests.
 
 ## Stack and file layout
 

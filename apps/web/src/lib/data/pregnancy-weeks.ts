@@ -6,13 +6,23 @@ export type WeekGuide = {
   focus: string;
   gentlePrompt: string;
   bookNote?: string;
+  bookSections: BookGuideSection[];
   citationPages: number[];
+  antenatalFocus: string;
+  nutritionFocus: string;
   reviewStatus: "not-reviewed" | "clinician-review-required";
+};
+
+export type BookGuideSection = {
+  title: string;
+  summary: string;
+  citationPages: number[];
 };
 
 type CachedBookNote = {
   week: number;
   summary: string;
+  sections: BookGuideSection[];
   citationPages: number[];
   reviewStatus: "clinician-review-required";
 };
@@ -193,6 +203,23 @@ const themes = [
   ],
 ] as const;
 
+function antenatalFocus(week: number) {
+  if (week <= 12)
+    return "At an early antenatal contact, ask about your routine checks, nutrition, supplements and any medicines. WHO recommends starting antenatal care in the first trimester; your clinic will tailor the schedule to you.";
+  if (week <= 19)
+    return "Keep your antenatal visits and ask your care team which checks and locally recommended malaria prevention apply to you. WHO recommends blood-pressure checks at every contact.";
+  if (week <= 23)
+    return "From around 20 weeks, ask how your clinic checks blood pressure and screens for pre-eclampsia. Share new symptoms with a health worker promptly.";
+  if (week <= 27)
+    return "After 24 weeks, antenatal care includes monitoring the baby's growth. Ask whether glucose screening is planned around weeks 24–28 and when your next visit should be.";
+  if (week <= 40)
+    return "Use antenatal visits to discuss the baby's movements, birth and emergency plans, and where to seek urgent care. Your clinician can tell you what movement changes need immediate assessment.";
+  return "If your pregnancy continues beyond the estimated due date, contact your maternity team and follow their plan for check-ins and next steps.";
+}
+
+const nutritionFocus =
+  "WHO encourages a varied diet with vegetables, fruit, beans, nuts, whole grains, fish or other protein foods, and pasteurized dairy where available. Nigerian examples in Sabi’s catalogue include beans, ugwu, egusi, oats and millet. Food-composition values describe foods; they are not a personal pregnancy diet plan. Ask your health worker about supplements and food-safety needs for you.";
+
 export const pregnancyWeeks: WeekGuide[] = themes.map(
   ([focus, gentlePrompt], index) => ({
     week: index + 1,
@@ -200,7 +227,10 @@ export const pregnancyWeeks: WeekGuide[] = themes.map(
     focus,
     gentlePrompt,
     bookNote: bookNotes.get(index + 1)?.summary,
+    bookSections: bookNotes.get(index + 1)?.sections ?? [],
     citationPages: bookNotes.get(index + 1)?.citationPages ?? [],
+    antenatalFocus: antenatalFocus(index + 1),
+    nutritionFocus,
     reviewStatus: bookNotes.has(index + 1)
       ? "clinician-review-required"
       : "not-reviewed",

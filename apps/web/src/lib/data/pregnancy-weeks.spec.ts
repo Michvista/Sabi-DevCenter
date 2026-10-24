@@ -24,13 +24,18 @@ describe("pregnancy week guides", () => {
     expect(getPregnancyWeek(33).week).toBe(33);
   });
 
-  it("uses cached, page-cited book excerpts for weeks 1 to 40 only", () => {
+  it("uses cached, multi-section, page-cited book guides for weeks 1 to 40 only", () => {
     expect(
       pregnancyWeeks
         .slice(0, 40)
         .every(
-          ({ bookNote, citationPages, reviewStatus }) =>
+          ({ bookNote, bookSections, citationPages, reviewStatus }) =>
             Boolean(bookNote) &&
+            bookSections.length >= 2 &&
+            bookSections.every(
+              (section) =>
+                section.summary.length > 20 && section.citationPages.length > 0,
+            ) &&
             citationPages.length > 0 &&
             reviewStatus === "clinician-review-required",
         ),
@@ -45,5 +50,11 @@ describe("pregnancy week guides", () => {
       237, 250, 262, 276, 287, 301, 315, 328, 339, 351, 362, 373, 384, 396, 407,
       419, 431, 443, 455, 465, 478, 490, 499, 511,
     ]);
+  });
+
+  it("provides an antenatal care focus without runtime-generated guidance", () => {
+    expect(pregnancyWeeks.every(({ antenatalFocus }) => antenatalFocus.length > 40)).toBe(true);
+    expect(pregnancyWeeks[24].antenatalFocus).toContain("24–28");
+    expect(pregnancyWeeks[32].antenatalFocus).toContain("birth and emergency plans");
   });
 });

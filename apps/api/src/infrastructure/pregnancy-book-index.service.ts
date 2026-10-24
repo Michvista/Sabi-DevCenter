@@ -17,6 +17,12 @@ type BookIndex = {
     page: number;
     text: string;
     embedding: number[];
+    citationPages: number[];
+    sections: Array<{
+      title: string;
+      summary: string;
+      citationPages: number[];
+    }>;
   }>;
 };
 
@@ -30,7 +36,6 @@ export class PregnancyBookIndexService implements OnApplicationBootstrap {
   async onApplicationBootstrap() {
     if (!this.db?.isInitialized) return;
     const repo = this.db.getRepository(PregnancyBookChunkEntity);
-    if ((await repo.count()) > 0) return;
     const path = resolve(__dirname, "../data/pregnancy-week-book-index.json");
     if (!existsSync(path)) {
       this.logger.warn(
@@ -41,22 +46,39 @@ export class PregnancyBookIndexService implements OnApplicationBootstrap {
     const index = JSON.parse(readFileSync(path, "utf8")) as BookIndex;
     if (
       index.chunks.length !== 40 ||
-      index.chunks.some((chunk) => chunk.embedding.length !== 768)
+      index.chunks.some(
+        (chunk) =>
+          chunk.embedding.length !== 768 ||
+          !chunk.citationPages.length ||
+          chunk.sections.length < 2,
+      )
     )
       throw new Error(
         "Pregnancy book index is incomplete or has invalid embeddings.",
       );
-    await repo.insert(
-      index.chunks.map((chunk) => ({
+    const rows = index.chunks.map((chunk) => ({
         week: chunk.week,
         page: chunk.page,
-        content: chunk.text,
+        content: JSON.stringify({
+          version: 2,
+          sections: chunk.sections,
+          citationPages: chunk.citationPages,
+        }),
         embedding: chunk.embedding,
         model: index.model,
-      })),
-    );
+      }));
+    const existing = await repo.find({ select: ["week", "content", "model"] });
+    const existingByWeek = new Map(existing.map((row) => [row.week, row]));
+    const alreadyCurrent =
+      existing.length === rows.length &&
+      rows.every((row) => {
+        const current = existingByWeek.get(row.week);
+        return current?.content === row.content && current.model === row.model;
+      });
+    if (alreadyCurrent) return;
+    await repo.upsert(rows, ["week"]);
     this.logger.log(
-      `Stored ${index.chunks.length} page-cited pregnancy book chunks in PostgreSQL.`,
+      `Stored or refreshed ${index.chunks.length} page-cited pregnancy-week guides in PostgreSQL.`,
     );
   }
 }
