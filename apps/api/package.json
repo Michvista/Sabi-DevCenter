@@ -1,0 +1,44 @@
+{
+  "name": "@sabi/api",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start:dev": "nest start --watch",
+    "build": "nest build",
+    "start:prod": "node dist/main.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "tsc --noEmit",
+    "check:rumpty": "node scripts/check-rumpty-connectivity.mjs",
+    "smoke:api": "node scripts/smoke-api.mjs",
+    "db:migrate": "typeorm-ts-node-commonjs migration:run -d src/database/data-source.ts"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1152.0",
+    "@nestjs/common": "^11.0.1",
+    "@nestjs/core": "^11.0.1",
+    "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/schedule": "^12.0.2",
+    "@nestjs/typeorm": "^11.0.3",
+    "bullmq": "^6.3.15",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2",
+    "dotenv": "^18.0.8",
+    "ioredis": "^5.11.1",
+    "openai": "^7.34.0",
+    "pg": "^8.23.1",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "typeorm": "^0.3.31",
+    "web-push": "^3.6.7"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.10",
+    "@nestjs/schematics": "^11.0.7",
+    "@types/node": "^22.15.30",
+    "@types/web-push": "^3.6.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
+    "vitest": "^5.0.5"
+  }
+}

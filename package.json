@@ -1,0 +1,29 @@
+{
+  "name": "sabi-maternal-companion",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/web",
+    "apps/api"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n api,web -c magenta,cyan \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:web": "npm --workspace @sabi/web run dev",
+    "dev:api": "npm --workspace @sabi/api run start:dev",
+    "rag:ingest-book": "node apps/api/scripts/ingest-pregnancy-book.mjs",
+    "rag:extract-weeks": "python apps/api/scripts/extract-pregnancy-week-notes.py",
+    "rag:embed-book": "node apps/api/scripts/embed-pregnancy-book.mjs",
+    "build": "npm run build --workspace @sabi/api && npm run build --workspace @sabi/web",
+    "test": "npm run test --workspace @sabi/api && npm run test --workspace @sabi/web",
+    "check": "npm run check --workspace @sabi/api && npm run check --workspace @sabi/web",
+    "check:rumpty": "npm --workspace @sabi/api run check:rumpty",
+    "smoke:api": "npm --workspace @sabi/api run smoke:api",
+    "format": "prettier --plugin prettier-plugin-svelte --write package.json README.md apps",
+    "format:check": "prettier --plugin prettier-plugin-svelte --check package.json README.md apps"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "prettier": "^3.6.2",
+    "prettier-plugin-svelte": "^3.4.0"
+  }
+}

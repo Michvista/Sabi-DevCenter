@@ -1,0 +1,248 @@
+{
+  "model": "local-pdf-extraction",
+  "source": "Your Pregnancy Week by Week — Glade B. Curtis and Judith Schuler",
+  "citationNumbering": "PDF page numbers",
+  "generatedAt": "2026-10-20T22:53:56.565689+00:00",
+  "notes": [
+    {
+      "week": 1,
+      "summary": "This is an exciting time for you—having a baby growing inside you is an incredible experience! Our goal is to help you understand and enjoy your pregnancy.",
+      "citationPages": [37],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 2,
+      "summary": "The beginning of a pregnancy is actually figured from the beginning of your last menstrual period. For your healthcare provider’s calculations, you are pregnant 2 weeks before you actually conceive!",
+      "citationPages": [38],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 3,
+      "summary": "The embryo is very small—at this point, it’s only a group of cells, but it’s growing rapidly.",
+      "citationPages": [52],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 4,
+      "summary": "Your developing baby’s size varies from 0.014 inch to about 0.04 inch (0.36mm to about 1mm) in length. One millimeter is half the size of a letter “o” on this page.",
+      "citationPages": [64],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 5,
+      "summary": "Your developing baby hasn’t grown a lot. By this week, it’s about 0.05 inch (1.25mm) long.",
+      "citationPages": [75],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 6,
+      "summary": "Crown-to-rump length is the sitting height or distance from the top of the baby’s head to its rump or buttocks.",
+      "citationPages": [89],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 7,
+      "summary": "Your baby goes through an incredible growth spurt around this time. At the beginning of this week, the crown-to-rump length is 0.16 to 0.2 inch (4 to 5mm), about the size of a BB pellet.",
+      "citationPages": [103],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 8,
+      "summary": "By this week of pregnancy, the crown-to-rump length of baby is ½ to ¾ inch (1.4 to 2cm). This is about the size of a pinto bean.",
+      "citationPages": [117],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 9,
+      "summary": "The crown-to-rump length of the embryo is 1 to 1¼ inches (2.2 to 3cm). This is close to the size of a medium green olive.",
+      "citationPages": [130],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 10,
+      "summary": "By this week, crown-to-rump length of baby is about 1¼ to 1¾ inches (3.1 to 4.2cm). Baby is starting to put on a little weight, so we’ll add weight in this section.",
+      "citationPages": [142],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 11,
+      "summary": "Crown-to-rump length of baby is 1½ to 2½ inches (4.4 to 6cm). Fetal weight is about 0.3 ounce (8g).",
+      "citationPages": [156],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 12,
+      "summary": "Your baby weighs between ⅓ and ½ ounce (8 to 14g), and crown-to- rump length is almost 2½ inches (6.1cm).",
+      "citationPages": [170],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 13,
+      "summary": "Your baby continues to grow rapidly! Its crown-to-rump length is 2½ to 3 inches (6.5 to 7.8cm), and it weighs between ½ and ¾ ounce (13 to 20g).",
+      "citationPages": [183],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 14,
+      "summary": "Crown-to-rump length is 3¼ to 4 inches (8 to 9.3cm). Your baby is about the size of your fist and weighs almost 1 ounce (25g).",
+      "citationPages": [196],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 15,
+      "summary": "The fetal crown-to-rump length by this week is 4 to 4½ inches (9.3 to 10.3cm). The fetus weighs about 1¾ ounces (50g).",
+      "citationPages": [210],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 16,
+      "summary": "Baby’s crown-to-rump length by this week is 4⅓ to 4⅔ inches (10.8 to 11.6cm). Weight is about 2¾ ounces (80g).",
+      "citationPages": [223],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 17,
+      "summary": "The crown-to-rump length of your baby is 4½ to 4¾ inches (11 to 12cm). Fetal weight has doubled in 2 weeks and is now about 3½ ounces (100g).",
+      "citationPages": [237],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 18,
+      "summary": "Baby’s crown-to-rump length is 5 to 5½ inches (12.5 to 14cm) by this week. Weight of the fetus is about 5¼ ounces (150g).",
+      "citationPages": [250],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 19,
+      "summary": "Crown-to-rump length of the growing fetus is 5¼ to 6 inches (13 to 15cm) by this week. Your baby weighs about 7 ounces (200g).",
+      "citationPages": [262],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 20,
+      "summary": "At this midpoint in your pregnancy, crown-to-rump length is 5⅔ to 6½ inches (14 to 16cm). Your baby weighs about 9 ounces (260g).",
+      "citationPages": [276],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 21,
+      "summary": "Your baby now weighs about 10½ ounces (300g); its crown-to-rump length is about 7¼ inches (18cm). It’s about the size of a large banana.",
+      "citationPages": [287],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 22,
+      "summary": "Your baby weighs about 12¼ ounces (350g). Crown-to-rump length at this time is about 7⅔ inches (19cm).",
+      "citationPages": [301],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 23,
+      "summary": "By this week, baby weighs almost 1 pound (455g)! Its crown-to-rump length is 8 inches (20cm).",
+      "citationPages": [315],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 24,
+      "summary": "By this week, baby weighs about 1¼ pounds (540g). Its crown-to-rump length is about 8½ inches (21cm).",
+      "citationPages": [328],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 25,
+      "summary": "Your baby now weighs about 1½ pounds (700g), and crown-to-rump length is about 8¾ inches (22cm).",
+      "citationPages": [339],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 26,
+      "summary": "Baby now weighs almost 2 pounds (.91kg). By this week, crown-to-rump length is about 9¼ inches (23cm).",
+      "citationPages": [351],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 27,
+      "summary": "This week marks the beginning of the third trimester. We’ll be adding total length of baby’s body from head to toe.",
+      "citationPages": [362],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 28,
+      "summary": "Your baby weighs nearly 2¼ pounds (1kg). Crown-to-rump length is close to 10 inches (25cm).",
+      "citationPages": [373],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 29,
+      "summary": "By this time, baby weighs about 2½ pounds (1.2kg). Crown-to-rump length is almost 10½ inches (26cm).",
+      "citationPages": [384],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 30,
+      "summary": "By week 30, baby weighs about 3 pounds (1.3kg). Its crown-to-rump length is a little over 10¾ inches (27cm), and total length is 15¾ inches (40cm).",
+      "citationPages": [396],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 31,
+      "summary": "Your baby weighs about 3⅓ pounds (1.5kg), and crown-to-rump length is 11¾ inches (28cm). Its total length is nearly 16 inches (41cm).",
+      "citationPages": [407],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 32,
+      "summary": "By this week, baby weighs almost 3¾ pounds (1.7kg). Crown-to-rump length is over 11½ inches (29cm), and total length is nearly 16¾ inches (42cm).",
+      "citationPages": [419],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 33,
+      "summary": "Your baby weighs about 4¼ pounds (1.9kg) by this week. Its crown-to- rump length is about 12 inches (30cm), and total length is nearly 17¼ inches (44cm).",
+      "citationPages": [431],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 34,
+      "summary": "Your baby weighs almost 4¾ pounds (2.15kg) by this week. Its crown- to-rump length is about 12¾ (32cm).",
+      "citationPages": [443],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 35,
+      "summary": "Your baby now weighs over 5¼ pounds (2.4kg). Crown-to-rump length is about 13¼ inches (33cm), and total length is 18¼ inches (46cm).",
+      "citationPages": [455],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 36,
+      "summary": "By this week, your baby weighs about 5¾ pounds (2.6kg). Its crown-to- rump length is over 13½ inches (34cm), and total length is 18⅔ inches (47cm).",
+      "citationPages": [465],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 37,
+      "summary": "Your baby weighs almost 6⅓ pounds (2.8kg). Crown-to-rump length is 14 inches (35cm).",
+      "citationPages": [478],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 38,
+      "summary": "At this time, your baby weighs about 6¾ pounds (3.1kg). Crown-to-rump length is still about 14 inches (35cm).",
+      "citationPages": [490],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 39,
+      "summary": "Your baby weighs about 7¼ pounds (3.3kg). Crown-to-rump length is about 14½ inches (36cm).",
+      "citationPages": [499],
+      "reviewStatus": "clinician-review-required"
+    },
+    {
+      "week": 40,
+      "summary": "Your baby weighs about 7⅔ pounds (3.5kg). Its crown-to-rump length is about 14¾ to 15¼ inches (37 to 38cm).",
+      "citationPages": [511],
+      "reviewStatus": "clinician-review-required"
+    }
+  ]
+}
