@@ -1482,116 +1482,136 @@ p {
 }
 .food-result {
   border: 1px solid #eeece6;
-  border-radius: 10px;
-  padding: 9px;
+  border-radius: 12px;
+  padding: 14px;
   background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 .food-result-heading {
   display: flex;
   align-items: center;
-  gap: 8px;
-  color: #55574f;
-  font-size: 10px;
+  gap: 10px;
+  color: #3b3d36;
+  font-size: 14px;
 }
 .food-result-heading img {
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
   object-fit: cover;
+}
+.food-result-heading strong {
+  font-size: 15px;
+  font-weight: 600;
+  color: #2b2c28;
 }
 .food-result-heading small {
   display: block;
-  margin-top: 3px;
-  color: #9a988f;
-  font-size: 8px;
+  margin-top: 2px;
+  color: #8c8f82;
+  font-size: 12px;
 }
 .food-result dl {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 12px;
-  margin: 8px 0 0;
+  gap: 8px 16px;
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  background: #faf9f6;
+  border-radius: 8px;
 }
 .food-result dl div {
   display: flex;
-  gap: 4px;
-  font-size: 8px;
+  gap: 6px;
+  font-size: 12px;
 }
 .food-result dt {
-  color: #89877f;
+  color: #72746b;
 }
 .food-result dd {
   margin: 0;
-  color: #55574f;
+  color: #33352e;
   font-weight: 700;
 }
 .food-result-basis {
   display: block;
-  margin-top: 6px;
-  color: #99978e;
-  font-size: 8px;
+  margin-top: 8px;
+  color: #888b7e;
+  font-size: 11px;
 }
 .food-log-form {
   display: grid;
-  grid-template-columns: 0.7fr 1.3fr auto;
+  grid-template-columns: 0.8fr 1.2fr auto;
   align-items: end;
-  gap: 7px;
-  margin-top: 9px;
+  gap: 10px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #f0eee8;
 }
 .food-log-form label {
   display: grid;
   gap: 4px;
-  color: #89877f;
-  font-size: 8px;
+  color: #63655c;
+  font-size: 12px;
+  font-weight: 600;
 }
 .food-log-form input,
 .food-log-form select {
   min-width: 0;
-  border: 1px solid #e4e6dc;
-  border-radius: 6px;
-  padding: 6px;
-  color: #55574f;
+  border: 1px solid #dcd7cb;
+  border-radius: 8px;
+  padding: 7px 10px;
+  color: #333;
   background: #fff;
-  font: inherit;
+  font-size: 13px;
 }
 .food-log-form button,
 .food-log li button {
-  border: 1px solid #dce3d8;
-  border-radius: 6px;
-  padding: 6px 8px;
-  background: #f2f5ee;
-  color: #53684d;
-  font: inherit;
+  border: 1px solid #809474;
+  border-radius: 8px;
+  padding: 8px 14px;
+  background: #809474;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
   cursor: pointer;
+  transition: background 0.15s ease;
+}
+.food-log-form button:hover,
+.food-log li button:hover {
+  background: #6c8060;
 }
 .food-log {
-  margin-top: 14px;
+  margin-top: 18px;
   border-top: 1px solid #eeece6;
-  padding-top: 12px;
+  padding-top: 16px;
 }
 .food-log-heading {
   display: flex;
   justify-content: space-between;
-  gap: 8px;
+  gap: 10px;
 }
 .food-log h4 {
   margin: 3px 0 0;
-  color: #55574f;
-  font-size: 12px;
+  color: #33352f;
+  font-size: 15px;
+  font-weight: 600;
 }
 .food-log-heading small,
 .food-log li span,
 .food-log li small {
-  color: #89877f;
-  font-size: 8px;
+  color: #7b7d72;
+  font-size: 12px;
 }
 .food-log > p {
   margin-top: 8px;
-  font-size: 9px;
+  font-size: 12px;
+  color: #666;
 }
 .food-log ul {
   display: grid;
-  gap: 7px;
-  margin: 9px 0 0;
+  gap: 8px;
+  margin: 10px 0 0;
   padding: 0;
   list-style: none;
 }
@@ -1599,10 +1619,11 @@ p {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 8px;
+  gap: 10px;
   border: 1px solid #eeece6;
-  border-radius: 7px;
-  padding: 8px;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #fff;
 }
 .food-log li div,
 .food-log li span,
@@ -1610,8 +1631,9 @@ p {
   display: block;
 }
 .food-log li strong {
-  color: #55574f;
-  font-size: 9px;
+  color: #2b2c28;
+  font-size: 13px;
+  font-weight: 600;
 }
 .food-log li span,
 .food-log li small {
@@ -1627,18 +1649,18 @@ p {
 }
 .food-message,
 .food-disclaimer {
-  margin: 8px 0 0 !important;
+  margin: 10px 0 0 !important;
   color: #8a695b !important;
-  font-size: 9px !important;
+  font-size: 12px !important;
   line-height: 1.5 !important;
 }
 .food-copy .food-learn-link {
-  margin-top: 10px;
+  margin-top: 12px;
 }
 .food-copy button {
-  font-size: 8px;
-  color: #64775d;
-  margin-top: 7px;
+  font-size: 12px;
+  color: #556c4e;
+  margin-top: 8px;
 }
 .support-note {
   display: flex;

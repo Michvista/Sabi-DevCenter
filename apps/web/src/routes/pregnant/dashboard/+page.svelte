@@ -587,7 +587,7 @@
             <div class="learn-tab-pane">
               {#if learnTab === "foods"}
                 <div class="learn-pane-wrap">
-                  <FoodGuide week={week ?? 20} />
+                  <FoodGuide week={week ?? 28} />
                 </div>
               {:else if learnTab === "mealplan"}
                 <div class="learn-pane-wrap mealplan-wrap">
