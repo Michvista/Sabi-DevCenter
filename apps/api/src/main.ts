@@ -1,5 +1,13 @@
+import dns from "node:dns";
 import dotenv from "dotenv";
 import { resolve } from "node:path";
+
+// Ensure global API domains (YarnGPT, Azure, Rumpty, etc.) resolve reliably
+try {
+  dns.setServers(["8.8.8.8", "1.1.1.1"]);
+} catch {
+  // Use system default if custom DNS cannot be bound
+}
 
 dotenv.config({ path: resolve(__dirname, "../../../.env") });
 
