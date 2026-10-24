@@ -1,10 +1,11 @@
-import { Injectable, OnModuleDestroy } from "@nestjs/common";
+import { Injectable, Logger, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
 import { Queue } from "bullmq";
 import Redis from "ioredis";
 import { redisTlsOptionsFromConfig } from "./redis-tls";
 
 @Injectable()
-export class RedisQueueService implements OnModuleDestroy {
+export class RedisQueueService implements OnModuleInit, OnModuleDestroy {
+  private readonly logger = new Logger(RedisQueueService.name);
   private readonly connection = process.env.RUMPTY_REDIS_URL
     ? new Redis(process.env.RUMPTY_REDIS_URL, {
         maxRetriesPerRequest: null,
@@ -22,6 +23,20 @@ export class RedisQueueService implements OnModuleDestroy {
 
   get configured() {
     return this.queue !== null;
+  }
+
+  async onModuleInit() {
+    if (!this.connection) {
+      this.logger.warn("Rumpty Redis is not configured; background jobs are disabled.");
+      return;
+    }
+
+    await this.connection.connect();
+    const response = await this.connection.ping();
+    if (response !== "PONG") {
+      throw new Error("Rumpty Redis did not return PONG during startup.");
+    }
+    this.logger.log("Rumpty Redis connection verified with PING.");
   }
 
   async onModuleDestroy() {
