@@ -111,23 +111,44 @@
   }
 </script>
 
-{#if supported}<section
-    class="notification-optin"
+{#if supported}
+  <section
+    class="rounded-2xl border border-[#e7e4dc] bg-white p-5 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
     aria-label="Browser reminders"
   >
-    <div>
-      <strong>Weekly check-in reminders</strong><small
-        >One gentle browser notification on Mondays and the day before a saved
+    <div class="space-y-1">
+      <div class="flex items-center gap-2">
+        <i class="iconoir-bell text-base text-[#809474]"></i>
+        <strong class="font-serif text-base text-[#2b2c28]">Weekly check-in reminders</strong>
+      </div>
+      <p class="text-xs text-[#72746b] leading-relaxed max-w-md">
+        One gentle browser notification on Mondays and the day before a saved
         antenatal visit, at 9am Lagos time. No symptoms or health details are
-        sent in the notification.</small
-      >{#if message}<small role="status">{message}</small>{/if}
+        sent.
+      </p>
+      {#if message}
+        <p class="text-xs font-medium text-[#475842] mt-1" role="status">{message}</p>
+      {/if}
     </div>
-    <div class="notification-actions">
-      {#if enabled}<button type="button" disabled={busy} onclick={sendTest}
-          >Send test</button
-        >{/if}
-      <button type="button" disabled={busy} onclick={toggle}
-        >{busy ? "Updating…" : enabled ? "Turn off" : "Enable"}</button
+    <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+      {#if enabled}
+        <button
+          type="button"
+          disabled={busy}
+          onclick={sendTest}
+          class="flex-1 sm:flex-initial py-2 px-3 text-xs font-semibold rounded-xl border border-[#d6d2c4] text-[#475842] hover:bg-[#faf9f6] transition-colors cursor-pointer"
+        >
+          Send test
+        </button>
+      {/if}
+      <button
+        type="button"
+        disabled={busy}
+        onclick={toggle}
+        class="flex-1 sm:flex-initial py-2 px-4 text-xs font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer shadow-xs disabled:opacity-50"
       >
+        {busy ? "Updating…" : enabled ? "Turn off" : "Enable"}
+      </button>
     </div>
-  </section>{/if}
+  </section>
+{/if}

@@ -52,7 +52,6 @@
       .toUpperCase(),
   );
 
-  // Check-in history modal / drawer
   let showHistory = $state(false);
   let historyLoading = $state(false);
   let patientCheckIns = $state<
@@ -65,7 +64,6 @@
     }>
   >([]);
 
-  // Clinician reply to patient state
   let replyText = $state("");
   let sendingReply = $state(false);
   let replySuccess = $state(false);
@@ -193,7 +191,6 @@
     if (!replyText.trim() || sendingReply) return;
     sendingReply = true;
     try {
-      // Simulated delivery into patient log/record
       replySuccess = true;
       replyText = "";
       setTimeout(() => {
@@ -285,219 +282,277 @@
 </svelte:head>
 
 {#if authorized}
-  <div class="midwife-app">
-    <aside class="midwife-sidebar">
-      <a class="mw-brand" href="/midwife/dashboard"
-        ><span class="mw-mark"><img src="/sabi-mark.svg" alt="" /></span><span
-          >sabi<span class="brand-dot">.</span><small>CARE TEAM</small></span
-        ></a
-      >
-      <div class="mw-section-label">CLINIC</div>
-      <button
-        class="mw-nav"
-        class:active={activeTab === 'overview'}
-        onclick={() => (activeTab = 'overview')}
-      >
-        <i class="iconoir-activity text-base text-[#809474]"></i>
-        <span>Patient overview</span>
-      </button>
-      <button
-        class="mw-nav"
-        class:active={activeTab === 'followups'}
-        onclick={() => (activeTab = 'followups')}
-      >
-        <i class="iconoir-calendar text-base text-[#af705a]"></i>
-        <span>Follow-ups</span>
-        {#if followUpList.length > 0}
-          <span class="ml-auto px-2 py-0.5 text-xs font-bold rounded-full bg-[#af705a] text-white">
-            {followUpList.length}
-          </span>
-        {/if}
-      </button>
-      <button class="mw-nav mw-signout" onclick={signOut}>
-        <i class="iconoir-log-out text-base text-[#888]"></i>
-        <span>Sign out</span>
-      </button>
-      <div class="mw-side-foot">
-        <span class="mw-online"></span> Secure care team portal
+  <div class="min-h-screen bg-[#faf9f6] flex flex-col md:flex-row antialiased text-[#2b2c28]">
+    <!-- Midwife Sidebar -->
+    <aside class="hidden md:flex w-64 flex-col fixed inset-y-0 left-0 bg-white border-r border-[#e7e4dc] p-6 z-20">
+      <a class="flex items-center gap-2.5 mb-8" href="/midwife/dashboard">
+        <span class="w-9 h-9 rounded-xl bg-[#475842] flex items-center justify-center text-white shadow-xs overflow-hidden">
+          <img src="/sabi-mark.svg" alt="" class="w-full h-full" />
+        </span>
+        <span class="font-serif text-2xl font-bold tracking-tight text-[#2b2c28]">
+          sabi<span class="text-[#af705a]">.</span>
+          <small class="block font-sans text-[10px] font-bold tracking-widest text-[#9c998f] uppercase">CARE TEAM</small>
+        </span>
+      </a>
+
+      <div class="text-[11px] font-bold tracking-wider text-[#9c998f] uppercase mb-3 px-3">CLINIC</div>
+
+      <nav class="space-y-1" aria-label="Care team navigation">
+        <button
+          class="w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all cursor-pointer {activeTab === 'overview' ? 'bg-[#f4f7f2] text-[#2b2c28] border border-[#dce5d6]' : 'text-[#72746b] hover:text-[#2b2c28] hover:bg-[#faf9f6]'}"
+          onclick={() => (activeTab = 'overview')}
+        >
+          <i class="iconoir-activity text-base text-[#809474]"></i>
+          <span>Patient overview</span>
+        </button>
+        <button
+          class="w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all cursor-pointer {activeTab === 'followups' ? 'bg-[#f4f7f2] text-[#2b2c28] border border-[#dce5d6]' : 'text-[#72746b] hover:text-[#2b2c28] hover:bg-[#faf9f6]'}"
+          onclick={() => (activeTab = 'followups')}
+        >
+          <i class="iconoir-calendar text-base text-[#af705a]"></i>
+          <span>Follow-ups</span>
+          {#if followUpList.length > 0}
+            <span class="ml-auto px-2 py-0.5 text-xs font-bold rounded-full bg-[#af705a] text-white">
+              {followUpList.length}
+            </span>
+          {/if}
+        </button>
+      </nav>
+
+      <div class="mt-auto pt-6 border-t border-[#f0ede6] space-y-4">
+        <div class="flex items-center gap-3 p-3 rounded-2xl bg-[#faf9f6] border border-[#edeae1]">
+          <div class="w-9 h-9 rounded-full bg-[#475842]/20 text-[#475842] font-serif font-bold text-sm flex items-center justify-center shrink-0">
+            {clinicianInitials}
+          </div>
+          <div class="min-w-0 flex-1">
+            <strong class="block text-xs font-semibold text-[#2b2c28] truncate">{clinicianName}</strong>
+            <small class="block text-[11px] text-[#8e9083] truncate">Care team account</small>
+          </div>
+        </div>
+
+        <button
+          onclick={signOut}
+          class="w-full flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold rounded-xl text-[#72746b] hover:text-[#2b2c28] hover:bg-[#faf9f6] border border-[#e7e4dc] transition-colors cursor-pointer"
+        >
+          <i class="iconoir-log-out text-sm"></i>
+          <span>Sign out</span>
+        </button>
       </div>
     </aside>
-    <main class="mw-main">
-      <header class="mw-topbar">
-        <a class="back-home" href="/"
-          ><i class="iconoir-arrow-left text-base"></i> Sabi home</a
-        >
-        <div class="mw-top-right">
-          <span>Active Session</span>
-          <button
-            class="mw-bell"
-            aria-label="Notifications"
-            title="Notifications"
-            ><i class="iconoir-bell text-base"></i><i></i
-          ></button>
-          <div class="mw-clinician-avatar">{clinicianInitials}</div>
-          <div class="mw-clinician-name">
-            <strong>{clinicianName}</strong><small>Care team account</small>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 md:ml-64 flex flex-col min-h-screen">
+      <!-- Topbar -->
+      <header class="sticky top-0 z-10 bg-[#faf9f6]/90 backdrop-blur-md border-b border-[#e7e4dc] px-4 sm:px-8 h-16 flex items-center justify-between">
+        <a class="inline-flex items-center gap-1.5 text-xs font-medium text-[#72746b] hover:text-[#2b2c28] transition-colors" href="/">
+          <i class="iconoir-arrow-left text-sm"></i> Sabi home
+        </a>
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-[#809474]"></span>
+            <span class="text-xs text-[#8e9083] font-medium">Active Session</span>
+          </div>
+          <div class="w-8 h-8 rounded-full bg-[#475842]/20 text-[#475842] font-serif font-bold text-xs flex items-center justify-center border border-white shadow-2xs">
+            {clinicianInitials}
           </div>
         </div>
       </header>
-      <div class="mw-content">
-        <div class="mw-welcome">
+
+      <div class="flex-1 p-4 sm:p-8 max-w-6xl w-full mx-auto space-y-6 pb-20 md:pb-8">
+        <!-- Welcome Row -->
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-2">
           <div>
-            <div class="mw-kicker">YOUR CARE TEAM</div>
-            <h1>Good morning, {clinicianName}<span>.</span></h1>
-            <p>Stay close to the people in your care, between every visit.</p>
+            <div class="text-[11px] font-bold tracking-widest text-[#9c998f] uppercase">YOUR CARE TEAM</div>
+            <h1 class="font-serif text-2xl sm:text-3xl font-semibold text-[#2b2c28] tracking-tight mt-1">
+              Good morning, {clinicianName}<span class="text-[#af705a]">.</span>
+            </h1>
+            <p class="text-xs sm:text-sm text-[#72746b] mt-0.5">Stay close to the people in your care, between every visit.</p>
           </div>
-          <button class="invite-button" onclick={() => void loadCareData()}
-            ><i class="iconoir-refresh text-base"></i> Refresh care requests</button
+          <button
+            class="inline-flex items-center gap-2 py-2 px-4 text-xs font-semibold rounded-xl bg-white border border-[#d6d2c4] text-[#475842] hover:bg-[#faf9f6] transition-colors cursor-pointer shadow-2xs shrink-0"
+            onclick={() => void loadCareData()}
           >
+            <i class="iconoir-refresh text-sm"></i>
+            <span>Refresh care requests</span>
+          </button>
         </div>
-        <div class="mw-metrics">
-          <article>
-            <span>CONNECTED PATIENTS</span><strong
-              >{String(roster.length).padStart(2, "0")}</strong
-            ><small>Across your care list</small><i class="metric-icon"
-              ><i class="iconoir-community text-lg text-[#809474]"></i></i
-            >
+
+        <!-- Metrics Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <article class="p-5 rounded-3xl bg-white border border-[#e7e4dc] shadow-xs flex items-center justify-between">
+            <div>
+              <span class="text-[11px] font-bold tracking-wider text-[#888b7c] uppercase block">CONNECTED PATIENTS</span>
+              <strong class="font-serif text-3xl font-semibold text-[#2b2c28] block my-1">{String(roster.length).padStart(2, "0")}</strong>
+              <small class="text-xs text-[#8e9083]">Across your care list</small>
+            </div>
+            <div class="w-12 h-12 rounded-2xl bg-[#809474]/15 flex items-center justify-center text-[#475842]">
+              <i class="iconoir-community text-2xl"></i>
+            </div>
           </article>
-          <article>
-            <span>CHECK-INS LOGGED</span><strong
-              >{String(roster.filter(p => p.status !== "No check-in yet").length).padStart(2, "0")}</strong
-            ><small>Patients with active logs</small
-            ><i class="metric-icon sage"
-              ><i class="iconoir-activity text-lg text-[#657c62]"></i></i
-            >
+
+          <article class="p-5 rounded-3xl bg-white border border-[#e7e4dc] shadow-xs flex items-center justify-between">
+            <div>
+              <span class="text-[11px] font-bold tracking-wider text-[#888b7c] uppercase block">CHECK-INS LOGGED</span>
+              <strong class="font-serif text-3xl font-semibold text-[#2b2c28] block my-1">
+                {String(roster.filter(p => p.status !== "No check-in yet").length).padStart(2, "0")}
+              </strong>
+              <small class="text-xs text-[#8e9083]">Patients with active logs</small>
+            </div>
+            <div class="w-12 h-12 rounded-2xl bg-[#809474]/15 flex items-center justify-center text-[#475842]">
+              <i class="iconoir-activity text-2xl"></i>
+            </div>
           </article>
-          <article>
-            <span>ATTENTION NEEDED</span><strong
-              class={followUpList.length > 0 ? "text-[#b34026]" : ""}
-              >{String(followUpList.length).padStart(2, "0")}</strong
-            ><small>Reported warnings / messages</small><i class="metric-icon amber"
-              ><i class="iconoir-bell text-lg text-[#af705a]"></i></i
-            >
+
+          <article class="p-5 rounded-3xl bg-white border border-[#e7e4dc] shadow-xs flex items-center justify-between">
+            <div>
+              <span class="text-[11px] font-bold tracking-wider text-[#888b7c] uppercase block">ATTENTION NEEDED</span>
+              <strong class="font-serif text-3xl font-semibold block my-1 {followUpList.length > 0 ? 'text-[#b94a32]' : 'text-[#2b2c28]'}">
+                {String(followUpList.length).padStart(2, "0")}
+              </strong>
+              <small class="text-xs text-[#8e9083]">Reported warnings / messages</small>
+            </div>
+            <div class="w-12 h-12 rounded-2xl bg-[#af705a]/15 flex items-center justify-center text-[#af705a]">
+              <i class="iconoir-bell text-2xl"></i>
+            </div>
           </article>
         </div>
 
         {#if activeTab === 'overview'}
           <!-- 2-COLUMN PATIENT OVERVIEW BOARD -->
-          <section class="mw-board">
-            <div class="mw-list-panel">
-              <div class="mw-panel-head">
+          <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            <!-- Left Panel: Roster List -->
+            <div class="lg:col-span-5 rounded-3xl bg-white border border-[#e7e4dc] p-6 shadow-xs space-y-4">
+              <div class="flex items-center justify-between pb-3 border-b border-[#f0ede6]">
                 <div>
-                  <div class="mw-kicker">YOUR PEOPLE</div>
-                  <h2>Patient check-ins</h2>
+                  <div class="text-[11px] font-bold tracking-widest text-[#888b7c] uppercase">YOUR PEOPLE</div>
+                  <h2 class="font-serif text-xl font-semibold text-[#2b2c28]">Patient check-ins</h2>
                 </div>
-                <span class="patient-count">{roster.length} {roster.length === 1 ? 'person' : 'people'}</span>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#faf9f6] border border-[#e7e4dc] text-[#55574f]">
+                  {roster.length} {roster.length === 1 ? 'person' : 'people'}
+                </span>
               </div>
-              <label class="mw-search"
-                ><i class="iconoir-search text-base text-[#888]"></i><input
+
+              <!-- Search -->
+              <div class="relative">
+                <input
                   bind:value={query}
                   placeholder="Find a patient…"
                   aria-label="Find a patient"
-                /></label
-              >
-              {#if requests.length}<div class="mw-pending-requests">
-                  <strong>Connection requests</strong
-                  >{#each requests as request (request.id)}<div>
-                      <span
-                        >{request.patientName}<small>{request.patientEmail}</small
-                        ></span
-                      ><button
+                  class="w-full pl-9 pr-4 py-2.5 text-xs rounded-xl border border-[#dedad0] bg-[#faf9f6] focus:outline-none focus:ring-2 focus:ring-[#809474]/40 focus:bg-white"
+                />
+                <i class="iconoir-search absolute left-3 top-3 text-xs text-[#888]"></i>
+              </div>
+
+              <!-- Pending Requests -->
+              {#if requests.length}
+                <div class="p-3.5 rounded-2xl bg-[#fef9e7] border border-[#e9d27a] space-y-2">
+                  <strong class="text-xs font-bold text-[#7c440a] block">Connection requests ({requests.length})</strong>
+                  {#each requests as request (request.id)}
+                    <div class="flex items-center justify-between text-xs p-2 rounded-xl bg-white border border-[#e9d27a]/40">
+                      <div>
+                        <span class="font-semibold text-[#2b2c28] block">{request.patientName}</span>
+                        <small class="text-[#8e9083]">{request.patientEmail}</small>
+                      </div>
+                      <button
                         type="button"
                         onclick={() => void approveRequest(request.id)}
-                        >Approve</button
+                        class="py-1 px-3 text-xs font-semibold rounded-lg bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer"
                       >
-                    </div>{/each}
-                </div>{/if}
-              <div class="mw-roster">
-                {#each filtered as person}<button
-                    class="mw-person"
-                    class:chosen={selected === person.id}
+                        Approve
+                      </button>
+                    </div>
+                  {/each}
+                </div>
+              {/if}
+
+              <!-- Patients List -->
+              <div class="space-y-2 max-h-[440px] overflow-y-auto pr-1">
+                {#each filtered as person}
+                  <button
+                    class="w-full text-left p-3 rounded-2xl border transition-all cursor-pointer flex items-center gap-3 {selected === person.id ? 'bg-[#f4f7f2] border-[#809474]' : 'bg-[#faf9f6] border-[#eeece6] hover:bg-white'}"
                     onclick={() => (selected = person.id)}
-                    ><span class="mw-person-avatar {person.tone}"
-                      >{person.name
-                        .split(/\s+/)
-                        .map((part) => part[0])
-                        .join("")
-                        .slice(0, 2)
-                        .toUpperCase()}</span
-                    ><span class="mw-person-copy"
-                      ><strong>{person.name}</strong><small
-                        >{person.week
-                          ? `${person.week} weeks`
-                          : "Pregnancy date not added"} · {person.status}</small
-                      ></span
-                    >{#if person.risk}<span
-                        class="followup-dot"
-                        title="Question to review"
-                      ></span>{/if}<i class="iconoir-nav-arrow-right text-sm text-[#aaa]"></i></button
-                  >{/each}{#if filtered.length === 0}<p class="no-match">
+                  >
+                    <div class="w-10 h-10 rounded-full bg-[#af705a]/15 text-[#af705a] font-serif font-bold text-xs flex items-center justify-center shrink-0">
+                      {person.name.split(/\s+/).map((part) => part[0]).join("").slice(0, 2).toUpperCase()}
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <strong class="block text-sm font-semibold text-[#2b2c28] truncate">{person.name}</strong>
+                      <small class="block text-xs text-[#72746b] truncate">
+                        {person.week ? `${person.week} weeks` : "No due date"} · {person.status}
+                      </small>
+                    </div>
+                    {#if person.risk}
+                      <span class="w-2 h-2 rounded-full bg-[#af705a] shrink-0" title="Question to review"></span>
+                    {/if}
+                    <i class="iconoir-nav-arrow-right text-xs text-[#aaa]"></i>
+                  </button>
+                {/each}
+
+                {#if filtered.length === 0}
+                  <p class="text-xs text-[#8e9083] p-4 rounded-xl bg-[#faf9f6] text-center">
                     No linked patient matches that search.
-                  </p>{/if}
+                  </p>
+                {/if}
               </div>
-              <div class="mw-consent-note">
-                Only patients who requested a connection and were approved appear
-                here. Review shared information with the patient during care.
+
+              <div class="text-[11px] text-[#8e9083] pt-3 border-t border-[#f0ede6] leading-relaxed">
+                Only patients who requested a connection and were approved appear here.
               </div>
             </div>
-            <div class="mw-detail-panel">
-              <div class="patient-profile">
-                <div class="profile-top">
-                  <div class="mw-person-avatar large {patient.tone}">
-                    {patient.name
-                      ? patient.name
-                          .split(/\s+/)
-                          .map((part) => part[0])
-                          .join("")
-                          .slice(0, 2)
-                          .toUpperCase()
-                      : "PT"}
+
+            <!-- Right Panel: Patient Detail -->
+            <div class="lg:col-span-7 rounded-3xl bg-white border border-[#e7e4dc] p-6 sm:p-8 shadow-xs space-y-6">
+              <!-- Profile Top -->
+              <div class="flex items-start justify-between gap-4 pb-6 border-b border-[#f0ede6]">
+                <div class="flex items-center gap-4">
+                  <div class="w-14 h-14 rounded-2xl bg-[#af705a]/15 text-[#af705a] font-serif font-bold text-xl flex items-center justify-center shadow-xs">
+                    {patient.name ? patient.name.split(/\s+/).map((part) => part[0]).join("").slice(0, 2).toUpperCase() : "PT"}
                   </div>
-                  <span class="connected-badge"><span></span> Connected</span>
+                  <div>
+                    <h2 class="font-serif text-2xl font-semibold text-[#2b2c28]">{patient.name}</h2>
+                    <p class="text-xs text-[#72746b] mt-0.5">{patient.email || "Connected care record"}</p>
+                  </div>
                 </div>
-                <h2>{patient.name}</h2>
-                <p>
-                  {patient.email ? patient.email : "Connected care record"}
-                </p>
-                <div class="patient-stat-row">
-                  <div>
-                    <small>PREGNANCY</small><strong
-                      >{patient.week
-                        ? `Week ${patient.week}`
-                        : "Not added"}</strong
-                    >
-                  </div>
-                  <div>
-                    <small>ESTIMATED DUE DATE</small><strong>{patient.due}</strong
-                    >
-                  </div>
-                  <div>
-                    <small>NEXT ANTENATAL VISIT</small><strong
-                      >{patient.nextVisit ?? "Not scheduled"}</strong
-                    >
-                  </div>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#edf5eb] text-[#385a38] text-xs font-semibold border border-[#c6dfc0]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-[#385a38]"></span> Connected
+                </span>
+              </div>
+
+              <!-- Stats Row -->
+              <div class="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-[#faf9f6] border border-[#eeece6]">
+                <div>
+                  <small class="text-[10px] font-bold text-[#888b7c] uppercase tracking-wider block">PREGNANCY</small>
+                  <strong class="text-sm font-semibold text-[#2b2c28]">{patient.week ? `Week ${patient.week}` : "Not set"}</strong>
+                </div>
+                <div>
+                  <small class="text-[10px] font-bold text-[#888b7c] uppercase tracking-wider block">DUE DATE</small>
+                  <strong class="text-sm font-semibold text-[#2b2c28]">{patient.due}</strong>
+                </div>
+                <div>
+                  <small class="text-[10px] font-bold text-[#888b7c] uppercase tracking-wider block">NEXT VISIT</small>
+                  <strong class="text-sm font-semibold text-[#2b2c28]">{patient.nextVisit ?? "Not scheduled"}</strong>
                 </div>
               </div>
-              <div class="latest-checkin">
-                <div class="latest-title">
-                  <span class="latest-icon"
-                    ><i class="iconoir-activity text-sm text-[#657c62]"></i></span
-                  >
-                  <div>
-                    <strong>Latest Patient Check-in</strong>
-                    <small>{patient.checkInAt ? formatHumanDate(patient.checkInAt) : "Recent log"}</small>
-                  </div>
+
+              <!-- Latest Check-in -->
+              <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <strong class="text-xs font-bold text-[#888b7c] uppercase tracking-wider">LATEST PATIENT CHECK-IN</strong>
+                  <span class="text-xs text-[#8e9083]">{patient.checkInAt ? formatHumanDate(patient.checkInAt) : "Recent log"}</span>
                 </div>
-                <div class="checkin-mood">“{patient.last}”</div>
+
+                <div class="font-serif text-lg text-[#2b2c28] italic p-4 rounded-2xl bg-[#faf9f6] border border-[#eeece6]">
+                  “{patient.last}”
+                </div>
 
                 {#if patient.symptoms && patient.symptoms.length > 0}
-                  <div class="mb-4 p-3.5 rounded-xl bg-[#fdf5f3] border border-[#f6ded9]">
-                    <strong class="text-xs font-semibold text-[#b34026] block mb-2">
+                  <div class="p-4 rounded-2xl bg-[#fdf4f0] border border-[#f4cfc4] space-y-2">
+                    <strong class="text-xs font-semibold text-[#9c2d15] block">
                       Reported Symptoms ({patient.symptoms.length})
                     </strong>
                     <div class="flex flex-wrap gap-1.5">
                       {#each patient.symptoms as s}
-                        <span class="px-2.5 py-1 text-xs rounded-full bg-[#fde8e3] text-[#9c2d15] font-medium border border-[#f4c9bf]">
+                        <span class="px-3 py-1 text-xs rounded-full bg-[#fdeae5] text-[#9c2d15] font-semibold border border-[#f6d0c6]">
                           {s}
                         </span>
                       {/each}
@@ -506,63 +561,49 @@
                 {/if}
 
                 {#if patient.note}
-                  <div class="mb-4 p-3.5 rounded-xl bg-[#f7f8f4] border border-[#e2e7dc]">
-                    <strong class="text-xs font-semibold text-[#455a3f] block mb-1">
-                      Patient Note / Question
-                    </strong>
-                    <p class="text-xs text-[#525547] leading-relaxed italic">
-                      "{patient.note}"
-                    </p>
+                  <div class="p-4 rounded-2xl bg-[#faf9f6] border border-[#eeece6] space-y-1">
+                    <strong class="text-xs font-semibold text-[#475842] block">Patient Note / Question</strong>
+                    <p class="text-xs text-[#525547] leading-relaxed italic">"{patient.note}"</p>
                   </div>
                 {/if}
 
-                {#if patient.risk}
-                  <div class="question-callout">
-                    <strong>Care Team Attention Recommended</strong>
-                    <span>Review reported concerns with patient at the next clinic touchpoint.</span>
-                  </div>
-                {:else}
-                  <div class="wellbeing-callout">
-                    <span>♡</span> No urgent concerns shared in this check-in.
-                  </div>
-                {/if}
-
-                <div class="mt-4 pt-3 border-t border-[#f0eee8] flex flex-wrap gap-2">
+                <div class="pt-2">
                   <button
-                    class="message-patient cursor-pointer"
+                    class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#809474] hover:underline cursor-pointer"
                     onclick={() => void viewPatientHistory(patient.id)}
                   >
-                    View check-in history <i class="iconoir-nav-arrow-right text-sm"></i>
+                    <span>View full check-in history</span>
+                    <i class="iconoir-arrow-right text-xs"></i>
                   </button>
                 </div>
 
-                <!-- CLINICIAN REPLY BOX -->
-                <div class="mt-5 pt-4 border-t border-[#ebeae4]">
-                  <div class="flex items-center gap-2 mb-2">
-                    <i class="iconoir-chat-bubble-check text-sm text-[#809474]"></i>
-                    <strong class="text-xs font-semibold text-[#2c2d28]">Send Clinical Note / Follow-up</strong>
+                <!-- Clinician Reply Form -->
+                <div class="pt-4 border-t border-[#edeae1] space-y-3">
+                  <div class="flex items-center gap-2">
+                    <i class="iconoir-chat-bubble-check text-base text-[#809474]"></i>
+                    <strong class="text-xs font-semibold text-[#2b2c28]">Send Clinical Note / Follow-up</strong>
                   </div>
-                  <form class="space-y-2" onsubmit={sendClinicianNote}>
+                  <form class="space-y-2.5" onsubmit={sendClinicianNote}>
                     <textarea
                       bind:value={replyText}
-                      rows="2"
+                      rows="3"
                       maxlength="500"
                       placeholder="Add reassurance, dietary advice, or antenatal appointment prep for {patient.name}…"
-                      class="w-full p-2.5 text-xs rounded-xl border border-[#dedad0] bg-[#faf9f6] focus:outline-none focus:ring-1 focus:ring-[#809474] resize-none"
+                      class="w-full p-3 text-xs rounded-xl border border-[#dedad0] bg-[#faf9f6] focus:outline-none focus:ring-2 focus:ring-[#809474]/40 focus:bg-white resize-none"
                     ></textarea>
                     <div class="flex items-center justify-between">
-                      <small class="text-[11px] text-[#888]">Visible on patient dashboard</small>
+                      <small class="text-[11px] text-[#8e9083]">Visible on patient dashboard</small>
                       <button
                         type="submit"
                         disabled={sendingReply || !replyText.trim()}
-                        class="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-[#809474] text-white hover:bg-[#6c8060] disabled:opacity-50 cursor-pointer transition-colors"
+                        class="py-2 px-4 text-xs font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] disabled:opacity-50 transition-colors cursor-pointer shadow-xs"
                       >
                         {sendingReply ? "Saving…" : "Post Note"}
                       </button>
                     </div>
                   </form>
                   {#if replySuccess}
-                    <div class="mt-2 p-2 rounded-lg bg-[#edf5eb] text-[#385a38] text-xs font-medium">
+                    <div class="p-3 rounded-xl bg-[#edf5eb] border border-[#c6dfc0] text-xs font-medium text-[#385a38]">
                       ✓ Note saved to patient record!
                     </div>
                   {/if}
@@ -572,48 +613,46 @@
           </section>
 
         {:else}
-          <!-- FOLLOW-UPS DEDICATED VIEW -->
-          <section class="rounded-2xl bg-white border border-[#ebece5] p-6 mb-6">
-            <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+          <!-- FOLLOW-UPS TAB -->
+          <section class="rounded-3xl bg-white border border-[#e7e4dc] p-6 sm:p-8 shadow-xs space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-[#f0ede6]">
               <div>
-                <div class="mw-kicker">PRIORITY CARE LIST</div>
-                <h2 class="font-serif text-2xl font-medium text-[#2c2e27]">Patient Follow-ups</h2>
-                <p class="text-xs text-[#7c7e73] mt-1">
-                  Patients with reported symptoms, warning indicators, or awaiting clinic visits.
-                </p>
+                <div class="text-[11px] font-bold tracking-widest text-[#888b7c] uppercase">PRIORITY CARE LIST</div>
+                <h2 class="font-serif text-2xl font-semibold text-[#2b2c28]">Patient Follow-ups</h2>
+                <p class="text-xs text-[#72746b] mt-0.5">Patients with reported symptoms, warning indicators, or awaiting clinic visits.</p>
               </div>
-              <span class="px-3 py-1 rounded-full bg-[#f8ede8] text-[#b34026] text-xs font-bold">
+              <span class="px-3 py-1 rounded-full bg-[#fdf4f0] text-[#9c2d15] text-xs font-bold border border-[#f4cfc4]">
                 {followUpList.length} requiring review
               </span>
             </div>
 
             {#if followUpList.length === 0}
-              <div class="py-12 text-center rounded-xl bg-[#faf9f6] border border-dashed border-[#e6e2d8]">
-                <i class="iconoir-check-circle text-3xl text-[#809474] mb-2 inline-block"></i>
-                <h3 class="font-serif text-lg font-medium text-[#33352f]">All caught up</h3>
-                <p class="text-xs text-[#7e8074] max-w-sm mx-auto mt-1">
+              <div class="py-16 text-center rounded-2xl bg-[#faf9f6] border border-dashed border-[#e2dfd5] space-y-2">
+                <i class="iconoir-check-circle text-4xl text-[#809474]"></i>
+                <h3 class="font-serif text-lg font-semibold text-[#2b2c28]">All caught up</h3>
+                <p class="text-xs text-[#72746b] max-w-sm mx-auto">
                   None of your connected patients have reported urgent symptoms or unresolved warning signs.
                 </p>
               </div>
             {:else}
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {#each followUpList as p}
-                  <div class="rounded-xl border border-[#eedecf] bg-[#fdfaf8] p-4 flex flex-col justify-between">
+                  <div class="p-5 rounded-2xl border border-[#f4cfc4] bg-[#fdf4f0] flex flex-col justify-between space-y-4">
                     <div>
                       <div class="flex items-center justify-between mb-2">
-                        <span class="inline-flex items-center gap-1.5 text-xs font-bold text-[#b34026]">
-                          <span class="w-2 h-2 rounded-full bg-[#b34026]"></span>
+                        <span class="inline-flex items-center gap-1.5 text-xs font-bold text-[#9c2d15]">
+                          <span class="w-2 h-2 rounded-full bg-[#9c2d15]"></span>
                           {p.last}
                         </span>
-                        <span class="text-xs text-[#8c887d] font-semibold">{p.week ? `Wk ${p.week}` : 'Due: ' + p.due}</span>
+                        <span class="text-xs text-[#8e9083] font-semibold">{p.week ? `Wk ${p.week}` : 'Due: ' + p.due}</span>
                       </div>
                       <h4 class="font-serif text-lg font-semibold text-[#2b2c28]">{p.name}</h4>
-                      <p class="text-xs text-[#6e7065] mt-0.5">{p.email}</p>
+                      <p class="text-xs text-[#72746b]">{p.email}</p>
 
                       {#if p.symptoms && p.symptoms.length > 0}
                         <div class="mt-3 flex flex-wrap gap-1.5">
                           {#each p.symptoms as sym}
-                            <span class="px-2 py-0.5 rounded-md bg-[#fbe7e2] text-[#a1331c] text-xs font-medium border border-[#f5cdc4]">
+                            <span class="px-2.5 py-0.5 rounded-full bg-white text-[#9c2d15] text-xs font-semibold border border-[#f4cfc4]">
                               {sym}
                             </span>
                           {/each}
@@ -621,16 +660,16 @@
                       {/if}
 
                       {#if p.note}
-                        <div class="mt-3 p-2 rounded-lg bg-white border border-[#f0eee8] text-xs text-[#525547] italic">
+                        <div class="mt-3 p-3 rounded-xl bg-white border border-[#f4cfc4]/50 text-xs text-[#525547] italic">
                           "{p.note}"
                         </div>
                       {/if}
                     </div>
 
-                    <div class="mt-4 pt-3 border-t border-[#f2eae1] flex items-center justify-between">
-                      <span class="text-xs text-[#777]">Next visit: {p.nextVisit ?? "None set"}</span>
+                    <div class="pt-3 border-t border-[#f4cfc4]/50 flex items-center justify-between">
+                      <span class="text-xs text-[#72746b]">Next visit: {p.nextVisit ?? "None set"}</span>
                       <button
-                        class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-[#809474] text-white hover:bg-[#6c8060] cursor-pointer"
+                        class="py-1.5 px-3.5 text-xs font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer shadow-2xs"
                         onclick={() => {
                           selected = p.id;
                           activeTab = 'overview';
@@ -646,81 +685,18 @@
           </section>
         {/if}
 
-        <!-- HISTORY MODAL / DRAWER -->
-        {#if showHistory}
-          <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs p-4">
-            <div class="bg-white rounded-2xl border border-[#ebebe4] w-full max-w-lg max-h-[85vh] flex flex-col shadow-xl overflow-hidden">
-              <div class="p-5 border-b border-[#f0eee8] flex items-center justify-between bg-[#faf9f6]">
-                <div>
-                  <h3 class="font-serif text-xl font-semibold text-[#2c2d28]">{patient.name}</h3>
-                  <p class="text-xs text-[#777] mt-0.5">Check-in history and clinical timeline</p>
-                </div>
-                <button
-                  class="w-8 h-8 rounded-full bg-white border border-[#dedad0] flex items-center justify-center text-[#666] hover:bg-[#f3f0e8] cursor-pointer"
-                  onclick={() => (showHistory = false)}
-                  aria-label="Close modal"
-                >
-                  <i class="iconoir-xmark text-sm"></i>
-                </button>
-              </div>
-
-              <div class="p-5 overflow-y-auto space-y-4 flex-1">
-                {#if historyLoading}
-                  <div class="py-12 text-center text-xs text-[#888]">Loading check-in history…</div>
-                {:else if patientCheckIns.length === 0}
-                  <div class="py-12 text-center text-xs text-[#888]">No previous check-in history recorded for this patient.</div>
-                {:else}
-                  {#each patientCheckIns as entry}
-                    <div class="p-3.5 rounded-xl border border-[#ebe7de] bg-[#fdfdfb] space-y-2">
-                      <div class="flex items-center justify-between text-xs">
-                        <span class="font-semibold text-[#3c3e37]">{formatMoodLabel(entry.mood)}</span>
-                        <span class="text-[#8c8a81]">{formatHumanDate(entry.createdAt)}</span>
-                      </div>
-                      {#if entry.symptoms && entry.symptoms.length > 0}
-                        <div class="flex flex-wrap gap-1.5 pt-1">
-                          {#each entry.symptoms as s}
-                            <span class="px-2 py-0.5 rounded-full bg-[#fdeae5] text-[#9c2d15] text-[11px] font-medium border border-[#f6d0c6]">
-                              {s}
-                            </span>
-                          {/each}
-                        </div>
-                      {/if}
-                      {#if entry.note}
-                        <p class="text-xs text-[#5f6155] bg-white p-2.5 rounded-lg border border-[#f0eee8] italic">
-                          "{entry.note}"
-                        </p>
-                      {/if}
-                    </div>
-                  {/each}
-                {/if}
-              </div>
-
-              <div class="p-4 border-t border-[#f0eee8] bg-[#faf9f6] text-right">
-                <button
-                  class="px-4 py-2 text-xs font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] cursor-pointer"
-                  onclick={() => (showHistory = false)}
-                >
-                  Close History
-                </button>
-              </div>
-            </div>
+        <!-- Clinical Content Review -->
+        <section class="rounded-3xl bg-white border border-[#e7e4dc] p-6 sm:p-8 shadow-xs space-y-4" aria-labelledby="clinical-review-title">
+          <div class="pb-3 border-b border-[#f0ede6]">
+            <div class="text-[11px] font-bold tracking-widest text-[#888b7c] uppercase">CONTENT QUALITY</div>
+            <h2 id="clinical-review-title" class="font-serif text-xl font-semibold text-[#2b2c28]">Clinical content review</h2>
+            <p class="text-xs text-[#72746b] mt-0.5">
+              Review the weekly educational excerpt and leave a decision or correction note. Sabi does not verify professional credentials.
+            </p>
           </div>
-        {/if}
 
-        <section
-          class="mw-clinical-review"
-          aria-labelledby="clinical-review-title"
-        >
-          <div class="mw-kicker">CONTENT QUALITY</div>
-          <h2 id="clinical-review-title">Clinical content review</h2>
-          <p>
-            Review the weekly educational excerpt and leave a decision or
-            correction note. Use this workflow only if you are a qualified
-            maternity-care clinician. Sabi does not verify professional
-            credentials.
-          </p>
-          <label
-            >Pregnancy week
+          <div>
+            <label class="block text-xs font-semibold text-[#55574f] mb-1.5">Pregnancy week</label>
             <select
               bind:value={reviewWeek}
               onchange={() => {
@@ -729,59 +705,156 @@
                     (entry) => entry.week === Number(reviewWeek),
                   )?.notes ?? "";
               }}
+              class="w-full sm:w-80 px-3 py-2 text-xs rounded-xl border border-[#dedad0] bg-[#faf9f6]"
             >
-              {#each clinicalReviews as item}<option value={item.week}
-                  >Week {item.week} · {item.status === "PENDING"
-                    ? "Pending"
-                    : item.status === "APPROVED"
-                      ? "Reviewed"
-                      : "Changes requested"}</option
-                >{/each}
+              {#each clinicalReviews as item}
+                <option value={item.week}>
+                  Week {item.week} · {item.status === "PENDING" ? "Pending" : item.status === "APPROVED" ? "Reviewed" : "Changes requested"}
+                </option>
+              {/each}
             </select>
-          </label>
-          <article class="mw-review-excerpt">
-            <strong>{reviewWeekGuide.title}</strong>
+          </div>
+
+          <article class="p-4 rounded-2xl bg-[#faf9f6] border border-[#eeece6] space-y-2">
+            <strong class="font-serif text-base font-semibold text-[#2b2c28] block">{reviewWeekGuide.title}</strong>
             {#if reviewWeekGuide.bookSections.length}
               {#each reviewWeekGuide.bookSections as section}
-                <p><b>{section.title}</b> {section.summary}</p>
-                <small>Book PDF pages {section.citationPages.join(", ")}</small>
+                <p class="text-xs text-[#525547] leading-relaxed"><b>{section.title}:</b> {section.summary}</p>
+                <small class="block text-[11px] text-[#8e9083]">Book PDF pages {section.citationPages.join(", ")}</small>
               {/each}
             {:else}
-              <p>{reviewWeekGuide.gentlePrompt}</p>
+              <p class="text-xs text-[#525547] leading-relaxed">{reviewWeekGuide.gentlePrompt}</p>
             {/if}
-            <p><b>Antenatal care focus</b> {reviewWeekGuide.antenatalFocus}</p>
+            <p class="text-xs text-[#525547] leading-relaxed pt-2 border-t border-[#edeae1]">
+              <b>Antenatal care focus:</b> {reviewWeekGuide.antenatalFocus}
+            </p>
           </article>
-          <label
-            >Review notes<textarea
+
+          <div>
+            <label class="block text-xs font-semibold text-[#55574f] mb-1.5">Review notes</label>
+            <textarea
               bind:value={reviewNotes}
               maxlength="2000"
               placeholder="Add a correction, qualification or review note"
-            ></textarea></label
-          >
-          <div class="mw-review-actions">
+              rows="3"
+              class="w-full p-3 text-xs rounded-xl border border-[#dedad0] bg-[#faf9f6] focus:outline-none focus:ring-2 focus:ring-[#809474]/40 focus:bg-white resize-none"
+            ></textarea>
+          </div>
+
+          <div class="flex flex-wrap gap-2">
             <button
               disabled={reviewBusy}
               onclick={() => void submitClinicalReview("APPROVED")}
-              >Record review</button
+              class="py-2 px-4 text-xs font-semibold rounded-xl bg-[#475842] text-white hover:bg-[#384634] transition-colors cursor-pointer disabled:opacity-50"
             >
+              Record review
+            </button>
             <button
               disabled={reviewBusy}
               onclick={() => void submitClinicalReview("CHANGES_REQUESTED")}
-              >Request changes</button
+              class="py-2 px-4 text-xs font-semibold rounded-xl bg-[#faf9f6] border border-[#d6d2c4] text-[#72746b] hover:bg-[#f0ede6] transition-colors cursor-pointer disabled:opacity-50"
             >
+              Request changes
+            </button>
           </div>
-          {#if reviewMessage}<p role="status">{reviewMessage}</p>{/if}
+
+          {#if reviewMessage}
+            <p class="text-xs text-[#475842] font-medium" role="status">{reviewMessage}</p>
+          {/if}
         </section>
-        <div class="mw-safety">
-          <span>◈</span> This portal supports continuity of care. Clinical decisions
-          remain with the qualified care team and patient.
+
+        <!-- Safety Footer Note -->
+        <div class="p-4 rounded-2xl bg-[#f4f7f2] border border-[#dce5d6] text-xs text-[#475842] flex items-center gap-2.5">
+          <i class="iconoir-shield-check text-base text-[#809474]"></i>
+          <span>This portal supports continuity of care. Clinical decisions remain with the qualified care team and patient.</span>
         </div>
       </div>
     </main>
-    <nav class="mw-mobile-nav" aria-label="Care team navigation">
-      <button class:active={activeTab === 'overview'} onclick={() => (activeTab = 'overview')}>Overview</button>
-      <button class:active={activeTab === 'followups'} onclick={() => (activeTab = 'followups')}>Follow-ups ({followUpList.length})</button>
-      <button onclick={signOut}>Sign out</button>
+
+    <!-- History Drawer Modal -->
+    {#if showHistory}
+      <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs p-4">
+        <div class="bg-white rounded-3xl border border-[#e7e4dc] w-full max-w-lg max-h-[85vh] flex flex-col shadow-xl overflow-hidden">
+          <div class="p-5 border-b border-[#f0ede6] flex items-center justify-between bg-[#faf9f6]">
+            <div>
+              <h3 class="font-serif text-xl font-semibold text-[#2b2c28]">{patient.name}</h3>
+              <p class="text-xs text-[#72746b]">Check-in history and clinical timeline</p>
+            </div>
+            <button
+              class="w-8 h-8 rounded-full bg-white border border-[#dedad0] flex items-center justify-center text-[#72746b] hover:bg-[#f4f2ec] cursor-pointer"
+              onclick={() => (showHistory = false)}
+              aria-label="Close modal"
+            >
+              <i class="iconoir-xmark text-sm"></i>
+            </button>
+          </div>
+
+          <div class="p-5 overflow-y-auto space-y-3 flex-1">
+            {#if historyLoading}
+              <div class="py-12 text-center text-xs text-[#8e9083]">Loading check-in history…</div>
+            {:else if patientCheckIns.length === 0}
+              <div class="py-12 text-center text-xs text-[#8e9083]">No previous check-in history recorded for this patient.</div>
+            {:else}
+              {#each patientCheckIns as entry}
+                <div class="p-3.5 rounded-2xl border border-[#eeece6] bg-[#faf9f6] space-y-2">
+                  <div class="flex items-center justify-between text-xs">
+                    <span class="font-semibold text-[#2b2c28]">{formatMoodLabel(entry.mood)}</span>
+                    <span class="text-[#8e9083]">{formatHumanDate(entry.createdAt)}</span>
+                  </div>
+                  {#if entry.symptoms && entry.symptoms.length > 0}
+                    <div class="flex flex-wrap gap-1.5">
+                      {#each entry.symptoms as s}
+                        <span class="px-2.5 py-0.5 rounded-full bg-[#fdeae5] text-[#9c2d15] text-[11px] font-semibold border border-[#f6d0c6]">
+                          {s}
+                        </span>
+                      {/each}
+                    </div>
+                  {/if}
+                  {#if entry.note}
+                    <p class="text-xs text-[#525547] bg-white p-2.5 rounded-xl border border-[#eeece6] italic">
+                      "{entry.note}"
+                    </p>
+                  {/if}
+                </div>
+              {/each}
+            {/if}
+          </div>
+
+          <div class="p-4 border-t border-[#f0ede6] bg-[#faf9f6] text-right">
+            <button
+              class="py-2 px-4 text-xs font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer"
+              onclick={() => (showHistory = false)}
+            >
+              Close History
+            </button>
+          </div>
+        </div>
+      </div>
+    {/if}
+
+    <!-- Mobile Nav -->
+    <nav class="md:hidden fixed bottom-0 inset-x-0 bg-white border-t border-[#e7e4dc] px-2 py-2 flex items-center justify-around z-30 shadow-lg" aria-label="Care team navigation">
+      <button
+        class="flex flex-col items-center justify-center gap-1 py-1 px-3 rounded-xl transition-colors cursor-pointer {activeTab === 'overview' ? 'text-[#809474] font-bold' : 'text-[#8e9083]'}"
+        onclick={() => (activeTab = 'overview')}
+      >
+        <i class="iconoir-activity text-xl"></i>
+        <span class="text-[10px]">Overview</span>
+      </button>
+      <button
+        class="flex flex-col items-center justify-center gap-1 py-1 px-3 rounded-xl transition-colors cursor-pointer {activeTab === 'followups' ? 'text-[#af705a] font-bold' : 'text-[#8e9083]'}"
+        onclick={() => (activeTab = 'followups')}
+      >
+        <i class="iconoir-calendar text-xl"></i>
+        <span class="text-[10px]">Follow-ups ({followUpList.length})</span>
+      </button>
+      <button
+        class="flex flex-col items-center justify-center gap-1 py-1 px-3 rounded-xl text-[#8e9083] transition-colors cursor-pointer"
+        onclick={signOut}
+      >
+        <i class="iconoir-log-out text-xl"></i>
+        <span class="text-[10px]">Sign out</span>
+      </button>
     </nav>
   </div>
 {/if}

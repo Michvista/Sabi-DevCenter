@@ -183,50 +183,63 @@
 
   {:else}
     <!-- NOT YET CONNECTED FORM -->
-    <div class="flo-care-connect-header">
-      <div class="flo-checkin-eyebrow">YOUR CARE TEAM</div>
-      <h2 class="flo-checkin-title">Connect with your midwife</h2>
-      <p class="flo-checkin-sub">
-        Ask your midwife or health worker for their <strong>Sabi connection code</strong>. 
+    <div class="bg-white rounded-2xl border border-[#e7e4dc] p-6">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-[#809474]/15 flex items-center justify-center shrink-0">
+          <i class="iconoir-hospital text-lg text-[#475842]"></i>
+        </div>
+        <div>
+          <div class="text-[11px] font-bold tracking-widest text-[#9c998f] uppercase">YOUR CARE TEAM</div>
+          <h2 class="font-serif text-xl font-semibold text-[#2b2c28] leading-snug">Connect with your midwife</h2>
+        </div>
+      </div>
+
+      <p class="text-sm text-[#72746b] leading-relaxed mb-5">
+        Ask your midwife or health worker for their <strong class="text-[#2b2c28]">Sabi connection code</strong>.
         Enter it below to request a link to their care team account.
       </p>
+
+      <form class="space-y-3" onsubmit={connect}>
+        <div>
+          <label class="block text-xs font-semibold text-[#55574f] mb-1.5" for="care-code">
+            Midwife connection code
+          </label>
+          <div class="flex gap-2">
+            <input
+              id="care-code"
+              type="text"
+              bind:value={code}
+              required
+              maxlength="8"
+              placeholder="e.g. SABICRE"
+              autocomplete="off"
+              autocapitalize="characters"
+              spellcheck="false"
+              class="flex-1 px-4 py-3 text-sm font-mono font-bold uppercase tracking-widest rounded-xl border border-[#dedad0] bg-[#faf9f6] focus:outline-none focus:ring-2 focus:ring-[#809474]/40 focus:bg-white"
+            />
+            <button
+              class="py-3 px-5 text-sm font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] disabled:opacity-50 transition-colors cursor-pointer shadow-xs whitespace-nowrap"
+              type="submit"
+              disabled={busy || !code.trim()}
+            >
+              {busy ? "Sending…" : "Connect"}
+            </button>
+          </div>
+          <small class="block mt-2 text-xs text-[#72746b]">
+            Codes are 6–8 characters. For the demo, enter <strong class="font-mono">SABICRE</strong> to link with Demo Midwife.
+          </small>
+        </div>
+      </form>
+
+      {#if message}
+        <div
+          class="mt-4 px-4 py-3 rounded-xl text-sm font-medium flex items-start gap-2 {messageType === 'success' ? 'bg-[#edf5eb] border border-[#c6dfc0] text-[#385a38]' : 'bg-[#fdf4f0] border border-[#f4cfc4] text-[#9c2d15]'}"
+          role="status"
+        >
+          <i class="{messageType === 'success' ? 'iconoir-check-circle text-[#809474]' : 'iconoir-warning-triangle text-[#af705a]'} text-base mt-0.5 shrink-0"></i>
+          <span>{message}</span>
+        </div>
+      {/if}
     </div>
-
-    <form class="flo-care-form" onsubmit={connect}>
-      <label class="flo-care-label" for="care-code">
-        Midwife connection code
-      </label>
-      <div class="flo-care-input-row">
-        <input
-          id="care-code"
-          class="flo-care-code-input"
-          type="text"
-          bind:value={code}
-          required
-          maxlength="8"
-          placeholder="e.g. SABICRE"
-          autocomplete="off"
-          autocapitalize="characters"
-          spellcheck="false"
-        />
-        <button class="flo-care-submit-btn" type="submit" disabled={busy || !code.trim()}>
-          {busy ? "Sending…" : "Connect"}
-        </button>
-      </div>
-      <small class="flo-care-hint">
-        Codes are 6 characters. If using the demo, enter <strong>SABICRE</strong> to link directly with Demo Midwife.
-      </small>
-    </form>
-
-    {#if message}
-      <div
-        class="flo-care-message"
-        class:flo-care-success={messageType === "success"}
-        class:flo-care-error={messageType === "error"}
-        role="status"
-      >
-        {messageType === "success" ? "✓" : "!"} {message}
-      </div>
-    {/if}
   {/if}
 </div>

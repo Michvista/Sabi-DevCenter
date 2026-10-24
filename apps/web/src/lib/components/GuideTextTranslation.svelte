@@ -21,93 +21,37 @@
   }
 </script>
 
-<section
-  class="guide-translation"
-  aria-label="Show this guide in another language"
->
-  <div class="translation-controls">
-    <label class="sr-only" for="guide-translation-language"
-      >Translation language</label
+<section class="space-y-3" aria-label="Show this guide in another language">
+  <div class="flex gap-2">
+    <label class="sr-only" for="guide-translation-language">Translation language</label>
+    <select
+      id="guide-translation-language"
+      bind:value={language}
+      class="flex-1 px-3 py-2 text-xs rounded-xl border border-[#dedad0] bg-[#faf9f6] text-[#2b2c28] focus:outline-none focus:ring-2 focus:ring-[#809474]/40"
     >
-    <select id="guide-translation-language" bind:value={language}>
       <option value="ha">Hausa</option>
       <option value="ig">Igbo</option>
       <option value="yo">Yorùbá</option>
       <option value="pcm">Nigerian Pidgin</option>
     </select>
-    <button type="button" disabled={loading} onclick={showTranslation}>
-      {loading
-        ? "Translating…"
-        : translated
-          ? "Show again"
-          : "Show translation"}
+    <button
+      type="button"
+      disabled={loading}
+      onclick={showTranslation}
+      class="py-2 px-4 text-xs font-semibold rounded-xl bg-white border border-[#d6d2c4] text-[#475842] hover:bg-[#faf9f6] transition-colors cursor-pointer disabled:opacity-50"
+    >
+      {loading ? "Translating…" : translated ? "Show again" : "Show translation"}
     </button>
   </div>
   {#if translated}
-    <p class="translated-guide" lang={language}>{translated}</p>
-    <small
-      >Machine translation. Ask your maternity-care worker to confirm details
-      that affect your care.</small
-    >
+    <p class="p-3.5 rounded-xl bg-[#faf9f6] border border-[#e7e4dc] text-xs sm:text-sm text-[#30312c] leading-relaxed" lang={language}>
+      {translated}
+    </p>
+    <small class="block text-[11px] text-[#8e9083]">
+      Machine translation. Ask your maternity-care worker to confirm details that affect your care.
+    </small>
   {/if}
-  {#if message}<small role="status">{message}</small>{/if}
+  {#if message}
+    <p class="text-xs text-[#9c2d15]" role="status">{message}</p>
+  {/if}
 </section>
-
-<style>
-  .guide-translation {
-    display: grid;
-    gap: 8px;
-    margin: 10px 0;
-  }
-  .translation-controls {
-    display: flex;
-    gap: 8px;
-  }
-  select,
-  button {
-    border: 1px solid #e7e4dc;
-    border-radius: 7px;
-    padding: 8px 10px;
-    font: inherit;
-    font-size: 12px;
-  }
-  select {
-    flex: 1;
-    min-width: 0;
-    background: white;
-    color: #4f514a;
-  }
-  button {
-    background: #f2f4ed;
-    color: #485d46;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  button:disabled {
-    opacity: 0.65;
-    cursor: wait;
-  }
-  .translated-guide {
-    margin: 0;
-    padding: 12px;
-    border-radius: 9px;
-    background: #f8f7f2;
-    line-height: 1.65;
-  }
-  small {
-    color: #85847d;
-    font-size: 11px;
-    line-height: 1.5;
-  }
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-</style>

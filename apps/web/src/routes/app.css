@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --color-sabi-ink: #2b2c28;
+  --color-sabi-muted: #72746b;
+  --color-sabi-line: #e7e4dc;
+  --color-sabi-paper: #ffffff;
+  --color-sabi-terracotta: #af705a;
+  --color-sabi-soft-terracotta: #fdf4f0;
+  --color-sabi-green: #809474;
+  --color-sabi-soft-green: #edf5eb;
+  --color-sabi-bg: #faf9f6;
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+:root {
+  font-family: var(--font-sans);
+  color: #2b2c28;
+  background-color: #faf9f6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background-color: #faf9f6;
+}

@@ -125,120 +125,152 @@
   }
 </script>
 
-<section class="food-log recipe-builder" aria-labelledby="recipe-builder-title">
-  <div class="food-log-heading">
-    <div>
-      <span class="food-kicker">MEASURE YOUR OWN RECIPE</span>
-      <h4 id="recipe-builder-title">Build a nutrient estimate</h4>
-    </div>
+<div class="rounded-2xl border border-[#e7e4dc] bg-[#faf9f6] p-5 space-y-4" aria-labelledby="recipe-builder-title">
+  <div>
+    <span class="text-[11px] font-bold tracking-widest text-[#888b7c] uppercase">MEASURE YOUR OWN RECIPE</span>
+    <h4 id="recipe-builder-title" class="font-serif text-base font-semibold text-[#2b2c28]">Build a nutrient estimate</h4>
+    <p class="text-xs text-[#72746b] mt-1 leading-relaxed">
+      Add the ingredients and weights from your actual recipe. Sabi totals only sourced micronutrients for matched items.
+    </p>
   </div>
-  <p>
-    Add the ingredients and weights from your actual recipe. Sabi totals only
-    sourced micronutrients for matched items; it will not guess quantities or
-    values for unmatched ingredients.
-  </p>
+
   <form
-    class="planner-form"
+    class="flex flex-col sm:flex-row gap-2.5"
     onsubmit={(event) => {
       event.preventDefault();
       void search();
     }}
   >
-    <label
-      >Ingredient<input
-        bind:value={query}
-        placeholder="e.g. beans, tomato, spinach"
-        required
-      /></label
+    <input
+      bind:value={query}
+      placeholder="e.g. beans, tomato, spinach"
+      required
+      class="flex-1 px-3.5 py-2 text-xs rounded-xl border border-[#dedad0] bg-white focus:outline-none focus:ring-2 focus:ring-[#809474]/40"
+    />
+    <button
+      type="submit"
+      disabled={busy}
+      class="py-2 px-4 text-xs font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer disabled:opacity-50 shrink-0"
     >
-    <button type="submit" disabled={busy}
-      >{busy ? "Searching…" : "Find measured ingredient"}</button
-    >
+      {busy ? "Searching…" : "Find measured ingredient"}
+    </button>
   </form>
-  {#if results.length}<div
-      class="recipe-search-results"
-      aria-label="Measured ingredient matches"
-    >
-      {#each results as food (food.id)}<button
+
+  {#if results.length}
+    <div class="space-y-1.5 max-h-48 overflow-y-auto" aria-label="Measured ingredient matches">
+      {#each results as food (food.id)}
+        <button
           type="button"
-          class:chosen={selected?.id === food.id}
+          class="w-full text-left p-2.5 rounded-xl border text-xs transition-colors cursor-pointer {selected?.id === food.id ? 'bg-[#edf5eb] border-[#809474]' : 'bg-white border-[#e7e4dc] hover:bg-[#faf9f6]'}"
           onclick={() => (selected = food)}
-          ><strong>{food.label}</strong><small
-            >{food.source} · {food.nutrientBasis ?? "reference portion"}</small
-          ></button
-        >{/each}
-    </div>{/if}
-  {#if selected}<div class="recipe-add-row">
-      <span>{selected.label}</span><label
-        >Recipe amount (g)<input
+        >
+          <strong class="font-semibold text-[#2b2c28] block">{food.label}</strong>
+          <small class="text-[#888b7c]">{food.source} · {food.nutrientBasis ?? "reference portion"}</small>
+        </button>
+      {/each}
+    </div>
+  {/if}
+
+  {#if selected}
+    <div class="flex flex-wrap items-center gap-2 p-3 rounded-xl bg-white border border-[#e7e4dc] text-xs">
+      <span class="font-semibold text-[#2b2c28] flex-1">{selected.label}</span>
+      <div class="flex items-center gap-1.5">
+        <label class="text-[#72746b]">Amount (g):</label>
+        <input
           type="number"
           min="1"
           max="5000"
           bind:value={grams}
-        /></label
-      ><button type="button" onclick={addIngredient}>Add ingredient</button>
-    </div>{/if}
-  {#if ingredients.length}<ul class="recipe-ingredient-list">
-      {#each ingredients as item (item.id)}<li>
-          <span>{item.name} · {item.grams} g<small>{item.source}</small></span
-          ><button
-            type="button"
-            aria-label={`Remove ${item.name}`}
-            onclick={() =>
-              (ingredients = ingredients.filter(
-                (entry) => entry.id !== item.id,
-              ))}>Remove</button
-          >
-        </li>{/each}
-    </ul>
-    <div class="recipe-estimate">
-      <strong
-        >Measured recipe estimate · {totalWeight} g total ingredients</strong
+          class="w-20 px-2 py-1 text-xs rounded-lg border border-[#dedad0]"
+        />
+      </div>
+      <button
+        type="button"
+        onclick={addIngredient}
+        class="py-1 px-3 rounded-lg bg-[#809474] text-white font-semibold hover:bg-[#6c8060] cursor-pointer"
       >
-      <dl>
-        {#each Object.entries(totals).filter(([key]) => labels[key]) as [key, value]}<div
-          >
-            <dt>{labels[key]}</dt>
-            <dd>
-              {value.toFixed(1)}
-              {key.endsWith("Mg") ? "mg" : key.endsWith("Mcg") ? "µg" : "g"}
-            </dd>
-          </div>{/each}
-      </dl>
+        Add
+      </button>
     </div>
-    <form
-      class="planner-form recipe-save-form"
-      onsubmit={(event) => {
-        event.preventDefault();
-        void saveRecipe();
-      }}
-    >
-      <label
-        >Recipe name<input
+  {/if}
+
+  {#if ingredients.length}
+    <div class="space-y-3 pt-3 border-t border-[#edeae1]">
+      <ul class="space-y-1.5 text-xs">
+        {#each ingredients as item (item.id)}
+          <li class="flex items-center justify-between p-2 rounded-lg bg-white border border-[#eeece6]">
+            <div>
+              <span class="font-medium text-[#2b2c28]">{item.name} · {item.grams} g</span>
+              <small class="block text-[10px] text-[#888b7c]">{item.source}</small>
+            </div>
+            <button
+              type="button"
+              aria-label={`Remove ${item.name}`}
+              onclick={() =>
+                (ingredients = ingredients.filter(
+                  (entry) => entry.id !== item.id,
+                ))}
+              class="text-xs text-[#af705a] hover:underline cursor-pointer"
+            >
+              Remove
+            </button>
+          </li>
+        {/each}
+      </ul>
+
+      <!-- Totals Estimate -->
+      <div class="p-3.5 rounded-xl bg-white border border-[#dce5d6] space-y-2">
+        <strong class="text-xs font-semibold text-[#475842] block">
+          Measured recipe estimate · {totalWeight} g total ingredients
+        </strong>
+        <div class="grid grid-cols-3 gap-2 text-xs">
+          {#each Object.entries(totals).filter(([key]) => labels[key]) as [key, value]}
+            <div>
+              <span class="text-[#888b7c] block text-[10px] uppercase font-bold">{labels[key]}</span>
+              <span class="font-semibold text-[#2b2c28]">
+                {value.toFixed(1)} {key.endsWith("Mg") ? "mg" : key.endsWith("Mcg") ? "µg" : "g"}
+              </span>
+            </div>
+          {/each}
+        </div>
+      </div>
+
+      <!-- Save Recipe Form -->
+      <form
+        class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2"
+        onsubmit={(event) => {
+          event.preventDefault();
+          void saveRecipe();
+        }}
+      >
+        <input
           bind:value={recipeName}
           maxlength="160"
-          placeholder="e.g. My egusi soup"
+          placeholder="Recipe name (e.g. My egusi)"
           required
-        /></label
-      >
-      <label
-        >Meal<select bind:value={recipeMeal}
-          ><option>Breakfast</option><option>Lunch</option><option
-            >Dinner</option
-          ><option>Snack</option></select
-        ></label
-      >
-      <button type="submit">Save estimate to meal log</button>
-    </form>
-    {#if saveMessage}<p class="food-message" role="status">
-        {saveMessage}
-      </p>{/if}
-    <small
-      >Estimate covers listed ingredients before cooking; cooking water,
-      discarded liquid, yield changes, and unmeasured ingredients affect final
-      values. Sources are shown per ingredient. This is not individualized
-      pregnancy nutrition advice.</small
-    >
+          class="px-3 py-2 text-xs rounded-xl border border-[#dedad0] bg-white sm:col-span-1"
+        />
+        <select bind:value={recipeMeal} class="px-3 py-2 text-xs rounded-xl border border-[#dedad0] bg-white">
+          <option>Breakfast</option>
+          <option>Lunch</option>
+          <option>Dinner</option>
+          <option>Snack</option>
+        </select>
+        <button
+          type="submit"
+          class="py-2 px-3 text-xs font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer"
+        >
+          Save to meal log
+        </button>
+      </form>
+
+      {#if saveMessage}
+        <p class="text-xs text-[#385a38] font-medium" role="status">✓ {saveMessage}</p>
+      {/if}
+    </div>
   {/if}
-  {#if message}<p class="food-message" role="status">{message}</p>{/if}
-</section>
+
+  {#if message}
+    <p class="text-xs text-[#af705a]" role="status">{message}</p>
+  {/if}
+</div>

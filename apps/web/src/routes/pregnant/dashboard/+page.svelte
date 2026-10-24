@@ -41,26 +41,22 @@
   let visitInput = $state("");
   let visitSaving = $state(false);
   let visitMessage = $state("");
-  let weekInput = $state<number | "">(29); // direct week entry
+  let weekInput = $state<number | "">(29);
   let weekSaving = $state(false);
 
   let week = $derived(dueDate ? pregnancyWeek(dueDate) : (typeof weekInput === "number" ? weekInput : 29));
   let days = $derived(dueDate ? daysUntil(dueDate) : null);
   let currentGuide = $derived(getPregnancyWeek(week ?? 29));
 
-
-  // My pregnancy interactive state
   let selectedTrimester = $state<1 | 2 | 3>(3);
   let selectedWeek = $state<number>(29);
-
-  // Sub-tabs for Learn
   let learnTab = $state<"foods" | "mealplan" | "meds">("foods");
 
   const navigation = [
-    { label: "Today" as const, href: "/pregnant/dashboard", icon: "iconoir-home", color: "text-[#809474]" },
-    { label: "My pregnancy" as const, href: "#pregnancy", icon: "iconoir-calendar", color: "text-[#af705a]" },
-    { label: "Learn" as const, href: "#learn", icon: "iconoir-book", color: "text-[#3b82f6]" },
-    { label: "My midwife" as const, href: "#care-team", icon: "iconoir-hospital", color: "text-[#657c62]" },
+    { label: "Today" as const, icon: "iconoir-home", color: "text-[#809474]" },
+    { label: "My pregnancy" as const, icon: "iconoir-calendar", color: "text-[#af705a]" },
+    { label: "Learn" as const, icon: "iconoir-book", color: "text-[#3b82f6]" },
+    { label: "My midwife" as const, icon: "iconoir-hospital", color: "text-[#475842]" },
   ];
 
   const formattedToday = new Intl.DateTimeFormat("en-NG", {
@@ -135,8 +131,6 @@
   function saveWeekDirect() {
     const w = typeof weekInput === "number" ? weekInput : parseInt(String(weekInput));
     if (!w || w < 1 || w > 42) return;
-    // Compute due date: 40 weeks from LMP, LMP = conception - 2 weeks
-    // Due date = today + (40 - w) weeks
     const due = new Date();
     due.setDate(due.getDate() + (40 - w) * 7);
     const dueDateStr = due.toISOString().slice(0, 10);
@@ -166,8 +160,6 @@
       })
       .finally(() => (weekSaving = false));
   }
-
-
 
   function saveNextVisit() {
     if (!dueDate) {
@@ -205,7 +197,6 @@
       .finally(() => (visitSaving = false));
   }
 
-  // Weeks for current trimester view
   let trimesterWeeks = $derived(
     selectedTrimester === 1
       ? Array.from({ length: 12 }, (_, i) => i + 1)
@@ -224,228 +215,241 @@
 </svelte:head>
 
 {#if authorized}
-  <div class="app-shell">
+  <div class="min-h-screen bg-[#faf9f6] flex flex-col md:flex-row antialiased text-[#2b2c28]">
     <!-- Sidebar Navigation -->
-    <aside class="sidebar">
-      <a class="brand" href="/pregnant/dashboard" aria-label="Sabi home">
-        <span class="brand-mark"><img src="/sabi-mark.svg" alt="" /></span>
-        <span class="brand-name"
-          >sabi<span class="brand-dot">.</span><small>care, close to home</small
-          ></span
-        >
+    <aside class="hidden md:flex w-64 flex-col fixed inset-y-0 left-0 bg-white border-r border-[#e7e4dc] p-6 z-20">
+      <a class="flex items-center gap-2.5 mb-8" href="/pregnant/dashboard" aria-label="Sabi home">
+        <span class="w-9 h-9 rounded-xl bg-[#af705a] flex items-center justify-center text-white shadow-xs overflow-hidden">
+          <img src="/sabi-mark.svg" alt="" class="w-full h-full" />
+        </span>
+        <span class="font-serif text-2xl font-bold tracking-tight text-[#2b2c28]">
+          sabi<span class="text-[#af705a]">.</span>
+          <small class="block font-sans text-[10px] font-bold tracking-widest text-[#9c998f] uppercase">care close to home</small>
+        </span>
       </a>
-      <div class="side-label">YOUR SPACE</div>
-      <nav aria-label="Main navigation">
+
+      <div class="text-[11px] font-bold tracking-wider text-[#9c998f] uppercase mb-3 px-3">YOUR SPACE</div>
+      
+      <nav class="space-y-1" aria-label="Main navigation">
         {#each navigation as item}
           <button
-            class:active={activeNav === item.label}
-            class="nav-item"
+            class="w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all cursor-pointer {activeNav === item.label ? 'bg-[#f4f7f2] text-[#2b2c28] border border-[#dce5d6]' : 'text-[#72746b] hover:text-[#2b2c28] hover:bg-[#faf9f6]'}"
             onclick={() => (activeNav = item.label)}
           >
             <i class="{item.icon} text-lg {item.color}"></i>
             <span>{item.label}</span>
             {#if item.label === "My pregnancy" && week}
-              <span class="nav-week-badge">W{week}</span>
+              <span class="ml-auto text-[11px] font-bold px-2 py-0.5 rounded-full bg-[#af705a]/15 text-[#af705a]">W{week}</span>
             {/if}
           </button>
         {/each}
       </nav>
-      <div class="sidebar-spacer"></div>
 
-      <!-- User Profile Badge -->
-      <div class="midwife-card">
-        <div class="mini-avatar">{userInitials}</div>
-        <div>
-          <strong>{currentUser?.name || "Your Profile"}</strong>
-          <small>{dueDate ? `Week ${week} · Due ${dueDate.slice(5)}` : "Care Profile"}</small>
+      <div class="mt-auto pt-6 border-t border-[#f0ede6] space-y-4">
+        <div class="flex items-center gap-3 p-3 rounded-2xl bg-[#faf9f6] border border-[#edeae1]">
+          <div class="w-9 h-9 rounded-full bg-[#af705a]/20 text-[#af705a] font-serif font-bold text-sm flex items-center justify-center shrink-0">
+            {userInitials}
+          </div>
+          <div class="min-w-0 flex-1">
+            <strong class="block text-xs font-semibold text-[#2b2c28] truncate">{currentUser?.name || "Your Profile"}</strong>
+            <small class="block text-[11px] text-[#8e9083] truncate">{dueDate ? `Week ${week} · Due ${dueDate.slice(5)}` : "Care Profile"}</small>
+          </div>
         </div>
-      </div>
-      <div class="privacy-note">
-        <span class="privacy-dot"></span> Care held with dignity
+
+        <button
+          onclick={signOut}
+          class="w-full flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold rounded-xl text-[#72746b] hover:text-[#2b2c28] hover:bg-[#faf9f6] border border-[#e7e4dc] transition-colors cursor-pointer"
+        >
+          <i class="iconoir-log-out text-sm"></i>
+          <span>Sign out</span>
+        </button>
       </div>
     </aside>
 
     <!-- Main Content Area -->
-    <main class="main-content">
-      <header class="topbar">
-        <div class="breadcrumb">
-          My space <span>/</span> <strong>{activeNav}</strong>
+    <main class="flex-1 md:ml-64 flex flex-col min-h-screen">
+      <!-- Topbar -->
+      <header class="sticky top-0 z-10 bg-[#faf9f6]/90 backdrop-blur-md border-b border-[#e7e4dc] px-4 sm:px-8 h-16 flex items-center justify-between">
+        <div class="text-xs font-medium text-[#72746b]">
+          My space <span class="text-[#c8c5bb] mx-1">/</span> <strong class="font-semibold text-[#2b2c28]">{activeNav}</strong>
         </div>
-        <div class="topbar-right">
-          <span class="today-label">{formattedToday}</span>
-          <button
-            class="avatar-button"
-            aria-label="Sign out"
-            title="Sign out of Sabi"
-            onclick={signOut}>{userInitials}</button
-          >
+        <div class="flex items-center gap-4">
+          <span class="hidden sm:inline-block text-xs text-[#8e9083] font-medium">{formattedToday}</span>
+          <div class="w-8 h-8 rounded-full bg-[#af705a]/20 text-[#af705a] font-serif font-bold text-xs flex items-center justify-center border border-white shadow-2xs">
+            {userInitials}
+          </div>
         </div>
       </header>
 
-      <div class="page-wrap">
-        <!-- TOP VIEW: Welcome Header (Common across pages) -->
-        <div class="welcome-row">
+      <div class="flex-1 p-4 sm:p-8 max-w-6xl w-full mx-auto space-y-6 pb-20 md:pb-8">
+        <!-- Welcome Header -->
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-2">
           <div>
-            <div class="eyebrow">
-              <span class="sun-icon">✳</span> YOUR CARE, YOUR PACE
+            <div class="text-[11px] font-bold tracking-widest text-[#9c998f] uppercase flex items-center gap-1.5">
+              <span class="text-[#af705a]">✳</span> YOUR CARE, YOUR PACE
             </div>
-            <h1>
-              Good morning, {displayName}<span class="heading-period">.</span>
+            <h1 class="font-serif text-2xl sm:text-3xl font-semibold text-[#2b2c28] tracking-tight mt-1">
+              Good morning, {displayName}<span class="text-[#af705a]">.</span>
             </h1>
-            <p class="subheading">
+            <p class="text-xs sm:text-sm text-[#72746b] mt-0.5">
               A little care for you and baby, right where you are.
             </p>
           </div>
           {#if week !== null}
-            <div class="week-pill">
-              <span class="week-pill-dot"></span>
-              {week} weeks along · Trimester {Math.min(3, Math.ceil(week / 13))}
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#e7e4dc] text-xs font-semibold text-[#525547] shadow-2xs">
+              <span class="w-2 h-2 rounded-full bg-[#af705a]"></span>
+              <span>{week} weeks along · Trimester {Math.min(3, Math.ceil(week / 13))}</span>
             </div>
           {/if}
         </div>
 
         <!-- TAB 1: TODAY -->
         {#if activeNav === "Today"}
-          <!-- Summary Cards Row -->
-          <section class="summary-grid" aria-label="Pregnancy summary">
+          <!-- Summary Cards Grid -->
+          <section class="grid grid-cols-1 md:grid-cols-3 gap-4" aria-label="Pregnancy summary">
             <!-- Due Date & Current Week Card -->
-            <article class="summary-card due-card">
-              <div class="summary-icon coral">
-                <i class="iconoir-calendar text-lg text-[#af705a]"></i>
-              </div>
-              <div class="summary-content">
-                <div class="flex items-center justify-between gap-2">
-                  <span class="summary-label">CURRENT WEEK &amp; DUE DATE</span>
-                  <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-[#af705a]/15 text-[#af705a]">Week {week}</span>
+            <article class="p-5 rounded-3xl bg-white border border-[#e7e4dc] shadow-xs flex flex-col justify-between space-y-3">
+              <div class="flex items-start justify-between gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-[#af705a]/15 text-[#af705a] flex items-center justify-center shrink-0">
+                  <i class="iconoir-calendar text-xl"></i>
                 </div>
-                <strong>{dueDate ? formatDate(dueDate) : `Week ${week} (Around Trimester ${Math.min(3, Math.ceil(week / 13))})`}</strong>
-                <span class="summary-note">
-                  {days !== null
-                    ? `${days} days until you meet baby`
-                    : "Enter your current week or due date to personalize your timeline"}
+                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#af705a]/15 text-[#af705a]">
+                  Week {week}
                 </span>
-
-                <div class="mt-3 pt-2 border-t border-[#e7e4dc] flex flex-wrap items-center gap-2">
-                  <label for="direct-week-input" class="text-xs text-[#525547] font-medium">I am on week:</label>
-                  <input
-                    id="direct-week-input"
-                    type="number"
-                    min="1"
-                    max="42"
-                    bind:value={weekInput}
-                    class="w-16 px-2 py-1 text-sm font-semibold rounded-md border border-[#d6d2c4] bg-white text-center focus:outline-none focus:ring-1 focus:ring-[#809474]"
-                  />
-                  <button
-                    type="button"
-                    onclick={saveWeekDirect}
-                    disabled={weekSaving}
-                    class="px-2.5 py-1 text-xs font-medium rounded-md bg-[#809474] text-white hover:bg-[#6c8060] transition-colors disabled:opacity-50"
-                  >
-                    {weekSaving ? "Updating…" : "Set Week"}
-                  </button>
-                </div>
               </div>
-              <details class="edit-due">
-                <summary aria-label="Edit due date">···</summary>
-                <div class="due-popover">
-                  <label for="due-date">Or specify exact due date</label>
-                  <input id="due-date" type="date" bind:value={dueInput} />
-                  <button onclick={saveDueDate} disabled={dateSaving}>
-                    {dateSaving ? "Saving…" : "Save date"}
-                  </button>
-                  {#if dateMessage}<small role="status">{dateMessage}</small>{/if}
-                </div>
-              </details>
+              <div>
+                <span class="block text-[11px] font-bold tracking-wider text-[#888b7c] uppercase mb-1">DUE DATE & WEEK</span>
+                <strong class="font-serif text-lg font-semibold text-[#2b2c28] block">
+                  {dueDate ? formatDate(dueDate) : `Week ${week}`}
+                </strong>
+                <p class="text-xs text-[#72746b] mt-0.5">
+                  {days !== null ? `${days} days until you meet baby` : "Set your current week or due date"}
+                </p>
+              </div>
+
+              <div class="pt-3 border-t border-[#edeae1] flex items-center gap-2">
+                <label for="direct-week-input" class="text-xs text-[#72746b] font-medium">Week:</label>
+                <input
+                  id="direct-week-input"
+                  type="number"
+                  min="1"
+                  max="42"
+                  bind:value={weekInput}
+                  class="w-16 px-2 py-1 text-xs font-semibold rounded-lg border border-[#dedad0] bg-[#faf9f6] text-center"
+                />
+                <button
+                  type="button"
+                  onclick={saveWeekDirect}
+                  disabled={weekSaving}
+                  class="py-1 px-3 text-xs font-semibold rounded-lg bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer disabled:opacity-50"
+                >
+                  {weekSaving ? "Saving…" : "Set Week"}
+                </button>
+              </div>
             </article>
 
             <!-- Antenatal Visit Card -->
-            <article class="summary-card visit-card">
-              <div class="summary-icon lilac-bg">
-                <i class="iconoir-clock text-lg text-[#7b6fa0]"></i>
+            <article class="p-5 rounded-3xl bg-white border border-[#e7e4dc] shadow-xs flex flex-col justify-between space-y-3">
+              <div class="flex items-start justify-between gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-[#7b6fa0]/15 text-[#7b6fa0] flex items-center justify-center shrink-0">
+                  <i class="iconoir-clock text-xl"></i>
+                </div>
               </div>
-              <div class="summary-content">
-                <span class="summary-label">NEXT ANTENATAL VISIT</span>
-                <strong>
+              <div>
+                <span class="block text-[11px] font-bold tracking-wider text-[#888b7c] uppercase mb-1">NEXT CLINIC VISIT</span>
+                <strong class="font-serif text-lg font-semibold text-[#2b2c28] block">
                   {nextVisitDate ? formatDate(nextVisitDate) : "Not scheduled yet"}
                 </strong>
-                <span class="summary-note">
+                <p class="text-xs text-[#72746b] mt-0.5">
                   {nextVisitDate
                     ? daysUntil(nextVisitDate) === 0
-                      ? "Your clinic visit is today!"
+                      ? "Your visit is today!"
                       : daysUntil(nextVisitDate) > 0
                         ? `In ${daysUntil(nextVisitDate)} days`
                         : "Visit date has passed"
                     : "Add your next appointment date"}
-                </span>
+                </p>
               </div>
-              <details class="edit-due visit-editor">
-                <summary aria-label="Add or edit antenatal visit">
-                  <i class="iconoir-plus text-base"></i>
-                </summary>
-                <div class="due-popover">
-                  <label for="next-visit">Next clinic date</label>
-                  <input id="next-visit" type="date" bind:value={visitInput} />
-                  <button onclick={saveNextVisit} disabled={visitSaving}>
-                    {visitSaving ? "Saving…" : "Save visit"}
-                  </button>
-                  {#if visitMessage}<small role="status">{visitMessage}</small>{/if}
-                </div>
-              </details>
+
+              <div class="pt-3 border-t border-[#edeae1] flex items-center gap-2">
+                <input
+                  type="date"
+                  bind:value={visitInput}
+                  class="flex-1 px-2 py-1 text-xs rounded-lg border border-[#dedad0] bg-[#faf9f6]"
+                />
+                <button
+                  type="button"
+                  onclick={saveNextVisit}
+                  disabled={visitSaving}
+                  class="py-1 px-3 text-xs font-semibold rounded-lg bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer disabled:opacity-50 shrink-0"
+                >
+                  {visitSaving ? "Saving…" : "Save"}
+                </button>
+              </div>
             </article>
 
             <!-- Care Team Card -->
-            <article class="summary-card midwife-summary">
-              <div class="summary-icon green-bg">
-                <i class="iconoir-user-circle text-lg text-[#809474]"></i>
+            <article class="p-5 rounded-3xl bg-white border border-[#e7e4dc] shadow-xs flex flex-col justify-between space-y-3">
+              <div class="flex items-start justify-between gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-[#475842]/15 text-[#475842] flex items-center justify-center shrink-0">
+                  <i class="iconoir-hospital text-xl"></i>
+                </div>
+                <button
+                  class="text-xs font-semibold text-[#809474] hover:underline flex items-center gap-1 cursor-pointer"
+                  onclick={() => (activeNav = "My midwife")}
+                >
+                  <span>Open portal</span>
+                  <i class="iconoir-arrow-right text-xs"></i>
+                </button>
               </div>
-              <div class="summary-content">
-                <span class="summary-label">YOUR CARE TEAM</span>
-                <strong>Assigned Midwife Connection</strong>
-                <span class="summary-note">You are not alone between visits</span>
+              <div>
+                <span class="block text-[11px] font-bold tracking-wider text-[#888b7c] uppercase mb-1">YOUR CARE TEAM</span>
+                <strong class="font-serif text-lg font-semibold text-[#2b2c28] block">
+                  Assigned Midwife
+                </strong>
+                <p class="text-xs text-[#72746b] mt-0.5">
+                  Connected support between antenatal visits
+                </p>
               </div>
-              <button
-                class="summary-arrow"
-                aria-label="Open care team tab"
-                onclick={() => (activeNav = "My midwife")}
-              >
-                <i class="iconoir-nav-arrow-right text-base text-[#525547]"></i>
-              </button>
+              <div class="pt-3 border-t border-[#edeae1] text-xs text-[#8e9083]">
+                Check-ins and symptoms sync automatically.
+              </div>
             </article>
           </section>
 
-          <!-- Main Today Two-Column Grid -->
-          <div class="today-layout-grid">
-            <!-- Left Column: Wellness Check-in & Safety Check -->
-            <div class="today-left-col">
+          <!-- Main Layout: 2 Columns -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            <!-- Left Column: Check-ins -->
+            <div class="lg:col-span-7 space-y-6">
               <WellnessCheckin />
               <SafetyCheck />
             </div>
 
-            <!-- Right Column: Today's Week Highlight & Reminders -->
-            <aside class="today-right-col">
-              <!-- Flo Highlight Card -->
-              <div class="today-week-preview-card">
-                <div class="preview-badge">
-                  <span>🌱 BABY THIS WEEK</span>
-                  <span class="badge-week">Week {week}</span>
+            <!-- Right Column: Baby Highlight & Notifications -->
+            <aside class="lg:col-span-5 space-y-6">
+              <!-- Baby Size Card -->
+              <div class="p-6 rounded-3xl bg-linear-to-br from-[#ffffff] to-[#faf8f5] border border-[#e7e4dc] shadow-xs space-y-4">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-[#af705a] uppercase tracking-wider">🌱 BABY THIS WEEK</span>
+                  <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#af705a]/15 text-[#af705a]">Week {week}</span>
                 </div>
-                <h3 class="preview-fruit-title">
-                  Baby is the size of a <span class="highlight-fruit">{currentGuide.babyFruit}</span>
+                <h3 class="font-serif text-xl font-semibold text-[#2b2c28]">
+                  Baby is the size of a <span class="text-[#af705a]">{currentGuide.babyFruit}</span>
                 </h3>
-                <div class="preview-metrics">
+                <div class="flex items-center gap-3 text-xs text-[#72746b]">
                   <span>Length: ~{currentGuide.babyLength}</span>
-                  <span class="bullet">•</span>
+                  <span>•</span>
                   <span>Weight: ~{currentGuide.babyWeight}</span>
                 </div>
-                <p class="preview-blurb">{currentGuide.gentlePrompt}</p>
+                <p class="text-xs text-[#525547] leading-relaxed">{currentGuide.gentlePrompt}</p>
 
-                <div class="preview-food-snippet">
-                  <strong>🍲 Food to prioritize this week:</strong>
-                  <p>{currentGuide.nigerianFoodTip}</p>
+                <div class="p-3.5 rounded-2xl bg-[#faf9f6] border border-[#eeece6] space-y-1">
+                  <strong class="text-xs font-semibold text-[#475842] block">🍲 Food to prioritize this week:</strong>
+                  <p class="text-xs text-[#525547] leading-relaxed">{currentGuide.nigerianFoodTip}</p>
                 </div>
 
                 <button
-                  class="preview-cta-button"
+                  class="w-full py-2.5 px-4 text-xs font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-2xs"
                   onclick={() => {
                     selectedWeek = week;
                     selectedTrimester = currentGuide.trimester;
@@ -453,195 +457,178 @@
                   }}
                 >
                   <span>Explore Full Week {week} Guide</span>
-                  <i class="iconoir-nav-arrow-right text-base"></i>
+                  <i class="iconoir-arrow-right text-xs"></i>
                 </button>
               </div>
 
-              <!-- Push Reminder Opt-In -->
+              <!-- Push Notification Opt-in -->
               <NotificationOptIn />
 
-              <!-- Quick Care Link Card -->
-              <div class="care-reassurance-card">
-                <span class="care-heart">♡</span>
-                <div>
-                  <strong>Questions between clinic visits?</strong>
-                  <p>Your midwife is connected on Sabi to review your check-in updates.</p>
+              <!-- Reassurance Card -->
+              <div class="p-4 rounded-2xl bg-[#faf9f6] border border-[#e7e4dc] flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-[#af705a]/15 text-[#af705a] flex items-center justify-center text-sm font-bold shrink-0">
+                  ♡
+                </div>
+                <div class="text-xs">
+                  <strong class="text-[#2b2c28] block">Questions between clinic visits?</strong>
+                  <span class="text-[#72746b]">Your midwife is connected on Sabi to review your check-in updates.</span>
                 </div>
               </div>
             </aside>
           </div>
 
-        <!-- TAB 2: MY PREGNANCY (FLO-STYLE JOURNEY) -->
+        <!-- TAB 2: MY PREGNANCY -->
         {:else if activeNav === "My pregnancy"}
-          <section class="flo-journey-container" id="pregnancy" aria-labelledby="journey-title">
-            <div class="journey-header-box">
-              <div class="eyebrow small-eyebrow">WEEK-BY-WEEK COMPANION</div>
-              <h2 id="journey-title">Your 42-Week Pregnancy Journey</h2>
-              <p>
+          <section class="space-y-6" id="pregnancy" aria-labelledby="journey-title">
+            <div class="p-6 rounded-3xl bg-white border border-[#e7e4dc] shadow-xs space-y-1">
+              <div class="text-[11px] font-bold tracking-widest text-[#9c998f] uppercase">WEEK-BY-WEEK COMPANION</div>
+              <h2 id="journey-title" class="font-serif text-2xl font-semibold text-[#2b2c28]">Your 42-Week Pregnancy Journey</h2>
+              <p class="text-xs sm:text-sm text-[#72746b]">
                 Select any week to follow baby’s milestones, your body’s changes, and weekly Nigerian food guidance.
               </p>
             </div>
 
             <!-- Trimester Selector Tabs -->
-            <div class="trimester-toggle-bar" role="tablist">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" role="tablist">
               <button
-                class="trimester-btn"
-                class:active={selectedTrimester === 1}
+                class="p-4 rounded-2xl border text-left transition-all cursor-pointer {selectedTrimester === 1 ? 'bg-white border-[#809474] shadow-xs' : 'bg-[#faf9f6] border-[#e7e4dc] hover:bg-white'}"
                 onclick={() => {
                   selectedTrimester = 1;
                   selectedWeek = Math.min(12, selectedWeek);
                 }}
               >
-                <strong>Trimester 1</strong>
-                <small>Weeks 1 – 12 · Foundations</small>
+                <strong class="block text-sm font-semibold text-[#2b2c28]">Trimester 1</strong>
+                <small class="text-xs text-[#72746b]">Weeks 1 – 12 · Foundations</small>
               </button>
 
               <button
-                class="trimester-btn"
-                class:active={selectedTrimester === 2}
+                class="p-4 rounded-2xl border text-left transition-all cursor-pointer {selectedTrimester === 2 ? 'bg-white border-[#809474] shadow-xs' : 'bg-[#faf9f6] border-[#e7e4dc] hover:bg-white'}"
                 onclick={() => {
                   selectedTrimester = 2;
                   selectedWeek = Math.max(13, Math.min(27, selectedWeek));
                 }}
               >
-                <strong>Trimester 2</strong>
-                <small>Weeks 13 – 27 · Growth & Kicks</small>
+                <strong class="block text-sm font-semibold text-[#2b2c28]">Trimester 2</strong>
+                <small class="text-xs text-[#72746b]">Weeks 13 – 27 · Growth & Kicks</small>
               </button>
 
               <button
-                class="trimester-btn"
-                class:active={selectedTrimester === 3}
+                class="p-4 rounded-2xl border text-left transition-all cursor-pointer {selectedTrimester === 3 ? 'bg-white border-[#809474] shadow-xs' : 'bg-[#faf9f6] border-[#e7e4dc] hover:bg-white'}"
                 onclick={() => {
                   selectedTrimester = 3;
                   selectedWeek = Math.max(28, selectedWeek);
                 }}
               >
-                <strong>Trimester 3</strong>
-                <small>Weeks 28 – 42 · Final Stretch</small>
+                <strong class="block text-sm font-semibold text-[#2b2c28]">Trimester 3</strong>
+                <small class="text-xs text-[#72746b]">Weeks 28 – 42 · Final Stretch</small>
               </button>
             </div>
 
             <!-- Horizontal Week Pills Selector -->
-            <div class="week-pills-scroller" aria-label="Select week">
+            <div class="flex gap-2 overflow-x-auto pb-2" aria-label="Select week">
               {#each trimesterWeeks as w}
                 <button
-                  class="week-bubble"
-                  class:current={w === week}
-                  class:selected={w === selectedWeek}
+                  class="flex-none flex flex-col items-center justify-center w-14 py-2.5 rounded-2xl border transition-all cursor-pointer {w === selectedWeek ? 'bg-[#809474] text-white border-[#809474] shadow-xs' : w === week ? 'bg-[#faf9f6] border-[#af705a] text-[#af705a] font-bold' : 'bg-white border-[#e7e4dc] text-[#525547] hover:border-[#809474]'}"
                   onclick={() => (selectedWeek = w)}
                   aria-pressed={w === selectedWeek}
                 >
-                  <span class="bubble-num">{w}</span>
-                  <span class="bubble-sub">
-                    {#if w === week}You
-                    {:else}Wk {w}{/if}
-                  </span>
+                  <span class="text-sm font-bold">{w}</span>
+                  <span class="text-[10px] uppercase">{w === week ? "You" : `Wk ${w}`}</span>
                 </button>
               {/each}
             </div>
 
-            <!-- Flo-Style Interactive Weekly Guide for Selected Week -->
+            <!-- Weekly Guide Component -->
             <WeeklyGuide week={selectedWeek} />
           </section>
 
-        <!-- TAB 3: LEARN (STRUCTURED KNOWLEDGE HUB) -->
+        <!-- TAB 3: LEARN -->
         {:else if activeNav === "Learn"}
-          <section class="learn-hub-page" id="learn" aria-labelledby="learn-hub-title">
-            <div class="learn-hero-header">
-              <div class="eyebrow small-eyebrow">YOUR KNOWLEDGE HUB</div>
-              <h2 id="learn-hub-title">Everything for a Healthy Pregnancy</h2>
-              <p>
+          <section class="space-y-6" id="learn" aria-labelledby="learn-hub-title">
+            <div class="p-6 rounded-3xl bg-white border border-[#e7e4dc] shadow-xs space-y-1">
+              <div class="text-[11px] font-bold tracking-widest text-[#9c998f] uppercase">YOUR KNOWLEDGE HUB</div>
+              <h2 id="learn-hub-title" class="font-serif text-2xl font-semibold text-[#2b2c28]">Everything for a Healthy Pregnancy</h2>
+              <p class="text-xs sm:text-sm text-[#72746b]">
                 Explore Nigerian nutrition, safe medications, weekly meal ideas, and answers to common maternal health questions.
               </p>
             </div>
 
             <!-- Hub Sub-Navigation Tabs -->
-            <div class="learn-subnav">
+            <div class="flex flex-wrap gap-2 p-1.5 bg-white rounded-2xl border border-[#e7e4dc] shadow-2xs">
               <button
-                class="subnav-pill"
-                class:active={learnTab === "foods"}
+                class="flex-1 min-w-[160px] flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer {learnTab === 'foods' ? 'bg-[#809474] text-white shadow-xs' : 'text-[#686960] hover:text-[#2b2c28] hover:bg-[#faf9f6]'}"
                 onclick={() => (learnTab = "foods")}
               >
-                <i class="iconoir-apple-half text-sm text-[#809474]"></i>
-                <span>Nigerian Foods &amp; Nutrients</span>
+                <i class="iconoir-apple-half text-sm"></i>
+                <span>Nigerian Foods & Nutrients</span>
               </button>
               <button
-                class="subnav-pill"
-                class:active={learnTab === "mealplan"}
+                class="flex-1 min-w-[160px] flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer {learnTab === 'mealplan' ? 'bg-[#809474] text-white shadow-xs' : 'text-[#686960] hover:text-[#2b2c28] hover:bg-[#faf9f6]'}"
                 onclick={() => (learnTab = "mealplan")}
               >
-                <i class="iconoir-calendar text-sm text-[#af705a]"></i>
-                <span>7-Day Meal Planner &amp; Market List</span>
+                <i class="iconoir-calendar text-sm"></i>
+                <span>7-Day Meal Planner & Market List</span>
               </button>
               <button
-                class="subnav-pill"
-                class:active={learnTab === "meds"}
+                class="flex-1 min-w-[160px] flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer {learnTab === 'meds' ? 'bg-[#809474] text-white shadow-xs' : 'text-[#686960] hover:text-[#2b2c28] hover:bg-[#faf9f6]'}"
                 onclick={() => (learnTab = "meds")}
               >
-                <i class="iconoir-shield-check text-sm text-[#3b82f6]"></i>
-                <span>Medication Safety &amp; Guides</span>
+                <i class="iconoir-shield-check text-sm"></i>
+                <span>Medication Safety & Guides</span>
               </button>
             </div>
 
             <!-- Tab Content -->
-            <div class="learn-tab-pane">
+            <div>
               {#if learnTab === "foods"}
-                <div class="learn-pane-wrap">
-                  <FoodGuide week={week ?? 28} />
-                </div>
+                <FoodGuide week={week ?? 28} />
               {:else if learnTab === "mealplan"}
-                <div class="learn-pane-wrap mealplan-wrap">
+                <div class="space-y-6">
                   <MealPlanner pregnancyWeek={week ?? 28} />
                   <GroceryList />
                 </div>
               {:else if learnTab === "meds"}
-                <div class="learn-pane-wrap">
-                  <LearningResources />
-                </div>
+                <LearningResources />
               {/if}
             </div>
           </section>
 
-        <!-- TAB 4: MY MIDWIFE (CARE TEAM PORTAL) -->
+        <!-- TAB 4: MY MIDWIFE -->
         {:else}
-          <section class="midwife-hub-page" id="care-team" aria-labelledby="midwife-title">
-            <div class="midwife-hero-header">
-              <div class="eyebrow small-eyebrow">CARE TEAM OVERSIGHT</div>
-              <h2 id="midwife-title">Connected Care with Your Midwife</h2>
-              <p>
-                Link your profile with your hospital or primary care midwife. They can review your weekly check-ins,
-                blood pressure records, and questions to support you between clinic appointments.
+          <section class="space-y-6" id="care-team" aria-labelledby="midwife-title">
+            <div class="p-6 rounded-3xl bg-white border border-[#e7e4dc] shadow-xs space-y-1">
+              <div class="text-[11px] font-bold tracking-widest text-[#9c998f] uppercase">CARE TEAM OVERSIGHT</div>
+              <h2 id="midwife-title" class="font-serif text-2xl font-semibold text-[#2b2c28]">Connected Care with Your Midwife</h2>
+              <p class="text-xs sm:text-sm text-[#72746b]">
+                Link your profile with your hospital or primary care midwife. They can review your weekly check-ins and support you between appointments.
               </p>
             </div>
 
-            <div class="midwife-content-box">
-              <CareTeamLink />
-            </div>
+            <CareTeamLink />
           </section>
         {/if}
 
-        <footer class="page-footer">
-          <a class="footer-brand" href="/pregnant/dashboard"
-            >sabi<span>.</span></a
-          >
-          <span>A maternal health companion for Nigerian families.</span>
-          <span class="footer-disclaimer"
-            >General education only · Always consult your nurse, midwife, or doctor</span
-          >
+        <!-- Footer -->
+        <footer class="pt-8 border-t border-[#edeae1] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#8e9083]">
+          <div class="flex items-center gap-2">
+            <strong class="font-serif text-sm font-bold text-[#2b2c28]">sabi<span class="text-[#af705a]">.</span></strong>
+            <span>A maternal health companion for Nigerian families.</span>
+          </div>
+          <span>General education only · Always consult your nurse, midwife, or doctor</span>
         </footer>
       </div>
     </main>
   </div>
 
   <!-- Mobile Bottom Navigation -->
-  <nav class="mobile-nav" aria-label="Mobile navigation">
+  <nav class="md:hidden fixed bottom-0 inset-x-0 bg-white border-t border-[#e7e4dc] px-2 py-2 flex items-center justify-around z-30 shadow-lg" aria-label="Mobile navigation">
     {#each navigation as item}
       <button
-        class:active={activeNav === item.label}
+        class="flex flex-col items-center justify-center gap-1 py-1 px-3 rounded-xl transition-colors cursor-pointer {activeNav === item.label ? 'text-[#809474] font-bold' : 'text-[#8e9083]'}"
         onclick={() => (activeNav = item.label)}
       >
-        <i class="{item.icon} {item.color} text-xl"></i>
-        <span>{item.label}</span>
+        <i class="{item.icon} text-xl {item.color}"></i>
+        <span class="text-[10px]">{item.label}</span>
       </button>
     {/each}
   </nav>

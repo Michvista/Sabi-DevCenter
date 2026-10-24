@@ -68,103 +68,103 @@
   ];
 </script>
 
-<div class="learning-hub">
+<div class="space-y-8">
   <!-- Medication Safety Hub -->
-  <section class="learning-section med-safety-section" aria-labelledby="meds-heading">
-    <div class="learning-section-header">
-      <div class="header-icon-wrap amber">
-        <i class="iconoir-shield-check text-2xl text-[#b45309]"></i>
+  <section class="rounded-3xl bg-white border border-[#e7e4dc] p-6 sm:p-8 shadow-xs space-y-6" aria-labelledby="meds-heading">
+    <div class="flex items-center gap-3 pb-4 border-b border-[#f0ede6]">
+      <div class="w-10 h-10 rounded-xl bg-[#af705a]/15 text-[#af705a] flex items-center justify-center text-xl">
+        <i class="iconoir-shield-check"></i>
       </div>
       <div>
-        <span class="hub-eyebrow">SAFETY FIRST</span>
-        <h2 id="meds-heading">Medication Safety During Pregnancy</h2>
-        <p>
-          Before taking any pill, tea, or remedy, understand how it affects you and your baby.
-          When in doubt, always confirm with your midwife or pharmacist.
+        <span class="text-[11px] font-bold tracking-widest text-[#888b7c] uppercase">SAFETY FIRST</span>
+        <h2 id="meds-heading" class="font-serif text-xl sm:text-2xl font-semibold text-[#2b2c28]">Medication Safety During Pregnancy</h2>
+        <p class="text-xs text-[#72746b]">
+          Before taking any pill, tea, or remedy, understand how it affects you and your baby. When in doubt, confirm with your midwife.
         </p>
       </div>
     </div>
 
     <!-- Search & Filter Controls -->
-    <div class="mb-5 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
+    <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
       <div class="relative flex-1 max-w-md">
         <input
           type="text"
           bind:value={searchQuery}
           placeholder="Search 50+ medicines, supplements, or symptoms…"
-          class="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-[#e2dfd5] bg-white placeholder-[#8e9083] focus:outline-none focus:ring-2 focus:ring-[#809474]/40"
+          class="w-full pl-9 pr-8 py-2.5 text-xs sm:text-sm rounded-xl border border-[#dedad0] bg-[#faf9f6] placeholder-[#9a988f] focus:outline-none focus:ring-2 focus:ring-[#809474]/40 focus:bg-white"
         />
-        <span class="absolute left-3 top-2.5 text-xs text-[#8e9083]">🔍</span>
+        <span class="absolute left-3 top-3 text-xs text-[#8e9083]">
+          <i class="iconoir-search"></i>
+        </span>
         {#if searchQuery}
           <button
             type="button"
             onclick={() => (searchQuery = "")}
-            class="absolute right-3 top-2.5 text-xs text-[#8e9083] hover:text-[#30312c]"
+            class="absolute right-3 top-3 text-xs text-[#8e9083] hover:text-[#30312c]"
           >
             ✕
           </button>
         {/if}
       </div>
 
-      <div class="med-filters" role="tablist" aria-label="Filter medications by safety level">
+      <div class="flex flex-wrap gap-1.5" role="tablist" aria-label="Filter medications by safety level">
         <button
-          class="filter-pill"
-          class:active={medFilter === "all"}
+          class="px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer {medFilter === 'all' ? 'bg-[#30312c] text-white shadow-xs' : 'bg-[#faf9f6] text-[#72746b] border border-[#e7e4dc] hover:border-[#809474]'}"
           onclick={() => (medFilter = "all")}
         >
           All ({medications.length})
         </button>
         <button
-          class="filter-pill pill-safe"
-          class:active={medFilter === "safe"}
+          class="px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer {medFilter === 'safe' ? 'bg-[#475842] text-white shadow-xs' : 'bg-[#edf5eb] text-[#385a38] border border-[#c6dfc0] hover:border-[#475842]'}"
           onclick={() => (medFilter = "safe")}
         >
-          🟢 Safe ({safeCount})
+          ✓ Safe ({safeCount})
         </button>
         <button
-          class="filter-pill pill-caution"
-          class:active={medFilter === "caution"}
+          class="px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer {medFilter === 'caution' ? 'bg-[#b45309] text-white shadow-xs' : 'bg-[#fef9e7] text-[#8a6820] border border-[#e9d27a] hover:border-[#b45309]'}"
           onclick={() => (medFilter = "caution")}
         >
-          🟡 Caution ({cautionCount})
+          ! Caution ({cautionCount})
         </button>
         <button
-          class="filter-pill pill-avoid"
-          class:active={medFilter === "avoid"}
+          class="px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer {medFilter === 'avoid' ? 'bg-[#af705a] text-white shadow-xs' : 'bg-[#fdf4f0] text-[#9c2d15] border border-[#f4cfc4] hover:border-[#af705a]'}"
           onclick={() => (medFilter = "avoid")}
         >
-          🔴 Avoid ({avoidCount})
+          ✕ Avoid ({avoidCount})
         </button>
       </div>
     </div>
 
     <!-- Medication Cards Grid -->
-    <div class="med-cards-grid">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 max-h-[600px] overflow-y-auto pr-1">
       {#each filteredMeds as med}
-        <article class="med-card {med.category}-card">
-          <div class="med-card-top">
-            <span class="med-badge {med.category}">
+        <article class="p-4 rounded-2xl border transition-all {med.category === 'safe' ? 'bg-white border-[#dce5d6]' : med.category === 'caution' ? 'bg-white border-[#fae5b8]' : 'bg-white border-[#f6d2ca]'}">
+          <div class="flex items-center justify-between gap-2 mb-2">
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider {med.category === 'safe' ? 'bg-[#edf5eb] text-[#385a38]' : med.category === 'caution' ? 'bg-[#fef9e7] text-[#8a6820]' : 'bg-[#fdf4f0] text-[#9c2d15]'}">
               {#if med.category === "safe"}✓ Generally Safe
               {:else if med.category === "caution"}! Caution
-              {:else}✕ Strictly Avoid{/if}
+              {:else}✕ Avoid{/if}
             </span>
-            <span class="med-tag">{med.tag}</span>
+            <span class="text-[11px] font-medium text-[#888b7c]">{med.tag}</span>
           </div>
 
-          <h3 class="med-name">{med.name}</h3>
-          <span class="med-use">{med.use}</span>
-          <p class="med-guidance">{med.guidance}</p>
+          <h3 class="font-serif text-base font-semibold text-[#2b2c28] mb-0.5">{med.name}</h3>
+          <span class="block text-xs font-medium text-[#809474] mb-2">{med.use}</span>
+          <p class="text-xs text-[#525547] leading-relaxed">{med.guidance}</p>
         </article>
       {/each}
     </div>
 
-    <div class="med-warning-banner">
-      <div class="warning-icon">
-        <i class="iconoir-warning-triangle text-xl text-[#b45309]"></i>
+    <!-- Agbo Warning Banner -->
+    <div class="p-4 rounded-2xl bg-[#fef9e7] border border-[#e9d27a] flex items-start gap-3">
+      <div class="w-8 h-8 rounded-lg bg-[#b45309]/15 flex items-center justify-center shrink-0 text-[#b45309]">
+        <i class="iconoir-warning-triangle text-base"></i>
       </div>
       <div>
-        <strong>A Crucial Clinical Note on Traditional Concoctions (Agbo)</strong>
-        <p>
+        <strong class="font-serif text-sm font-semibold text-[#7c440a] block">
+          A Crucial Clinical Note on Traditional Concoctions (Agbo)
+        </strong>
+        <p class="text-xs text-[#6e461b] mt-1 leading-relaxed">
           Many traditional herbs and herbal concoctions contain compounds that can cause the uterus to
           contract prematurely or stress fetal kidney function. In modern maternity care in Nigeria,
           clinicians strongly advise pausing all unstandardized herbal mixtures throughout pregnancy.
@@ -174,30 +174,29 @@
   </section>
 
   <!-- Regional Nigerian Food Wisdom -->
-  <section class="learning-section food-wisdom-section" aria-labelledby="food-wisdom-heading">
-    <div class="learning-section-header">
-      <div class="header-icon-wrap green">
-        <i class="iconoir-apple-half text-2xl text-[#809474]"></i>
+  <section class="rounded-3xl bg-white border border-[#e7e4dc] p-6 sm:p-8 shadow-xs space-y-6" aria-labelledby="food-wisdom-heading">
+    <div class="flex items-center gap-3 pb-4 border-b border-[#f0ede6]">
+      <div class="w-10 h-10 rounded-xl bg-[#809474]/15 text-[#385a38] flex items-center justify-center text-xl">
+        <i class="iconoir-apple-half"></i>
       </div>
       <div>
-        <span class="hub-eyebrow">CULTURAL NUTRITION</span>
-        <h2 id="food-wisdom-heading">Regional Nigerian Food Guides</h2>
-        <p>
+        <span class="text-[11px] font-bold tracking-widest text-[#888b7c] uppercase">CULTURAL NUTRITION</span>
+        <h2 id="food-wisdom-heading" class="font-serif text-xl sm:text-2xl font-semibold text-[#2b2c28]">Regional Nigerian Food Guides</h2>
+        <p class="text-xs text-[#72746b]">
           Nourishing meals from across our six geopolitical zones that deliver essential micronutrients for pregnancy.
         </p>
       </div>
     </div>
 
-    <div class="food-examples-grid">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       {#each foods as food}
-        <article class="food-example-card">
-          <div class="food-card-title-row">
-            <h4>{food.name}</h4>
+        <article class="p-4 rounded-2xl bg-[#faf9f6] border border-[#eeece6] space-y-2">
+          <h4 class="font-serif text-base font-semibold text-[#2b2c28]">{food.name}</h4>
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#809474]/10 text-xs font-semibold text-[#475842]">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#809474]"></span>
+            <span>{food.nutrients}</span>
           </div>
-          <div class="food-nutri-tag">
-            <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-[#3b5a3b]"></span>{food.nutrients}</span>
-          </div>
-          <p>{food.detail}</p>
+          <p class="text-xs text-[#525547] leading-relaxed">{food.detail}</p>
         </article>
       {/each}
     </div>

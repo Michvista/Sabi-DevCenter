@@ -66,105 +66,45 @@
   }
 </script>
 
-<div class="guide-audio">
-  <div class="guide-audio-heading">
-    <strong>Listen in your language</strong>
-    <span>Hear the guide in English, Hausa, Igbo, Yorùbá or Pidgin.</span>
+<div class="rounded-2xl border border-[#e7e4dc] bg-white p-4 space-y-3">
+  <div class="flex flex-wrap items-center justify-between gap-2">
+    <div>
+      <strong class="font-serif text-sm font-semibold text-[#2b2c28] block">Listen in your language</strong>
+      <span class="text-xs text-[#72746b]">Hear the guide in English, Hausa, Igbo, Yorùbá or Pidgin.</span>
+    </div>
   </div>
-  <div class="guide-audio-controls">
+  <div class="flex gap-2">
     <label class="sr-only" for="guide-language">Audio language</label>
-    <select id="guide-language" bind:value={targetLanguage}>
+    <select
+      id="guide-language"
+      bind:value={targetLanguage}
+      class="flex-1 px-3 py-2 text-xs rounded-xl border border-[#dedad0] bg-[#faf9f6] text-[#2b2c28] focus:outline-none focus:ring-2 focus:ring-[#809474]/40"
+    >
       <option value="en">English</option>
       <option value="ha">Hausa</option>
       <option value="ig">Igbo</option>
       <option value="yo">Yorùbá</option>
       <option value="pcm">Nigerian Pidgin</option>
     </select>
-    <button type="button" disabled={loading} onclick={() => listen(text)}>
-      {loading ? "Preparing…" : "Listen"}
+    <button
+      type="button"
+      disabled={loading}
+      onclick={() => listen(text)}
+      class="py-2 px-4 text-xs font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
+    >
+      <i class="iconoir-sound-high text-xs"></i>
+      <span>{loading ? "Preparing…" : "Listen"}</span>
     </button>
   </div>
-  {#if audioUrl}<audio bind:this={audioElement} controls src={audioUrl}
-      >Your browser does not support audio playback.</audio
-    >{/if}
-  {#if message}<small aria-live="polite">{message}</small>{/if}
-  <small class="guide-audio-note"
-    >Audio is for general learning. Ask your maternity-care team to explain any
-    advice that concerns you.</small
-  >
+  {#if audioUrl}
+    <audio bind:this={audioElement} controls src={audioUrl} class="w-full h-9 rounded-lg">
+      Your browser does not support audio playback.
+    </audio>
+  {/if}
+  {#if message}
+    <p class="text-xs text-[#525547]" aria-live="polite">{message}</p>
+  {/if}
+  <small class="block text-[11px] text-[#8e9083]">
+    Audio is for general learning. Ask your maternity-care team to explain any advice that concerns you.
+  </small>
 </div>
-
-<style>
-  .guide-audio {
-    display: grid;
-    gap: 9px;
-    margin: 16px 0 4px;
-    padding: 13px;
-    border: 1px solid #ece9e1;
-    border-radius: 11px;
-    background: #fbfaf7;
-  }
-  .guide-audio-heading {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    align-items: baseline;
-  }
-  .guide-audio-heading strong {
-    color: #485d46;
-    font-size: 10px;
-  }
-  .guide-audio-heading span,
-  .guide-audio small {
-    color: #85847d;
-    font-size: 8px;
-    line-height: 1.5;
-  }
-  .guide-audio-controls {
-    display: flex;
-    gap: 8px;
-  }
-  select {
-    min-width: 0;
-    flex: 1;
-    border: 1px solid #e7e4dc;
-    border-radius: 7px;
-    background: white;
-    padding: 8px;
-    color: #4f514a;
-    font: inherit;
-    font-size: 9px;
-  }
-  button {
-    border: 0;
-    border-radius: 7px;
-    background: #657c62;
-    color: white;
-    padding: 0 13px;
-    font-size: 9px;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  button:disabled {
-    opacity: 0.65;
-    cursor: wait;
-  }
-  audio {
-    width: 100%;
-    height: 36px;
-  }
-  .guide-audio-note {
-    opacity: 0.8;
-  }
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-</style>

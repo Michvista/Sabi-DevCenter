@@ -1,9 +1,5 @@
 <script lang="ts">
-  import "./styles.css";
-  import "./portals.css";
-  import "./learning.css";
-  import "./landing.css";
-  import "./food.css";
+  import "./app.css";
   let { children } = $props();
 </script>
 
