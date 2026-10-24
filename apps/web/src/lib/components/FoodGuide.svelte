@@ -54,6 +54,7 @@
   let savedMessage = $state("");
   let loggingId = $state<string | null>(null);
   let savedFoodId = $state<string | null>(null);
+  let removingId = $state<string | null>(null);
 
   const nutrientLabels: Record<string, string> = {
     calciumMg: "Calcium",
@@ -174,18 +175,23 @@
   }
 
   async function removeFoodLog(id: string) {
-    await fetch(
-      `${import.meta.env.VITE_API_URL ?? "http://localhost:8080"}/records/meals/${id}`,
-      {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${sessionToken()}` },
-      },
-    );
-    foodLog = foodLog.filter((entry) => entry.id !== id);
-    writeFoodLog(
-      typeof localStorage === "undefined" ? undefined : localStorage,
-      foodLog,
-    );
+    removingId = id;
+    try {
+      await fetch(
+        `${import.meta.env.VITE_API_URL ?? "http://localhost:8080"}/records/meals/${id}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${sessionToken()}` },
+        },
+      );
+      foodLog = foodLog.filter((entry) => entry.id !== id);
+      writeFoodLog(
+        typeof localStorage === "undefined" ? undefined : localStorage,
+        foodLog,
+      );
+    } finally {
+      removingId = null;
+    }
   }
 
   async function searchFood(value = query) {
@@ -358,9 +364,15 @@
       <button
         type="submit"
         disabled={loading}
-        class="py-3 px-6 text-sm font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] disabled:opacity-50 transition-colors cursor-pointer shadow-xs shrink-0"
+        class="py-3 px-6 text-sm font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] disabled:opacity-50 transition-colors cursor-pointer shadow-xs shrink-0 flex items-center justify-center gap-2"
       >
-        {loading ? "Searching…" : "Search Food"}
+        {#if loading}
+          <i class="iconoir-refresh animate-spin text-sm"></i>
+          <span>Searching…</span>
+        {:else}
+          <i class="iconoir-search text-sm"></i>
+          <span>Search Food</span>
+        {/if}
       </button>
     </form>
 
@@ -492,11 +504,17 @@
               </div>
               <button
                 type="button"
+                disabled={removingId === entry.id}
                 aria-label={`Remove ${entry.food} from meal notes`}
                 onclick={() => void removeFoodLog(entry.id)}
-                class="text-xs text-[#af705a] hover:underline cursor-pointer shrink-0 font-medium"
+                class="text-xs text-[#af705a] hover:underline cursor-pointer shrink-0 font-medium disabled:opacity-50 flex items-center gap-1"
               >
-                Remove
+                {#if removingId === entry.id}
+                  <i class="iconoir-refresh animate-spin text-xs"></i>
+                  <span>Removing…</span>
+                {:else}
+                  <span>Remove</span>
+                {/if}
               </button>
             </div>
           {/each}

@@ -342,9 +342,14 @@
                   type="button"
                   onclick={saveWeekDirect}
                   disabled={weekSaving}
-                  class="py-1 px-3 text-xs font-semibold rounded-lg bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer disabled:opacity-50"
+                  class="py-1 px-3 text-xs font-semibold rounded-lg bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer disabled:opacity-50 flex items-center gap-1"
                 >
-                  {weekSaving ? "Saving…" : "Set Week"}
+                  {#if weekSaving}
+                    <i class="iconoir-refresh animate-spin text-xs"></i>
+                    <span>Saving…</span>
+                  {:else}
+                    <span>Set Week</span>
+                  {/if}
                 </button>
               </div>
             </article>
@@ -382,9 +387,14 @@
                   type="button"
                   onclick={saveNextVisit}
                   disabled={visitSaving}
-                  class="py-1 px-3 text-xs font-semibold rounded-lg bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer disabled:opacity-50 shrink-0"
+                  class="py-1 px-3 text-xs font-semibold rounded-lg bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer disabled:opacity-50 shrink-0 flex items-center gap-1"
                 >
-                  {visitSaving ? "Saving…" : "Save"}
+                  {#if visitSaving}
+                    <i class="iconoir-refresh animate-spin text-xs"></i>
+                    <span>Saving…</span>
+                  {:else}
+                    <span>Save</span>
+                  {/if}
                 </button>
               </div>
             </article>
@@ -598,12 +608,12 @@
               {#if learnTab === "foods"}
                 <FoodGuide week={week ?? 28} />
               {:else if learnTab === "mealplan"}
-                <MealPlanner pregnancyWeek={week ?? 28} />
+                <MealPlanner pregnancyWeek={week ?? 28} onOpenGrocery={() => (learnTab = "grocery")} />
               {:else if learnTab === "grocery"}
                 <GroceryList />
               {:else if learnTab === "recipes"}
                 <div class="rounded-3xl bg-white border border-[#e7e4dc] p-6 sm:p-8 shadow-xs">
-                  <RecipeNutrientBuilder />
+                  <RecipeNutrientBuilder week={week ?? 28} />
                 </div>
               {:else if learnTab === "meds"}
                 <LearningResources />

@@ -260,7 +260,7 @@ export class RecordsController {
 
   @Post("groceries/from-plan")
   async groceriesFromPlan(@Req() req: AuthenticatedRequest) {
-    if (req.auth.role !== "PREGNANT_PERSON") return { added: 0 };
+    if (req.auth.role !== "PREGNANT_PERSON") return { added: 0, alreadyStocked: 0, totalItems: 0, expandedMeals: 0 };
     const entries = await this.database()
       .getRepository(MealPlanEntity)
       .find({ where: { userId: req.auth.userId } });
@@ -277,6 +277,7 @@ export class RecordsController {
     ];
     const repo = this.database().getRepository(GroceryItemEntity);
     let added = 0;
+    let alreadyStocked = 0;
     for (const name of names) {
       if (!(await repo.existsBy({ userId: req.auth.userId, name }))) {
         await repo.save({
@@ -287,9 +288,11 @@ export class RecordsController {
           checked: false,
         });
         added += 1;
+      } else {
+        alreadyStocked += 1;
       }
     }
-    return { added, expandedMeals };
+    return { added, alreadyStocked, totalItems: names.length, expandedMeals };
   }
 
   @Post("groceries/:id/check")

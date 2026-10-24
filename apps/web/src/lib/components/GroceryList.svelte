@@ -11,6 +11,9 @@
   let items = $state<Item[]>([]);
   let name = $state("");
   let quantity = $state("");
+  let adding = $state(false);
+  let deletingId = $state<string | null>(null);
+
   async function load() {
     const r = await fetch(`${api}/records/groceries`, {
       headers: { Authorization: `Bearer ${sessionToken()}` },
@@ -22,18 +25,24 @@
   });
   async function add(event: SubmitEvent) {
     event.preventDefault();
-    const r = await fetch(`${api}/records/groceries`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionToken()}`,
-      },
-      body: JSON.stringify({ name, quantity }),
-    });
-    if (r.ok) {
-      name = "";
-      quantity = "";
-      await load();
+    if (!name.trim() || adding) return;
+    adding = true;
+    try {
+      const r = await fetch(`${api}/records/groceries`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionToken()}`,
+        },
+        body: JSON.stringify({ name: name.trim(), quantity: quantity.trim() }),
+      });
+      if (r.ok) {
+        name = "";
+        quantity = "";
+        await load();
+      }
+    } finally {
+      adding = false;
     }
   }
   async function toggle(item: Item) {
@@ -46,6 +55,18 @@
       body: JSON.stringify({ checked: !item.checked }),
     });
     await load();
+  }
+  async function removeItem(id: string) {
+    deletingId = id;
+    try {
+      await fetch(`${api}/records/groceries/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${sessionToken()}` },
+      });
+      await load();
+    } finally {
+      deletingId = null;
+    }
   }
 </script>
 
@@ -84,10 +105,16 @@
     />
     <button
       type="submit"
-      class="py-2.5 px-5 text-sm font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer shadow-2xs flex items-center justify-center gap-1.5 shrink-0"
+      disabled={adding || !name.trim()}
+      class="py-2.5 px-5 text-sm font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] disabled:opacity-50 transition-colors cursor-pointer shadow-2xs flex items-center justify-center gap-1.5 shrink-0"
     >
-      <i class="iconoir-plus text-sm"></i>
-      <span>Add Item</span>
+      {#if adding}
+        <i class="iconoir-refresh animate-spin text-sm"></i>
+        <span>Adding…</span>
+      {:else}
+        <i class="iconoir-plus text-sm"></i>
+        <span>Add Item</span>
+      {/if}
     </button>
   </form>
 
@@ -95,28 +122,43 @@
   {#if items.length}
     <div class="space-y-2 max-h-[360px] overflow-y-auto pr-1">
       {#each items as item (item.id)}
-        <label
-          class="flex items-center justify-between p-3 rounded-xl border border-[#eeece6] bg-[#faf9f6] hover:bg-[#f6f4ee] cursor-pointer transition-colors"
+        <div
+          class="flex items-center justify-between p-3 rounded-xl border border-[#eeece6] bg-[#faf9f6] hover:bg-[#f6f4ee] transition-colors"
           class:opacity-60={item.checked}
           class:bg-[#f2efe9]={item.checked}
         >
-          <div class="flex items-center gap-3">
+          <label class="flex items-center gap-3 flex-1 min-w-0 cursor-pointer">
             <input
               type="checkbox"
               checked={item.checked}
               onchange={() => void toggle(item)}
-              class="w-4 h-4 rounded text-[#809474] focus:ring-[#809474] cursor-pointer"
+              class="w-4 h-4 rounded text-[#809474] focus:ring-[#809474] cursor-pointer shrink-0"
             />
-            <span class="text-sm font-medium text-[#30312c]" class:line-through={item.checked}>
+            <span class="text-sm font-medium text-[#30312c] truncate" class:line-through={item.checked}>
               {item.name}
             </span>
+          </label>
+          <div class="flex items-center gap-2 shrink-0 ml-2">
+            {#if item.quantity}
+              <span class="text-xs px-2.5 py-0.5 rounded-md bg-white border border-[#e2ded5] text-[#77786f] font-medium">
+                {item.quantity}
+              </span>
+            {/if}
+            <button
+              type="button"
+              disabled={deletingId === item.id}
+              onclick={() => void removeItem(item.id)}
+              class="w-7 h-7 rounded-lg flex items-center justify-center text-[#8e9083] hover:text-[#af705a] hover:bg-white transition-colors cursor-pointer"
+              aria-label={`Remove ${item.name}`}
+            >
+              {#if deletingId === item.id}
+                <i class="iconoir-refresh animate-spin text-xs"></i>
+              {:else}
+                <span class="text-xs font-bold leading-none">✕</span>
+              {/if}
+            </button>
           </div>
-          {#if item.quantity}
-            <span class="text-xs px-2.5 py-0.5 rounded-md bg-white border border-[#e2ded5] text-[#77786f] font-medium">
-              {item.quantity}
-            </span>
-          {/if}
-        </label>
+        </div>
       {/each}
     </div>
   {:else}

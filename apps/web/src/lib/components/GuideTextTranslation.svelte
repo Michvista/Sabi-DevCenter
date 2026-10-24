@@ -38,9 +38,14 @@
       type="button"
       disabled={loading}
       onclick={showTranslation}
-      class="py-2 px-4 text-xs font-semibold rounded-xl bg-white border border-[#d6d2c4] text-[#475842] hover:bg-[#faf9f6] transition-colors cursor-pointer disabled:opacity-50"
+      class="py-2 px-4 text-xs font-semibold rounded-xl bg-white border border-[#d6d2c4] text-[#475842] hover:bg-[#faf9f6] transition-colors cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
     >
-      {loading ? "Translating…" : translated ? "Show again" : "Show translation"}
+      {#if loading}
+        <i class="iconoir-refresh animate-spin text-xs"></i>
+        <span>Translating…</span>
+      {:else}
+        <span>{translated ? "Show again" : "Show translation"}</span>
+      {/if}
     </button>
   </div>
   {#if translated}

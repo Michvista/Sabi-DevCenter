@@ -9,7 +9,10 @@
     dishName: string;
     note?: string | null;
   };
-  let { pregnancyWeek = 20 }: { pregnancyWeek?: number } = $props();
+  let {
+    pregnancyWeek = 20,
+    onOpenGrocery,
+  }: { pregnancyWeek?: number; onOpenGrocery?: () => void } = $props();
   const api = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
   let weekGuide = $derived(getPregnancyWeek(pregnancyWeek));
 
@@ -75,6 +78,7 @@
   let generating = $state(false);
   let savingIdeas = $state(false);
   let exporting = $state(false);
+  let addingDish = $state(false);
   async function load() {
     const r = await fetch(`${api}/records/meal-plan`, {
       headers: { Authorization: `Bearer ${sessionToken()}` },
@@ -87,22 +91,32 @@
   });
   async function add(event: SubmitEvent) {
     event.preventDefault();
+    if (!dishName.trim() || addingDish) return;
+    addingDish = true;
     message = "";
-    const r = await fetch(`${api}/records/meal-plan`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionToken()}`,
-      },
-      body: JSON.stringify({ planDate: date, mealType, dishName }),
-    });
-    if (!r.ok) {
-      message =
-        "Could not save meal plan. Check your connection and try again.";
-      return;
+    try {
+      const r = await fetch(`${api}/records/meal-plan`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionToken()}`,
+        },
+        body: JSON.stringify({ planDate: date, mealType, dishName: dishName.trim() }),
+      });
+      if (!r.ok) {
+        message =
+          "Could not save meal plan. Check your connection and try again.";
+        return;
+      }
+      dishName = "";
+      await load();
+      message = `✓ Dish added to your schedule!`;
+      setTimeout(() => {
+        if (message.startsWith("✓ Dish")) message = "";
+      }, 3500);
+    } finally {
+      addingDish = false;
     }
-    dishName = "";
-    await load();
   }
   async function makeList() {
     exporting = true;
@@ -113,9 +127,14 @@
         headers: { Authorization: `Bearer ${sessionToken()}` },
       });
       const result = await r.json();
-      message = r.ok
-        ? `✓ ${result.added} items added to your market list${result.expandedMeals ? ` (from ${result.expandedMeals} scheduled dishes)` : ""}.`
-        : "Could not build the grocery list.";
+      if (!r.ok) throw new Error("Could not build the grocery list.");
+      if (result.added > 0) {
+        message = `✓ ${result.added} items added to your market list${result.alreadyStocked ? ` (${result.alreadyStocked} were already on your list)` : ""}!`;
+      } else if (result.alreadyStocked > 0) {
+        message = `✓ All ${result.alreadyStocked} ingredients for your scheduled meals are already in your market list!`;
+      } else {
+        message = "No ingredients found to export. Schedule your meals first.";
+      }
     } catch {
       message = "Could not export to grocery list. Please try again.";
     } finally {
@@ -322,10 +341,16 @@
 
         <button
           type="submit"
-          class="w-full py-2.5 px-4 text-sm font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer shadow-xs flex items-center justify-center gap-1.5"
+          disabled={addingDish}
+          class="w-full py-2.5 px-4 text-sm font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] disabled:opacity-50 transition-colors cursor-pointer shadow-xs flex items-center justify-center gap-1.5"
         >
-          <i class="iconoir-plus text-sm"></i>
-          <span>Add to Meal Plan</span>
+          {#if addingDish}
+            <i class="iconoir-refresh animate-spin text-sm"></i>
+            <span>Adding to Schedule…</span>
+          {:else}
+            <i class="iconoir-plus text-sm"></i>
+            <span>Add to Meal Plan</span>
+          {/if}
         </button>
       </form>
 
@@ -386,9 +411,15 @@
           <button
             type="submit"
             disabled={generating}
-            class="w-full py-2 px-3 text-xs font-semibold rounded-lg bg-[#475842] text-white hover:bg-[#384634] disabled:opacity-50 transition-colors cursor-pointer"
+            class="w-full py-2 px-3 text-xs font-semibold rounded-lg bg-[#475842] text-white hover:bg-[#384634] disabled:opacity-50 transition-colors cursor-pointer flex items-center justify-center gap-1.5"
           >
-            {generating ? "Generating Ideas…" : "Build 7-Day Plan"}
+            {#if generating}
+              <i class="iconoir-refresh animate-spin text-xs"></i>
+              <span>Generating Ideas…</span>
+            {:else}
+              <i class="iconoir-magic-wand text-xs"></i>
+              <span>Build 7-Day Plan</span>
+            {/if}
           </button>
         </form>
 
@@ -406,12 +437,18 @@
             {/each}
           </div>
           <button
-            class="w-full mt-2.5 py-2 px-3 text-xs font-semibold rounded-lg bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer disabled:opacity-50"
+            class="w-full mt-2.5 py-2 px-3 text-xs font-semibold rounded-lg bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer disabled:opacity-50 flex items-center justify-center gap-1.5"
             type="button"
             disabled={savingIdeas}
             onclick={() => void saveIdeas()}
           >
-            {savingIdeas ? "Saving…" : "Save All Ideas to My Plan"}
+            {#if savingIdeas}
+              <i class="iconoir-refresh animate-spin text-xs"></i>
+              <span>Saving…</span>
+            {:else}
+              <i class="iconoir-check text-xs"></i>
+              <span>Save All Ideas to My Plan</span>
+            {/if}
           </button>
         {/if}
       </details>
@@ -470,9 +507,21 @@
       </div>
 
       {#if message}
-        <div class="mt-4 p-3 rounded-xl bg-[#edf5eb] border border-[#d6e5d2] text-xs font-medium text-[#385a38] flex items-center gap-2" role="status">
-          <i class="iconoir-check-circle text-sm text-[#475842]"></i>
-          <span>{message}</span>
+        <div class="mt-4 p-3.5 rounded-xl bg-[#edf5eb] border border-[#d6e5d2] text-xs font-medium text-[#385a38] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2" role="status">
+          <div class="flex items-center gap-2">
+            <i class="iconoir-check-circle text-base text-[#475842] shrink-0"></i>
+            <span>{message}</span>
+          </div>
+          {#if onOpenGrocery && (message.includes("items added") || message.includes("already in your market list"))}
+            <button
+              type="button"
+              onclick={onOpenGrocery}
+              class="inline-flex items-center gap-1 font-bold text-[#475842] hover:text-[#242b22] hover:underline cursor-pointer shrink-0"
+            >
+              <span>Open Market List</span>
+              <i class="iconoir-arrow-right text-xs"></i>
+            </button>
+          {/if}
         </div>
       {/if}
     </div>

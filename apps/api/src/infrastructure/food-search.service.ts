@@ -276,40 +276,128 @@ export class FoodSearchService {
     };
   }
 
-  ingredientsForDish(dishName: string) {
+  ingredientsForDish(dishName: string): string[] {
     const normalize = (value: string) =>
       value
         .replace(/\([^)]*\)/g, "")
         .toLocaleLowerCase()
         .replace(/[^a-z0-9]+/g, " ")
         .trim();
-    const query = normalize(dishName);
-    const row = this.localFoods()
-      .map((food) => ({ food, name: normalize(food.Food_Name) }))
-      .filter(
-        ({ name }) =>
-          name &&
-          (name === query || name.includes(query) || query.includes(name)),
-      )
-      .sort((left, right) => right.name.length - left.name.length)[0]?.food;
-    if (!row?.Main_Ingredients) return [];
-    const ingredients: string[] = [];
-    let ingredient = "";
-    let nested = 0;
-    for (const character of row.Main_Ingredients) {
-      if (character === "(") nested += 1;
-      if (character === ")") nested = Math.max(0, nested - 1);
-      if ((character === "," || character === ";") && nested === 0) {
+
+    const stapleMap: Record<string, string[]> = {
+      beans: ["Brown beans", "Onions", "Palm oil", "Crayfish"],
+      plantain: ["Plantains"],
+      "boiled plantain": ["Plantains"],
+      "fried plantain": ["Plantains", "Vegetable oil"],
+      dodo: ["Plantains", "Vegetable oil"],
+      eba: ["Garri (cassava flakes)"],
+      garri: ["Garri"],
+      orange: ["Fresh oranges"],
+      oranges: ["Fresh oranges"],
+      groundnuts: ["Roasted groundnuts"],
+      peanuts: ["Groundnuts"],
+      pap: ["Fermented corn (ogi)", "Milk"],
+      ogi: ["Ogi (fermented corn)", "Milk"],
+      akara: ["Brown beans", "Vegetable oil", "Peppers", "Onions"],
+      "moi moi": ["Black-eyed beans", "Bell peppers", "Onions", "Vegetable oil"],
+      moimoi: ["Black-eyed beans", "Bell peppers", "Onions", "Vegetable oil"],
+      yam: ["White yam tuber"],
+      "boiled yam": ["White yam tuber"],
+      "yam porridge": ["White yam", "Palm oil", "Ugu leaves", "Smoked fish"],
+      asaro: ["White yam", "Palm oil", "Ugu leaves", "Smoked fish"],
+      rice: ["Rice", "Tomatoes", "Onions", "Vegetable oil"],
+      jollof: ["Rice", "Tomatoes", "Red bell peppers", "Onions", "Vegetable oil"],
+      "fried rice": ["Rice", "Carrots", "Green peas", "Chicken breast", "Sweet corn"],
+      "efo riro": ["Spinach or Shoko/Tete", "Palm oil", "Locust beans (iru)", "Peppers", "Fish or meat"],
+      egusi: ["Melon seeds (egusi)", "Ugu leaves", "Palm oil", "Smoked fish", "Crayfish"],
+      okro: ["Fresh okra", "Palm oil", "Crayfish", "Fish or meat"],
+      ogbono: ["Ogbono seeds", "Ugu leaves", "Palm oil", "Crayfish", "Assorted meat"],
+      "miyan kuka": ["Baobab leaf powder (kuka)", "Beef", "Dried fish", "Locust beans (dawadawa)", "Palm oil"],
+      tuwo: ["Rice flour or maize flour"],
+      "tuwo shinkafa": ["Mashed white rice"],
+      "tuwo masara": ["Maize flour"],
+      peppersoup: ["Catfish or goat meat", "Peppersoup spices", "Scent leaves", "Chili peppers"],
+      catfish: ["Fresh catfish"],
+      tilapia: ["Fresh tilapia fish"],
+      croaker: ["Croaker fish"],
+      chicken: ["Chicken"],
+      beef: ["Beef"],
+      goat: ["Goat meat"],
+      egg: ["Eggs"],
+      eggs: ["Eggs"],
+      avocado: ["Avocado pears"],
+      banana: ["Bananas"],
+      watermelon: ["Watermelon"],
+      pawpaw: ["Ripe pawpaw (papaya)"],
+      oatmeal: ["Rolled oats", "Milk"],
+      oats: ["Rolled oats", "Milk"],
+      custard: ["Custard powder", "Milk"],
+      bread: ["Whole wheat bread", "Butter"],
+    };
+
+    // Split compound dishes like "Ogi with moi moi", "Beans and boiled plantain", "Orange and groundnuts"
+    const subDishParts = dishName
+      .split(/\s+(?:with|and|&|\+)\s+|,/i)
+      .map((part) => part.trim())
+      .filter(Boolean);
+
+    const gatheredIngredients: string[] = [];
+
+    for (const part of subDishParts.length ? subDishParts : [dishName]) {
+      const normalizedPart = normalize(part);
+      let matchedStaple = false;
+
+      for (const [key, ingredients] of Object.entries(stapleMap)) {
+        if (
+          normalizedPart === key ||
+          normalizedPart.includes(key) ||
+          key.includes(normalizedPart)
+        ) {
+          gatheredIngredients.push(...ingredients);
+          matchedStaple = true;
+          break;
+        }
+      }
+
+      if (matchedStaple) continue;
+
+      const row = this.localFoods()
+        .map((food) => ({ food, name: normalize(food.Food_Name) }))
+        .filter(
+          ({ name }) =>
+            name &&
+            (name === normalizedPart ||
+              name.includes(normalizedPart) ||
+              normalizedPart.includes(name)),
+        )
+        .sort((left, right) => right.name.length - left.name.length)[0]?.food;
+
+      if (row?.Main_Ingredients) {
+        const ingredients: string[] = [];
+        let ingredient = "";
+        let nested = 0;
+        for (const character of row.Main_Ingredients) {
+          if (character === "(") nested += 1;
+          if (character === ")") nested = Math.max(0, nested - 1);
+          if ((character === "," || character === ";") && nested === 0) {
+            if (ingredient.trim()) ingredients.push(ingredient.trim());
+            ingredient = "";
+          } else {
+            ingredient += character;
+          }
+        }
         if (ingredient.trim()) ingredients.push(ingredient.trim());
-        ingredient = "";
+        gatheredIngredients.push(...ingredients);
       } else {
-        ingredient += character;
+        gatheredIngredients.push(part);
       }
     }
-    if (ingredient.trim()) ingredients.push(ingredient.trim());
+
     return [
       ...new Set(
-        ingredients.map((ingredient) => ingredient.trim()).filter(Boolean),
+        gatheredIngredients
+          .map((ingredient) => ingredient.trim())
+          .filter(Boolean),
       ),
     ];
   }

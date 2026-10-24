@@ -228,11 +228,12 @@
           type="submit"
           disabled={submitting}
         >
-          {submitting
-            ? "Please wait…"
-            : `${createAccount ? "Create account" : "Sign in"} to ${
-                isMidwife ? "care team" : "my pregnancy"
-              }`}
+          {#if submitting}
+            <i class="iconoir-refresh animate-spin text-sm"></i>
+            <span>Please wait…</span>
+          {:else}
+            <span>{createAccount ? "Create account" : "Sign in"} to {isMidwife ? "care team" : "my pregnancy"}</span>
+          {/if}
         </button>
       </form>
 
@@ -254,8 +255,13 @@
             onclick={signInDemo}
             disabled={submitting}
           >
-            <span>Enter Pregnant Demo Portal</span>
-            <i class="iconoir-arrow-right text-xs"></i>
+            {#if submitting}
+              <i class="iconoir-refresh animate-spin text-xs"></i>
+              <span>Signing in…</span>
+            {:else}
+              <span>Enter Pregnant Demo Portal</span>
+              <i class="iconoir-arrow-right text-xs"></i>
+            {/if}
           </button>
           <details class="mt-2 text-xs text-[#77786f]">
             <summary class="cursor-pointer hover:underline text-[11px]">Show demo credentials</summary>
@@ -284,8 +290,13 @@
             onclick={signInMidwifeDemo}
             disabled={submitting}
           >
-            <span>Enter Midwife Demo Portal</span>
-            <i class="iconoir-arrow-right text-xs"></i>
+            {#if submitting}
+              <i class="iconoir-refresh animate-spin text-xs"></i>
+              <span>Signing in…</span>
+            {:else}
+              <span>Enter Midwife Demo Portal</span>
+              <i class="iconoir-arrow-right text-xs"></i>
+            {/if}
           </button>
           <details class="mt-2 text-xs text-[#77786f]">
             <summary class="cursor-pointer hover:underline text-[11px]">Show midwife demo details</summary>

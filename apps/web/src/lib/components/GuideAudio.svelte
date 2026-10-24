@@ -111,8 +111,13 @@
       onclick={() => listen(text)}
       class="py-2 px-4 text-xs font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
     >
-      <i class="iconoir-sound-high text-xs"></i>
-      <span>{loading ? "Preparing…" : "Listen"}</span>
+      {#if loading}
+        <i class="iconoir-refresh animate-spin text-xs"></i>
+        <span>Preparing…</span>
+      {:else}
+        <i class="iconoir-sound-high text-xs"></i>
+        <span>Listen</span>
+      {/if}
     </button>
   </div>
   {#if audioUrl}

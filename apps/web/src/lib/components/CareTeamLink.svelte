@@ -282,8 +282,13 @@
             disabled={sendingChat || !chatText.trim()}
             class="py-2.5 px-6 text-xs font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] disabled:opacity-50 transition-colors cursor-pointer shadow-xs flex items-center justify-center gap-2 shrink-0"
           >
-            <i class="iconoir-arrow-right text-xs"></i>
-            <span>{sendingChat ? "Sending…" : "Send to Midwife"}</span>
+            {#if sendingChat}
+              <i class="iconoir-refresh animate-spin text-xs"></i>
+              <span>Sending…</span>
+            {:else}
+              <i class="iconoir-arrow-right text-xs"></i>
+              <span>Send to Midwife</span>
+            {/if}
           </button>
         </div>
       </form>
@@ -333,11 +338,16 @@
               class="flex-1 px-4 py-3 text-sm font-mono font-bold uppercase tracking-widest rounded-xl border border-[#dedad0] bg-[#faf9f6] focus:outline-none focus:ring-2 focus:ring-[#809474]/40 focus:bg-white"
             />
             <button
-              class="py-3 px-6 text-xs sm:text-sm font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] disabled:opacity-50 transition-colors cursor-pointer shadow-xs whitespace-nowrap"
+              class="py-3 px-6 text-xs sm:text-sm font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] disabled:opacity-50 transition-colors cursor-pointer shadow-xs whitespace-nowrap flex items-center justify-center gap-1.5"
               type="submit"
               disabled={busy || !code.trim()}
             >
-              {busy ? "Sending…" : "Connect"}
+              {#if busy}
+                <i class="iconoir-refresh animate-spin text-xs"></i>
+                <span>Connecting…</span>
+              {:else}
+                <span>Connect</span>
+              {/if}
             </button>
           </div>
           <small class="block mt-2 text-xs text-[#72746b]">

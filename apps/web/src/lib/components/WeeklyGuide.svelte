@@ -93,10 +93,17 @@
     return parts.join(" ").slice(0, 4500);
   });
 
+  let clinicalReview = $state<{
+    status: "APPROVED" | "CHANGES_REQUESTED" | "PENDING";
+    notes?: string | null;
+    reviewedAt?: string | null;
+  } | null>(null);
+
   $effect(() => {
     const currentWeek = week;
     const controller = new AbortController();
     bookSectionsOverride = undefined;
+    clinicalReview = null;
     void fetch(
       `${import.meta.env.VITE_API_URL ?? "http://localhost:8080"}/pregnancy/week`,
       {
@@ -107,8 +114,9 @@
       },
     )
       .then((response) => (response.ok ? response.json() : null))
-      .then((result: { bookSections?: BookGuideSection[] } | null) => {
+      .then((result: { bookSections?: BookGuideSection[]; clinicalReview?: typeof clinicalReview } | null) => {
         if (result?.bookSections?.length) bookSectionsOverride = result.bookSections;
+        clinicalReview = result?.clinicalReview ?? null;
       })
       .catch(() => {});
     return () => controller.abort();
@@ -123,10 +131,34 @@
         <span class="w-2 h-2 rounded-full bg-[#809474]"></span>
         <span>Trimester {guide.trimester} · Week {week}</span>
       </div>
-      <span class="text-xs text-[#72746b] bg-white border border-[#e7e4dc] px-3 py-1 rounded-full font-medium">
-        Clinical Companion
-      </span>
+
+      <div class="flex items-center gap-2">
+        {#if clinicalReview?.status === "APPROVED"}
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#edf5eb] text-[#385a38] text-xs font-semibold border border-[#c6dfc0]">
+            <i class="iconoir-check-circle text-xs text-[#809474]"></i>
+            <span>Verified by Midwife Care Team</span>
+          </span>
+        {:else if clinicalReview?.status === "CHANGES_REQUESTED"}
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#fef9e7] text-[#7c440a] text-xs font-semibold border border-[#e9d27a]">
+            <i class="iconoir-warning-triangle text-xs text-[#b8860b]"></i>
+            <span>Care Team Note Added</span>
+          </span>
+        {/if}
+        <span class="text-xs text-[#72746b] bg-white border border-[#e7e4dc] px-3 py-1 rounded-full font-medium">
+          Clinical Companion
+        </span>
+      </div>
     </div>
+
+    {#if clinicalReview?.notes}
+      <div class="mb-4 p-3 rounded-2xl bg-[#faf9f6] border border-[#dce5d6] text-xs text-[#475842] flex items-start gap-2">
+        <i class="iconoir-chat-bubble-check text-sm text-[#809474] mt-0.5 shrink-0"></i>
+        <div>
+          <strong class="font-semibold block">Midwife Reviewer Note for Week {week}:</strong>
+          <span>"{clinicalReview.notes}"</span>
+        </div>
+      </div>
+    {/if}
 
     <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
       <div class="md:col-span-3 flex justify-center">

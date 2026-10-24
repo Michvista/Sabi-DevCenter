@@ -80,6 +80,7 @@
   let openedMessages = $state(false);
   let approvingId = $state<string | null>(null);
   let reviewDecision = $state<"APPROVED" | "CHANGES_REQUESTED" | null>(null);
+  let refreshingCareData = $state(false);
 
   onMount(() => {
     if (!hasSession("midwife")) void goto("/sign-in/midwife");
@@ -125,59 +126,64 @@
   }
 
   async function loadCareData() {
-    const headers = { Authorization: `Bearer ${sessionToken()}` };
-    const api = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
-    const [patientsResponse, requestsResponse, reviewsResponse] =
-      await Promise.all([
-        fetch(`${api}/records/care-team/patients`, { headers }),
-        fetch(`${api}/records/care-team/requests`, { headers }),
-        fetch(`${api}/records/clinical-reviews`, { headers }),
-      ]);
-    const items = patientsResponse.ok
-      ? ((await patientsResponse.json()) as Array<{
-          id: string;
-          displayName: string;
-          email: string;
-          dueDate?: string;
-          nextVisitDate?: string;
-          mood?: string;
-          symptoms?: string[];
-          note?: string;
-          checkInAt?: string;
-        }>)
-      : [];
-    requests = requestsResponse.ok
-      ? ((await requestsResponse.json()) as typeof requests)
-      : [];
-    clinicalReviews = reviewsResponse.ok
-      ? ((await reviewsResponse.json()) as typeof clinicalReviews)
-      : [];
-    reviewNotes =
-      clinicalReviews.find((entry) => entry.week === Number(reviewWeek))
-        ?.notes ?? "";
+    refreshingCareData = true;
+    try {
+      const headers = { Authorization: `Bearer ${sessionToken()}` };
+      const api = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
+      const [patientsResponse, requestsResponse, reviewsResponse] =
+        await Promise.all([
+          fetch(`${api}/records/care-team/patients`, { headers }),
+          fetch(`${api}/records/care-team/requests`, { headers }),
+          fetch(`${api}/records/clinical-reviews`, { headers }),
+        ]);
+      const items = patientsResponse.ok
+        ? ((await patientsResponse.json()) as Array<{
+            id: string;
+            displayName: string;
+            email: string;
+            dueDate?: string;
+            nextVisitDate?: string;
+            mood?: string;
+            symptoms?: string[];
+            note?: string;
+            checkInAt?: string;
+          }>)
+        : [];
+      requests = requestsResponse.ok
+        ? ((await requestsResponse.json()) as typeof requests)
+        : [];
+      clinicalReviews = reviewsResponse.ok
+        ? ((await reviewsResponse.json()) as typeof clinicalReviews)
+        : [];
+      reviewNotes =
+        clinicalReviews.find((entry) => entry.week === Number(reviewWeek))
+          ?.notes ?? "";
 
-    const tones = ["sage", "peach", "lilac", "gold"];
-    roster = items.map((p, idx) => {
-      const isUrgent = p.mood === "urgent_symptoms" || (p.symptoms && p.symptoms.length > 0);
-      return {
-        id: p.id,
-        name: p.displayName,
-        email: p.email,
-        week: p.dueDate ? pregnancyWeek(p.dueDate) : 0,
-        due: formatHumanDate(p.dueDate),
-        nextVisit: p.nextVisitDate ? formatHumanDate(p.nextVisitDate) : null,
-        status: isUrgent ? "Needs Follow-up" : p.mood ? "Checked in" : "No check-in yet",
-        tone: tones[idx % tones.length],
-        last: p.mood ? formatMoodLabel(p.mood) : "No check-in shared",
-        note: p.note,
-        symptoms: p.symptoms ?? [],
-        checkInAt: p.checkInAt,
-        risk: Boolean(isUrgent),
-      };
-    });
-    if (!selected && roster[0]) {
-      selected = roster[0].id;
-      void loadPatientMessages(selected);
+      const tones = ["sage", "peach", "lilac", "gold"];
+      roster = items.map((p, idx) => {
+        const isUrgent = p.mood === "urgent_symptoms" || (p.symptoms && p.symptoms.length > 0);
+        return {
+          id: p.id,
+          name: p.displayName,
+          email: p.email,
+          week: p.dueDate ? pregnancyWeek(p.dueDate) : 0,
+          due: formatHumanDate(p.dueDate),
+          nextVisit: p.nextVisitDate ? formatHumanDate(p.nextVisitDate) : null,
+          status: isUrgent ? "Needs Follow-up" : p.mood ? "Checked in" : "No check-in yet",
+          tone: tones[idx % tones.length],
+          last: p.mood ? formatMoodLabel(p.mood) : "No check-in shared",
+          note: p.note,
+          symptoms: p.symptoms ?? [],
+          checkInAt: p.checkInAt,
+          risk: Boolean(isUrgent),
+        };
+      });
+      if (!selected && roster[0]) {
+        selected = roster[0].id;
+        void loadPatientMessages(selected);
+      }
+    } finally {
+      refreshingCareData = false;
     }
   }
 
@@ -453,11 +459,12 @@
             <p class="text-xs sm:text-sm text-[#72746b] mt-0.5">Stay close to the people in your care, between every visit.</p>
           </div>
           <button
-            class="inline-flex items-center gap-2 py-2 px-4 text-xs font-semibold rounded-xl bg-white border border-[#d6d2c4] text-[#475842] hover:bg-[#faf9f6] transition-colors cursor-pointer shadow-2xs shrink-0"
+            disabled={refreshingCareData}
+            class="inline-flex items-center gap-2 py-2 px-4 text-xs font-semibold rounded-xl bg-white border border-[#d6d2c4] text-[#475842] hover:bg-[#faf9f6] disabled:opacity-60 transition-colors cursor-pointer shadow-2xs shrink-0"
             onclick={() => void loadCareData()}
           >
-            <i class="iconoir-refresh text-sm"></i>
-            <span>Refresh care requests</span>
+            <i class="iconoir-refresh text-sm {refreshingCareData ? 'animate-spin' : ''}"></i>
+            <span>{refreshingCareData ? "Refreshing…" : "Refresh care requests"}</span>
           </button>
         </div>
 
@@ -814,8 +821,13 @@
                   disabled={sendingReply || !replyText.trim()}
                   class="py-2.5 px-6 text-xs font-semibold rounded-xl bg-[#475842] text-white hover:bg-[#384634] disabled:opacity-50 transition-colors cursor-pointer shadow-xs flex items-center gap-1.5"
                 >
-                  <i class="iconoir-arrow-right text-xs"></i>
-                  <span>{sendingReply ? "Posting…" : "Post Clinical Note"}</span>
+                  {#if sendingReply}
+                    <i class="iconoir-refresh animate-spin text-xs"></i>
+                    <span>Posting…</span>
+                  {:else}
+                    <i class="iconoir-arrow-right text-xs"></i>
+                    <span>Post Clinical Note</span>
+                  {/if}
                 </button>
               </div>
             </form>

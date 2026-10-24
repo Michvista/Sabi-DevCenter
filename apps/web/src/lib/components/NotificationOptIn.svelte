@@ -90,8 +90,10 @@
     }
   }
 
+  let testing = $state(false);
+
   async function sendTest() {
-    busy = true;
+    testing = true;
     message = "";
     try {
       const response = await fetch(`${api}/notifications/test`, {
@@ -106,7 +108,7 @@
       message =
         error instanceof Error ? error.message : "Test reminder failed.";
     } finally {
-      busy = false;
+      testing = false;
     }
   }
 </script>
@@ -134,20 +136,30 @@
       {#if enabled}
         <button
           type="button"
-          disabled={busy}
+          disabled={busy || testing}
           onclick={sendTest}
-          class="flex-1 sm:flex-initial py-2 px-3 text-xs font-semibold rounded-xl border border-[#d6d2c4] text-[#475842] hover:bg-[#faf9f6] transition-colors cursor-pointer"
+          class="flex-1 sm:flex-initial py-2 px-3 text-xs font-semibold rounded-xl border border-[#d6d2c4] text-[#475842] hover:bg-[#faf9f6] disabled:opacity-50 transition-colors cursor-pointer flex items-center justify-center gap-1.5"
         >
-          Send test
+          {#if testing}
+            <i class="iconoir-refresh animate-spin text-xs"></i>
+            <span>Sending…</span>
+          {:else}
+            <span>Send test</span>
+          {/if}
         </button>
       {/if}
       <button
         type="button"
-        disabled={busy}
+        disabled={busy || testing}
         onclick={toggle}
-        class="flex-1 sm:flex-initial py-2 px-4 text-xs font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer shadow-xs disabled:opacity-50"
+        class="flex-1 sm:flex-initial py-2 px-4 text-xs font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] transition-colors cursor-pointer shadow-xs disabled:opacity-50 flex items-center justify-center gap-1.5"
       >
-        {busy ? "Updating…" : enabled ? "Turn off" : "Enable"}
+        {#if busy}
+          <i class="iconoir-refresh animate-spin text-xs"></i>
+          <span>Updating…</span>
+        {:else}
+          <span>{enabled ? "Turn off" : "Enable"}</span>
+        {/if}
       </button>
     </div>
   </section>

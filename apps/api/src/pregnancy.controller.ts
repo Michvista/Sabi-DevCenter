@@ -25,8 +25,8 @@ import { FoodSearchService } from "./infrastructure/food-search.service";
 import { GroqEncouragementService } from "./infrastructure/groq-encouragement.service";
 import { calculatePortion } from "./infrastructure/food-search.service";
 import { InjectDataSource } from "@nestjs/typeorm";
-import type { DataSource } from "typeorm";
 import { PregnancyBookChunkEntity } from "./database/entities/pregnancy-book-chunk.entity";
+import { ClinicalContentReviewEntity } from "./database/entities/clinical-content-review.entity";
 
 class AssessDto {
   @IsArray()
@@ -112,6 +112,12 @@ export class PregnancyController {
         ];
       }
     }
+    const review = this.db?.isInitialized
+      ? await this.db
+          .getRepository(ClinicalContentReviewEntity)
+          .findOne({ where: { week: body.week }, order: { createdAt: "DESC" } })
+      : null;
+
     return {
       week: body.week,
       trimester:
@@ -128,6 +134,13 @@ export class PregnancyController {
             : "Getting ready, one day at a time",
       guidance:
         "Keep attending antenatal care and ask your health worker about questions that matter to you. Seek urgent care for warning signs.",
+      clinicalReview: review
+        ? {
+            status: review.status,
+            notes: review.notes,
+            reviewedAt: review.createdAt,
+          }
+        : null,
       ...(bookChunk && bookSections.length
         ? {
             bookNote: bookSections.map((section) => section.summary).join(" "),

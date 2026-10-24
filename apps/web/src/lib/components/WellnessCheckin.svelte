@@ -102,12 +102,17 @@
     <div class="flex items-center justify-between gap-3 pt-3 border-t border-[#f0eee8]">
       <span class="text-xs text-[#72746b]">Save this check-in?</span>
       <button
-        class="py-2.5 px-5 text-xs font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] disabled:opacity-50 transition-colors cursor-pointer shadow-2xs"
+        class="py-2.5 px-5 text-xs font-semibold rounded-xl bg-[#809474] text-white hover:bg-[#6c8060] disabled:opacity-50 transition-colors cursor-pointer shadow-2xs flex items-center gap-1.5"
         type="button"
         onclick={() => void saveCheckIn()}
         disabled={saving}
       >
-        {saving ? "Saving…" : "Save check-in"}
+        {#if saving}
+          <i class="iconoir-refresh animate-spin text-xs"></i>
+          <span>Saving…</span>
+        {:else}
+          <span>Save check-in</span>
+        {/if}
       </button>
     </div>
   {/if}
