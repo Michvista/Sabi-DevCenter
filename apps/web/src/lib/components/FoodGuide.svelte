@@ -7,7 +7,6 @@
   } from "../data/food-log";
   import { sessionToken } from "#lib/auth/session.ts";
   import { onMount } from "svelte";
-  import BarcodeScanner from "./BarcodeScanner.svelte";
   import RecipeNutrientBuilder from "./RecipeNutrientBuilder.svelte";
   import { getPregnancyWeek } from "../data/pregnancy-weeks";
   let { week = 20 }: { week?: number } = $props();
@@ -55,9 +54,6 @@
   let mealNote = $state("");
   let foodLog = $state<FoodLogEntry[]>([]);
   let savedMessage = $state("");
-  let barcode = $state("");
-  let barcodeBusy = $state(false);
-  let barcodeMessage = $state("");
 
   const nutrientLabels: Record<string, string> = {
     calciumMg: "Calcium",
@@ -71,38 +67,6 @@
   function formatNutrient(key: string, value: number) {
     const unit = key.endsWith("Mg") ? "mg" : key.endsWith("Mcg") ? "µg" : "g";
     return `${value.toFixed(1)} ${unit}`;
-  }
-
-  async function lookupBarcode() {
-    barcodeBusy = true;
-    barcodeMessage = "";
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL ?? "http://localhost:8080"}/pregnancy/foods/barcode/${encodeURIComponent(barcode)}`,
-      );
-      const body = (await response.json()) as {
-        found?: boolean;
-        message?: string;
-        product?: Food;
-      };
-      if (!response.ok)
-        throw new Error(body.message ?? "Barcode lookup failed.");
-      if (!body.found || !body.product) {
-        barcodeMessage = body.message ?? "No product was found.";
-        return;
-      }
-      foods = [body.product];
-      searched = true;
-      barcodeMessage =
-        "Packaged food found. Label nutrients may be incomplete; check the physical pack.";
-    } catch (cause) {
-      barcodeMessage =
-        cause instanceof Error
-          ? cause.message
-          : "Barcode lookup is unavailable.";
-    } finally {
-      barcodeBusy = false;
-    }
   }
 
   onMount(() => {
@@ -374,37 +338,6 @@
           onclick={() => void searchFood(idea)}>{idea}</button
         >{/each}
     </div>
-    <form
-      class="food-search barcode-search"
-      onsubmit={(event) => {
-        event.preventDefault();
-        void lookupBarcode();
-      }}
-    >
-      <label class="visually-hidden" for="food-barcode"
-        >Packaged food barcode</label
-      >
-      <input
-        id="food-barcode"
-        bind:value={barcode}
-        inputmode="numeric"
-        autocomplete="off"
-        placeholder="Or enter a product barcode"
-        maxlength="14"
-      />
-      <button type="submit" disabled={barcodeBusy || barcode.length < 8}
-        >{barcodeBusy ? "Looking up…" : "Look up barcode"}</button
-      >
-    </form>
-    <BarcodeScanner
-      onDetected={(value) => {
-        barcode = value;
-        void lookupBarcode();
-      }}
-    />
-    {#if barcodeMessage}<p class="food-message" role="status">
-        {barcodeMessage}
-      </p>{/if}
     {#if error}<p class="food-message" role="status">{error}</p>{/if}
     {#if searched && foods.length}
       <div class="food-results" aria-live="polite">
