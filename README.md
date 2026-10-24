@@ -65,6 +65,16 @@ Set `DATABASE_URL` and `RUMPTY_POSTGRES_CA_CERT` before creating accounts or sav
 npm --workspace @sabi/api run db:migrate
 ```
 
+### Judge demo account
+
+The pregnant-person sign-in screen has a one-click judge demo. Its public credentials are `demo.pregnant@sabi.health` / `SabiDemo2026!`. The demo account contains synthetic pregnancy, check-in, meal and grocery examples only. Seed it after the Rumpty database is reachable:
+
+```powershell
+npm run db:seed-demo
+```
+
+This command applies pending migrations and idempotently creates or refreshes the demo account. It adds sample records only when that demo account has no corresponding records. `VITE_DEMO_LOGIN_ENABLED`, `VITE_DEMO_EMAIL` and `VITE_DEMO_PASSWORD` control the public sign-in card; `SABI_DEMO_EMAIL` and `SABI_DEMO_PASSWORD` control the server-side seed. Keep the two pairs identical. These credentials are intentionally public and must only be used for the synthetic judge account, never for a real person.
+
 Set `AUTH_JWT_SECRET` to at least 32 random characters and `MIDWIFE_INVITE_CODE` to a private invitation code before creating a midwife account. Browser reminder keys are `WEB_PUSH_PUBLIC_KEY`, `WEB_PUSH_PRIVATE_KEY` and `WEB_PUSH_SUBJECT`; the private key must only be configured on the API server. Do not expose service credentials using a `VITE_` variable.
 
 The API returns HTTP 200 from `GET /` and `GET /health` for deployment health checks. The web app runs on port 5173 and API on 8080 by default.

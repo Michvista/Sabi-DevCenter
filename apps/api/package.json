@@ -11,7 +11,8 @@
     "check": "tsc --noEmit",
     "check:rumpty": "node scripts/check-rumpty-connectivity.mjs",
     "smoke:api": "node scripts/smoke-api.mjs",
-    "db:migrate": "typeorm-ts-node-commonjs migration:run -d src/database/data-source.ts"
+    "db:migrate": "typeorm-ts-node-commonjs migration:run -d src/database/data-source.ts",
+    "db:seed-demo": "npm run db:migrate && node scripts/seed-demo.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1152.0",

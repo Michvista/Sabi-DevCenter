@@ -16,6 +16,23 @@ function caFromEnv(pathKey, base64Key) {
   return existsSync(absolute) ? readFileSync(absolute) : undefined;
 }
 
+function describeFailure(error) {
+  const code =
+    error && typeof error === "object" && "code" in error
+      ? String(error.code)
+      : "no error code";
+  const message =
+    error && typeof error === "object" && "message" in error
+      ? String(error.message)
+      : String(error);
+  // Never print connection URLs or credentials in diagnostic output.
+  const safeMessage = message.replace(
+    /(?:postgres(?:ql)?|rediss?):\/\/[^\s"'`]+/gi,
+    "[connection URL redacted]",
+  );
+  return `${code}: ${safeMessage}`;
+}
+
 async function checkPostgres() {
   if (!process.env.DATABASE_URL) return "PostgreSQL: not configured";
   const url = new URL(process.env.DATABASE_URL);
@@ -33,11 +50,7 @@ async function checkPostgres() {
     await client.query("SELECT 1");
     return "PostgreSQL: connected with TLS verification";
   } catch (error) {
-    const code =
-      error && typeof error === "object" && "code" in error
-        ? String(error.code)
-        : "connection error";
-    return `PostgreSQL: unavailable (${code})`;
+    return `PostgreSQL: unavailable (${describeFailure(error)})`;
   } finally {
     await client.end().catch(() => {});
   }
@@ -52,16 +65,18 @@ async function checkRedis() {
     maxRetriesPerRequest: 1,
     tls: { ...(ca ? { ca } : {}), rejectUnauthorized: true },
   });
+  let lastRedisError;
+  // ioredis emits errors as well as rejecting connect()/command calls. Attach
+  // a listener so a failed probe produces one safe, useful diagnostic line.
+  client.on("error", (error) => {
+    lastRedisError = error;
+  });
   try {
     await client.connect();
     await client.ping();
     return "Redis: connected with TLS verification";
   } catch (error) {
-    const code =
-      error && typeof error === "object" && "code" in error
-        ? String(error.code)
-        : "connection error";
-    return `Redis: unavailable (${code})`;
+    return `Redis: unavailable (${describeFailure(lastRedisError ?? error)})`;
   } finally {
     client.disconnect();
   }

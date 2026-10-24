@@ -17,6 +17,12 @@
   let showPassword = $state(false);
   let submitting = $state(false);
   const isMidwife = $derived(role === "midwife");
+  const demoEnabled = $derived(
+    role === "pregnant" && import.meta.env.VITE_DEMO_LOGIN_ENABLED === "true",
+  );
+  const demoEmail =
+    import.meta.env.VITE_DEMO_EMAIL ?? "demo.pregnant@sabi.health";
+  const demoPassword = import.meta.env.VITE_DEMO_PASSWORD ?? "SabiDemo2026!";
   async function submit(event: SubmitEvent) {
     event.preventDefault();
     if (submitting) return;
@@ -38,6 +44,24 @@
     } catch (error) {
       message =
         error instanceof Error ? error.message : "Sign-in failed. Try again.";
+    } finally {
+      submitting = false;
+    }
+  }
+  async function signInDemo() {
+    if (submitting) return;
+    submitting = true;
+    message = "";
+    try {
+      await authenticate("login", {
+        email: demoEmail,
+        password: demoPassword,
+        role: "PREGNANT_PERSON",
+      });
+      await goto("/pregnant/dashboard");
+    } catch (error) {
+      message =
+        error instanceof Error ? error.message : "Demo sign-in is unavailable.";
     } finally {
       submitting = false;
     }
@@ -141,6 +165,34 @@
             }`}</button
       >
     </form>
+    {#if demoEnabled}
+      <section class="judge-demo" aria-label="Judge demo account">
+        <div>
+          <strong>Want to explore first?</strong>
+          <p>Open the pregnancy portal with fictional sample data.</p>
+        </div>
+        <button
+          class="judge-demo-button"
+          type="button"
+          onclick={signInDemo}
+          disabled={submitting}
+          >{submitting ? "Signing in…" : "Enter the judge demo account"}</button
+        >
+        <details>
+          <summary>Show demo sign-in details</summary>
+          <dl>
+            <div>
+              <dt>Email</dt>
+              <dd>{demoEmail}</dd>
+            </div>
+            <div>
+              <dt>Password</dt>
+              <dd>{demoPassword}</dd>
+            </div>
+          </dl>
+        </details>
+      </section>
+    {/if}
     <div class="demo-notice">
       <strong>Private account access</strong><span
         >Passwords are hashed on the server. Sabi is not emergency monitoring;

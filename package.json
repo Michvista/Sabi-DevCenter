@@ -17,6 +17,7 @@
     "test": "npm run test --workspace @sabi/api && npm run test --workspace @sabi/web",
     "check": "npm run check --workspace @sabi/api && npm run check --workspace @sabi/web",
     "check:rumpty": "npm --workspace @sabi/api run check:rumpty",
+    "db:seed-demo": "npm --workspace @sabi/api run db:seed-demo",
     "smoke:api": "npm --workspace @sabi/api run smoke:api",
     "format": "prettier --plugin prettier-plugin-svelte --write package.json README.md apps",
     "format:check": "prettier --plugin prettier-plugin-svelte --check package.json README.md apps"

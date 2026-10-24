@@ -546,6 +546,77 @@
 .demo-notice strong {
   color: #54574e;
 }
+
+.judge-demo {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid #eeeee7;
+  color: #54574e;
+}
+
+.judge-demo strong {
+  font-size: 11px;
+}
+
+.judge-demo p {
+  margin: 3px 0 2px;
+  color: #77796f;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.judge-demo dl {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  margin: 8px 0 0;
+  font-size: 9px;
+}
+
+.judge-demo dl div {
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  gap: 8px;
+}
+
+.judge-demo dt {
+  color: #77796f;
+}
+
+.judge-demo dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+
+.judge-demo-button {
+  min-height: 42px;
+  border: 1px solid #dfe3d9;
+  border-radius: 8px;
+  background: #f5f4ed;
+  color: #657c62;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.judge-demo-button:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.judge-demo details {
+  color: #77796f;
+  font-size: 8px;
+}
+
+.judge-demo summary {
+  width: fit-content;
+  cursor: pointer;
+}
 .signin-switch {
   display: block;
   margin-top: 16px;
