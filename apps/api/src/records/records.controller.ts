@@ -409,6 +409,28 @@ export class RecordsController {
     });
   }
 
+  @Get("care-links/status")
+  async getMyCareLink(@Req() req: AuthenticatedRequest) {
+    if (req.auth.role !== "PREGNANT_PERSON") return { connected: false };
+    const link = await this.database()
+      .createQueryBuilder()
+      .select("l.id", "id")
+      .addSelect("l.status", "status")
+      .addSelect("m.display_name", "midwifeName")
+      .addSelect("m.email", "midwifeEmail")
+      .from("care_links", "l")
+      .innerJoin("users", "m", "m.id = l.midwife_id")
+      .where("l.patient_id = :id AND l.status = 'active'", { id: req.auth.userId })
+      .getRawOne();
+    if (!link) return { connected: false };
+    return {
+      connected: true,
+      status: link.status,
+      midwifeName: link.midwifeName,
+      midwifeEmail: link.midwifeEmail,
+    };
+  }
+
 
   @Get("care-team/requests")
   async careRequests(@Req() req: AuthenticatedRequest) {
@@ -447,18 +469,37 @@ export class RecordsController {
     if (req.auth.role !== "MIDWIFE") return [];
     return this.database().query(
       `SELECT u.id AS id, u.display_name AS "displayName", u.email AS email,
-              p.due_date AS "dueDate", c.created_at AS "checkInAt", c.mood AS mood,
-              c.symptoms AS symptoms
+              p.due_date AS "dueDate", p.next_visit_date AS "nextVisitDate",
+              c.created_at AS "checkInAt", c.mood AS mood,
+              c.symptoms AS symptoms, c.note AS note
        FROM care_links l
        INNER JOIN users u ON u.id = l.patient_id
        LEFT JOIN pregnancies p ON p.user_id = u.id
        LEFT JOIN LATERAL (
-         SELECT created_at, mood, symptoms FROM check_ins
+         SELECT created_at, mood, symptoms, note FROM check_ins
          WHERE user_id = u.id ORDER BY created_at DESC LIMIT 1
        ) c ON TRUE
        WHERE l.midwife_id = $1 AND l.status = 'active'`,
       [req.auth.userId],
     );
+  }
+
+  @Get("care-team/patients/:id/check-ins")
+  async patientCheckIns(
+    @Req() req: AuthenticatedRequest,
+    @Param("id") patientId: string,
+  ) {
+    if (req.auth.role !== "MIDWIFE") return [];
+    // Ensure active care link exists
+    const hasLink = await this.database()
+      .getRepository(CareLinkEntity)
+      .existsBy({ patientId, midwifeId: req.auth.userId, status: "active" });
+    if (!hasLink) throw new ForbiddenException("No active care link with this patient.");
+    return this.database().getRepository(CheckInEntity).find({
+      where: { userId: patientId },
+      order: { createdAt: "DESC" },
+      take: 20,
+    });
   }
 
 }

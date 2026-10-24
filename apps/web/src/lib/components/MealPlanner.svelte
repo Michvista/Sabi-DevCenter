@@ -13,6 +13,43 @@
   const api = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
   let weekGuide = $derived(getPregnancyWeek(pregnancyWeek));
 
+  // Dynamic 7-day Nigerian meal combos tailored specifically to this pregnancy week's nutrients
+  let weekCombos = $derived.by(() => {
+    const w = pregnancyWeek;
+    const nutrients = weekGuide.keyNutrients.slice(0, 3).join(" & ");
+    if (w <= 12) {
+      return [
+        { day: "Monday", breakfast: "Ogi with akara & boiled egg", lunch: "Sweet potato porridge with spinach", dinner: "Fish pepper soup with boiled plantain", highlight: "Folate & gentle on morning nausea" },
+        { day: "Tuesday", breakfast: "Oatmeal with warm milk & banana", lunch: "Brown beans porridge with roasted plantain", dinner: "Okro soup with lean fish & eba", highlight: "High soluble fibre & zinc" },
+        { day: "Wednesday", breakfast: "Toasted wholemeal bread with egg & avocado", lunch: "Jollof rice with steamed chicken & vegetables", dinner: "Boiled yam with vegetable egg sauce", highlight: "Vitamin B6 & protein building blocks" },
+        { day: "Thursday", breakfast: "Moi moi with warm pap (pap)", lunch: "Egusi soup with bitterleaf and smoked fish", dinner: "Gbegiri & ewedu with amala", highlight: "Iron absorption with citrus fruit" },
+        { day: "Friday", breakfast: "Boiled sweet potatoes with tomato mackerel stew", lunch: "Fried plantain (Dodo) with beans porridge", dinner: "Vegetable soup with croaker fish", highlight: "Essential fatty acids for baby" },
+        { day: "Saturday", breakfast: "Pancake with fresh orange slices", lunch: "Tuwo shinkafa with miyan kuka", dinner: "Catfish peppersoup with boiled unripe plantain", highlight: "Natural minerals & hydration" },
+        { day: "Sunday", breakfast: "Akara with whole milk & fruit cup", lunch: "Ofada rice with ayamase stew & boiled egg", dinner: "Light oat porridge with groundnuts", highlight: "Complete protein Sunday dinner" },
+      ];
+    } else if (w <= 27) {
+      return [
+        { day: "Monday", breakfast: "Moi moi with boiled egg & orange juice", lunch: "Ugwu (pumpkin leaf) soup with beef & eba", dinner: "Boiled ripe plantain with grilled tilapia fish", highlight: "Iron & Vitamin C for blood volume" },
+        { day: "Tuesday", breakfast: "Wholewheat toast with peanut butter & banana", lunch: "Brown beans with corn (Adalu) & steamed fish", dinner: "Efo riro with goat meat & semovita", highlight: "Calcium & non-heme iron combo" },
+        { day: "Wednesday", breakfast: "Pap with toasted soybean flour & akara", lunch: "Native jollof rice with dried fish & scent leaf", dinner: "Yam porridge with green vegetable stir-in", highlight: "Bone density minerals" },
+        { day: "Thursday", breakfast: "Boiled eggs with sautéed spinach & bread", lunch: "Afang soup with periwinkle & waterleaf", dinner: "Fish pepper soup with steamed unripe plantain", highlight: "Magnesium & zinc boost" },
+        { day: "Friday", breakfast: "Fortified cereal with full-cream milk & nuts", lunch: "Ofe onugbu (Bitterleaf soup) with poundo", dinner: "Grilled chicken salad with boiled sweet potatoes", highlight: "Omega-3 & healthy fats" },
+        { day: "Saturday", breakfast: "Egg omelette filled with peppers & ugwu with toast", lunch: "Beans and sweet corn with stewed mackerel", dinner: "Fisherman soup with boiled yam", highlight: "Potassium & muscle recovery" },
+        { day: "Sunday", breakfast: "Warm oats with crushed walnuts & milk", lunch: "Fried rice with chicken breast & steamed carrots", dinner: "Miyan taushe with tuwo masara", highlight: "Antioxidants & maternal energy" },
+      ];
+    } else {
+      return [
+        { day: "Monday", breakfast: "Ogi with akara & sliced ripe pawpaw", lunch: "Egusi soup with steamed ugu, smoked fish & eba", dinner: "Beans porridge with grilled croaker fish", highlight: "Bone calcium & potassium reserves" },
+        { day: "Tuesday", breakfast: "Boiled plantain with scrambled egg & tomatoes", lunch: "Tuwo with Miyan Kuka & lean beef", dinner: "Light vegetable soup with catfish & boiled potato", highlight: "Easy digestion for heartburn relief" },
+        { day: "Wednesday", breakfast: "Greek yoghurt with sliced banana & honey", lunch: "Ofe nsala (white soup) with catfish & pounded yam", dinner: "Steamed moi moi with warm oatmeal", highlight: "High protein & baby glycogen store" },
+        { day: "Thursday", breakfast: "Toasted bread with hard-boiled eggs & sliced pear", lunch: "Banga soup with dried fish & starch", dinner: "Sweet potato porridge with shredded spinach", highlight: "Vitamin K & fetal fat buildup" },
+        { day: "Friday", breakfast: "Akara with fresh orange & warm beverage", lunch: "Edikang ikong soup with cow leg & fufu", dinner: "Grilled chicken strips with cucumber & garden egg salad", highlight: "Cellular hydration & tissue growth" },
+        { day: "Saturday", breakfast: "Fruit salad (banana, watermelon, apple) with nuts", lunch: "Jollof brown beans with steamed cabbage", dinner: "Goat meat peppersoup with boiled plantain", highlight: "Electrolyte replenishment" },
+        { day: "Sunday", breakfast: "Pancakes with scrambled eggs & avocado", lunch: "Fried rice with grilled tilapia & steamed peas", dinner: "Moi moi with custard or light pap", highlight: "Gentle restful Sunday dinner" },
+      ];
+    }
+  });
+
   let items = $state<Plan[]>([]);
   let date = $state(new Date().toISOString().slice(0, 10));
   let mealType = $state("Breakfast");
@@ -177,6 +214,46 @@
           >
             <span class="text-[#809474] font-bold">+</span> {dish}
           </button>
+        {/each}
+      </div>
+    </div>
+
+    <!-- 7-Day Nigerian Meal Timetable Combos Table -->
+    <div class="mt-6 pt-5 border-t border-[#e2ebd9]">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2">
+          <i class="iconoir-calendar text-base text-[#475842]"></i>
+          <h4 class="font-serif text-base font-semibold text-[#242b22]">Week {pregnancyWeek} Meal Timetable Combos</h4>
+        </div>
+        <span class="text-[11px] font-semibold text-[#809474] bg-white px-2.5 py-1 rounded-full border border-[#dce8d9]">
+          Breakfast · Lunch · Dinner Combos
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+        {#each weekCombos as combo}
+          <div class="p-4 rounded-xl bg-white border border-[#dce8d9] shadow-2xs hover:shadow-xs transition-shadow">
+            <div class="flex items-center justify-between mb-2">
+              <strong class="text-xs font-bold text-[#af705a] uppercase tracking-wider">{combo.day}</strong>
+              <span class="text-[10px] font-medium text-[#475842] bg-[#809474]/10 px-2 py-0.5 rounded-md">
+                {combo.highlight}
+              </span>
+            </div>
+            <div class="space-y-1.5 text-xs text-[#30312c]">
+              <div class="flex items-start gap-1.5">
+                <span class="text-[10px] font-bold text-[#809474] uppercase w-12 shrink-0">B'fast:</span>
+                <span class="font-medium text-[#3b3d36]">{combo.breakfast}</span>
+              </div>
+              <div class="flex items-start gap-1.5">
+                <span class="text-[10px] font-bold text-[#af705a] uppercase w-12 shrink-0">Lunch:</span>
+                <span class="font-medium text-[#3b3d36]">{combo.lunch}</span>
+              </div>
+              <div class="flex items-start gap-1.5">
+                <span class="text-[10px] font-bold text-[#7b6fa0] uppercase w-12 shrink-0">Dinner:</span>
+                <span class="font-medium text-[#3b3d36]">{combo.dinner}</span>
+              </div>
+            </div>
+          </div>
         {/each}
       </div>
     </div>

@@ -1461,8 +1461,24 @@ p {
 }
 .food-results {
   display: grid;
-  gap: 8px;
-  margin-top: 12px;
+  gap: 12px;
+  margin-top: 14px;
+  max-height: 540px;
+  overflow-y: auto;
+  padding-right: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: #809474 #f0ede6;
+}
+.food-results::-webkit-scrollbar {
+  width: 6px;
+}
+.food-results::-webkit-scrollbar-track {
+  background: #f0ede6;
+  border-radius: 99px;
+}
+.food-results::-webkit-scrollbar-thumb {
+  background-color: #809474;
+  border-radius: 99px;
 }
 .food-result {
   border: 1px solid #eeece6;
@@ -1978,9 +1994,11 @@ p {
   }
   .summary-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
   .summary-card {
-    min-height: 70px;
+    min-height: 90px;
+    padding: 14px;
   }
   .content-grid {
     gap: 0;

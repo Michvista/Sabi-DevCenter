@@ -10,7 +10,7 @@
 
   const moods = [
     { label: "Good", icon: "iconoir-emoji-satisfied", value: "good", color: "text-[#3d6e3d]" },
-    { label: "Okay", icon: "iconoir-emoji-quite-flat", value: "okay", color: "text-[#8a6820]" },
+    { label: "Okay", icon: "iconoir-emoji-quite", value: "okay", color: "text-[#8a6820]" },
     { label: "A little off", icon: "iconoir-emoji-sad", value: "off", color: "text-[#af705a]" },
     { label: "Need support", icon: "iconoir-heart", value: "support", color: "text-[#b94a32]" },
   ];

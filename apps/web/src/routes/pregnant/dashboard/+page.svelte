@@ -591,7 +591,7 @@
                 </div>
               {:else if learnTab === "mealplan"}
                 <div class="learn-pane-wrap mealplan-wrap">
-                  <MealPlanner />
+                  <MealPlanner pregnancyWeek={week ?? 28} />
                   <GroceryList />
                 </div>
               {:else if learnTab === "meds"}
