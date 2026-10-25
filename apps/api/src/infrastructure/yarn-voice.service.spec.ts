@@ -12,11 +12,11 @@ describe("YarnVoiceService", () => {
 
   it("requires a server-side YarnGPT key", async () => {
     await expect(
-      service.synthesizeGuide("A weekly guide.", "ha"),
+      service.synthesizeGuide("A weekly guide."),
     ).rejects.toBeInstanceOf(ServiceUnavailableException);
   });
 
-  it("requests translated speech from YarnGPT and returns the audio bytes", async () => {
+  it("speaks localized text without asking YarnGPT to translate it again", async () => {
     process.env.YARNGPT_API_KEY = "test-secret";
     // YarnGPT voice IDs are case-sensitive; accept the account's display casing.
     process.env.YARNGPT_DEFAULT_VOICE = "Idera";
@@ -28,17 +28,17 @@ describe("YarnVoiceService", () => {
     );
     vi.stubGlobal("fetch", fetchMock);
 
-    const result = await service.synthesizeGuide("A weekly guide.", "ig");
+    const result = await service.synthesizeGuide("A weekly guide.");
     const [url, options] = fetchMock.mock.calls[0];
 
     expect(url).toBe("https://api.yarngpt.ai/api/v1/streaming/conversation");
     expect(options.headers.Authorization).toBe("Bearer test-secret");
     expect(JSON.parse(options.body)).toMatchObject({
       text: "A weekly guide.",
-      target_language: "ig",
       voice: "idera",
       output_format: "mp3",
     });
+    expect(JSON.parse(options.body)).not.toHaveProperty("target_language");
     expect(result.audio).toEqual(Buffer.from([1, 2, 3]));
     expect(result.contentType).toBe("audio/mpeg");
   });
@@ -53,7 +53,7 @@ describe("YarnVoiceService", () => {
     );
 
     await expect(
-      service.synthesizeGuide("A guide.", "yo"),
+      service.synthesizeGuide("A guide."),
     ).rejects.toBeInstanceOf(ServiceUnavailableException);
   });
 
@@ -68,7 +68,7 @@ describe("YarnVoiceService", () => {
         }),
       ),
     );
-    await expect(service.synthesizeGuide("A guide.", "ha")).rejects.toThrow(
+    await expect(service.synthesizeGuide("A guide.")).rejects.toThrow(
       "Voice playback returned an unsupported response.",
     );
   });
@@ -80,7 +80,7 @@ describe("YarnVoiceService", () => {
       vi.fn().mockRejectedValue(new Error("network details")),
     );
 
-    await expect(service.synthesizeGuide("A guide.", "en")).rejects.toThrow(
+    await expect(service.synthesizeGuide("A guide.")).rejects.toThrow(
       "Voice playback is temporarily unavailable. Please try again later.",
     );
   });

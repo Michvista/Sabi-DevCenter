@@ -53,11 +53,11 @@ describe("VoiceController language fallback", () => {
     expect(result).toBeDefined();
   });
 
-  it("uses the Pidgin voice service without routing Pidgin through YarnGPT", async () => {
+  it("uses YarnGPT first for already-translated Pidgin text", async () => {
     const audio = { audio: Buffer.from([1]), contentType: "audio/mpeg" };
-    const yarn = { synthesizeGuide: vi.fn() };
+    const yarn = { synthesizeGuide: vi.fn().mockResolvedValue(audio) };
     const azure = { synthesizeEnglishGuide: vi.fn() };
-    const nineJalingo = { synthesizeGuide: vi.fn().mockResolvedValue(audio) };
+    const nineJalingo = { synthesizeGuide: vi.fn() };
     const controller = new VoiceController(
       yarn as never,
       azure as never,
@@ -70,14 +70,35 @@ describe("VoiceController language fallback", () => {
       { setHeader },
     );
 
+    expect(yarn.synthesizeGuide).toHaveBeenCalledWith("A short translated guide");
+    expect(nineJalingo.synthesizeGuide).not.toHaveBeenCalled();
+    expect(setHeader).toHaveBeenCalledWith("X-Sabi-Audio-Fallback", "none");
+  });
+
+  it("falls back to 9jaLingo when YarnGPT cannot speak a non-English guide", async () => {
+    const audio = { audio: Buffer.from([1]), contentType: "audio/mpeg" };
+    const yarn = { synthesizeGuide: vi.fn().mockRejectedValue(new Error("offline")) };
+    const azure = { synthesizeEnglishGuide: vi.fn() };
+    const nineJalingo = { synthesizeGuide: vi.fn().mockResolvedValue(audio) };
+    const controller = new VoiceController(
+      yarn as never,
+      azure as never,
+      nineJalingo as never,
+    );
+    const setHeader = vi.fn();
+
+    await controller.guide(
+      { text: "A short Pidgin guide", targetLanguage: "pcm" },
+      { setHeader },
+    );
+
     expect(nineJalingo.synthesizeGuide).toHaveBeenCalledWith(
-      "A short translated guide",
+      "A short Pidgin guide",
       "pcm",
     );
-    expect(yarn.synthesizeGuide).not.toHaveBeenCalled();
     expect(setHeader).toHaveBeenCalledWith(
       "X-Sabi-Audio-Fallback",
-      "9jalingo-pidgin",
+      "9jalingo-pcm",
     );
   });
 });

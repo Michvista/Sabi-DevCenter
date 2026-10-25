@@ -10,7 +10,6 @@ import {
 import { IsIn, IsString, MaxLength, MinLength } from "class-validator";
 import {
   YARN_LANGUAGE_CODES,
-  type YarnLanguageCode,
   YarnVoiceService,
 } from "./infrastructure/yarn-voice.service";
 import { AzureSpeechService } from "./infrastructure/azure-speech.service";
@@ -19,7 +18,7 @@ import {
   type NineJalingoLanguage,
 } from "./infrastructure/ninejalingo-speech.service";
 
-const AUDIO_LANGUAGE_CODES = [...YARN_LANGUAGE_CODES, "pcm"] as const;
+const AUDIO_LANGUAGE_CODES = YARN_LANGUAGE_CODES;
 type AudioLanguageCode = (typeof AUDIO_LANGUAGE_CODES)[number];
 
 class GuideAudioDto {
@@ -47,28 +46,17 @@ export class VoiceController {
     let result: { audio: Buffer; contentType: string };
     let fallback = "none";
 
-    // 1. Nigerian Pidgin always runs through 9jaLingo
-    if (body.targetLanguage === "pcm") {
-      result = await this.nineJalingo.synthesizeGuide(body.text, "pcm");
-      response.setHeader("X-Sabi-Audio-Fallback", "9jalingo-pidgin");
-      return new StreamableFile(result.audio, {
-        type: result.contentType,
-        disposition: 'inline; filename="sabi-week-guide.mp3"',
-      });
-    }
-
-    // 2. Try YarnGPT first for requested language
+    // The web client already translates non-English text before TTS. YarnGPT's
+    // catalogue voices speak these languages directly; omitting target_language
+    // prevents it from translating the already-localized guide a second time.
     try {
-      result = await this.yarn.synthesizeGuide(
-        body.text,
-        body.targetLanguage as YarnLanguageCode,
-      );
+      result = await this.yarn.synthesizeGuide(body.text);
     } catch {
-      // 3. Fallback: For Hausa, Igbo, Yoruba use 9jaLingo!
       if (
         body.targetLanguage === "ha" ||
         body.targetLanguage === "ig" ||
-        body.targetLanguage === "yo"
+        body.targetLanguage === "yo" ||
+        body.targetLanguage === "pcm"
       ) {
         try {
           result = await this.nineJalingo.synthesizeGuide(

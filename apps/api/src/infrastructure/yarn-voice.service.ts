@@ -1,12 +1,12 @@
 import { Injectable, ServiceUnavailableException } from "@nestjs/common";
 import { fetchWithDnsRetry } from "./fetch-with-dns-retry";
 
-export const YARN_LANGUAGE_CODES = ["en", "ha", "ig", "yo"] as const;
+export const YARN_LANGUAGE_CODES = ["en", "ha", "ig", "yo", "pcm"] as const;
 export type YarnLanguageCode = (typeof YARN_LANGUAGE_CODES)[number];
 
 @Injectable()
 export class YarnVoiceService {
-  async synthesizeGuide(text: string, targetLanguage: YarnLanguageCode) {
+  async synthesizeGuide(text: string) {
     const apiKey = process.env.YARNGPT_API_KEY;
     if (!apiKey) {
       throw new ServiceUnavailableException(
@@ -37,7 +37,6 @@ export class YarnVoiceService {
                   voice: process.env.YARNGPT_DEFAULT_VOICE.trim().toLowerCase(),
                 }
               : {}),
-            target_language: targetLanguage,
             output_format: "mp3",
           }),
           signal: AbortSignal.timeout(90_000),
