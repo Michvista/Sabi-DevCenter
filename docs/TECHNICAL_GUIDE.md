@@ -8,6 +8,12 @@ Sabi (from Nigerian Pidgin and everyday usage, *sabi* means “to know,” “un
 - API health check: <https://sabi-api.rumptycloud.app/health>
 - Source repository: <https://github.com/Michvista/Sabi-DevCenter>
 
+## Product demo video
+
+[![Watch the Sabi product demo on YouTube](https://img.youtube.com/vi/VnW5nJTtv28/hqdefault.jpg)](https://www.youtube.com/watch?v=VnW5nJTtv28)
+
+Select the preview image to watch the walkthrough on YouTube.
+
 The sign-in pages provide synthetic judge demo accounts. Use the demo sign-in option shown in the portal; demo records are fictional.
 
 ## Main user flows
