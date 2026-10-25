@@ -11,12 +11,10 @@
   let showPassword = $state(false);
   let submitting = $state(false);
   const isMidwife = $derived(role === "midwife");
-  const demoEnabled = $derived(
-    role === "pregnant" && import.meta.env.VITE_DEMO_LOGIN_ENABLED === "true",
-  );
-  const demoMidwifeEnabled = $derived(
-    role === "midwife" && import.meta.env.VITE_DEMO_LOGIN_ENABLED === "true",
-  );
+  // Keep judge access visible in both role-specific portals. These accounts
+  // use synthetic sample data and are intended to be publicly available.
+  const demoEnabled = $derived(role === "pregnant");
+  const demoMidwifeEnabled = $derived(role === "midwife");
   const demoEmail =
     import.meta.env.VITE_DEMO_EMAIL ?? "demo.pregnant@sabi.health";
   const demoPassword = import.meta.env.VITE_DEMO_PASSWORD ?? "SabiDemo2026!";

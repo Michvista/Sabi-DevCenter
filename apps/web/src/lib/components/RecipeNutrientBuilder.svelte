@@ -11,6 +11,7 @@
     id: string;
     foodCode?: string;
     label: string;
+    category?: string;
     source: string;
     nutrientBasis?: string;
     nutrientBasisGrams?: number;
