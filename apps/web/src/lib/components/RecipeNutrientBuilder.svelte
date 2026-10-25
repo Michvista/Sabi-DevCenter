@@ -149,56 +149,136 @@
         badge: "Waiting for Ingredients",
         color: "text-[#8e9083] bg-[#faf9f6] border-[#edeae1]",
         summary: "Add measured ingredients above to calculate nutritional density for Week " + week + ".",
-        highlights: [],
+        highlights: [] as string[],
+        warnings: [] as string[],
+        gaps: [] as string[],
         safetyCheck: "No active assessment.",
       };
     }
 
     const highlights: string[] = [];
+    const warnings: string[] = [];
+    const gaps: string[] = [];
     let score = 0;
 
-    // Check calcium (vital for 3rd trimester bone hardening, 2nd trimester tooth buds)
+    const allText = (recipeName + " " + ingredients.map((i) => i.name).join(" ")).toLowerCase();
+
+    // 1. Potash / Kaun / Akanwu check (Nigerian traditional food tenderizer risk)
+    if (/potash|kaun|akanwu|kanwa/.test(allText)) {
+      warnings.push("Potash (Kaun / Akanwu) detected: Traditional rock salt contains high levels of alkaline nitrates and is contraindicated in pregnancy as it can irritate the uterine wall and stimulate premature contractions. Substitute with a pinch of baking soda or slow-simmering for tenderness.");
+    }
+
+    // 2. Unpasteurized dairy / soft raw cheeses
+    if (/unpasteurized|raw milk|soft cheese|brie|camembert|blue cheese|feta raw/.test(allText)) {
+      warnings.push("Unpasteurized dairy / soft cheese: Carries a high risk of Listeria monocytogenes bacteria, which can cross the placenta. Ensure all milk and cheeses are explicitly pasteurized.");
+    }
+
+    // 3. Raw or undercooked animal products (raw eggs, sushi, rare meats)
+    if (/raw egg|uncooked egg|raw fish|sushi|undercooked|raw meat|rare beef/.test(allText)) {
+      warnings.push("Raw or undercooked animal protein detected: Carries risk of Salmonella and Toxoplasmosis. Ensure all eggs have firm yolks and all meats/poultry are cooked thoroughly.");
+    }
+
+    // 4. High-mercury fish
+    if (/shark|swordfish|king mackerel|tilefish|bigeye tuna/.test(allText)) {
+      warnings.push("High-mercury predatory fish: Large predatory species bioaccumulate methylmercury, which harms fetal neurodevelopment. Choose safe Nigerian alternatives like tilapia, croaker, mackerel (Titus), catfish, or salmon.");
+    }
+
+    // 5. Excess liver / organ meats
+    if (/liver|organ meat/.test(allText)) {
+      const liverItem = ingredients.find((i) => /liver|organ meat/i.test(i.name));
+      if (liverItem && liverItem.grams > 60) {
+        warnings.push(`High Liver portion (${liverItem.grams}g): Liver is exceptionally rich in preformed Vitamin A (retinol). High retinol intakes can be teratogenic. Keep liver portions occasional and under 50g.`);
+      }
+    }
+
+    // 6. Unstandardized herbal concoctions / agbo / bitter kola
+    if (/agbo|herbal tonic|bitter kola|dongoyaro|neem/.test(allText)) {
+      warnings.push("Unstandardized herbal remedies (Agbo / Bitter Kola): Lack regulated dosages and frequently contain uterine-stimulating phytochemicals. Avoid non-prescribed herbal concoctions during pregnancy.");
+    }
+
+    // 7. Alcohol / fermented palm wine
+    if (/alcohol|palm wine|beer|wine|whiskey|stout|gin/.test(allText)) {
+      warnings.push("Alcohol detected: There is no known safe amount or trimester for alcohol consumption. Alcohol passes directly through the umbilical cord and causes Fetal Alcohol Spectrum Disorders.");
+    }
+
+    // 8. Sodium Safety Audit (Pre-eclampsia & Gestational Hypertension)
+    if (totals.sodiumMg > 2000) {
+      warnings.push(`High Sodium (${totals.sodiumMg.toFixed(0)} mg in recipe): Exceeds WHO daily sodium recommendations (2,000 mg). High sodium increases blood pressure, water retention, and risks of gestational hypertension and pre-eclampsia. Halve the seasoning cubes or table salt.`);
+    } else if (totals.sodiumMg > 1400) {
+      warnings.push(`Moderate-to-High Sodium (${totals.sodiumMg.toFixed(0)} mg): Keep bouillon cubes (Maggi/Knorr) moderate. Enhance flavor with natural herbs, garlic, ginger, and locust beans (iru) instead.`);
+    }
+
+    // Nutrient Strengths
+    // Calcium (vital for 3rd trimester bone hardening, 2nd trimester tooth buds)
     if (totals.calciumMg >= 200) {
       highlights.push(`High Calcium (${totals.calciumMg.toFixed(0)} mg) supports fetal skeletal ossification in Week ${week}.`);
       score += 2;
     }
 
-    // Check iron (vital for maternal hemoglobin and placental blood volume)
+    // Iron (vital for maternal hemoglobin and placental blood volume)
     if (totals.ironMg >= 5) {
       highlights.push(`Rich in Non-Heme Iron (${totals.ironMg.toFixed(1)} mg) to counter pregnancy anemia.`);
       score += 2;
     }
 
-    // Check Folate (critical for cell division and neural closure)
+    // Folate (critical for cell division and neural closure)
     if (totals.folateMcg >= 150) {
       highlights.push(`Excellent Folate (${totals.folateMcg.toFixed(0)} µg) for rapid fetal tissue development.`);
       score += 2;
     }
 
-    // Check Vitamin C (assists non-heme iron absorption)
+    // Vitamin C (assists non-heme iron absorption)
     if (totals.vitaminCMg >= 25) {
       highlights.push(`Contains Vitamin C (${totals.vitaminCMg.toFixed(0)} mg) to maximize iron bioavailability.`);
       score += 1;
     }
 
-    // Check Dietary Fibre (combats pregnancy-induced constipation)
+    // Dietary Fibre (combats pregnancy-induced constipation)
     if (totals.fibreG >= 8) {
       highlights.push(`Dietary Fibre (${totals.fibreG.toFixed(1)} g) promotes healthy digestion and blood sugar stability.`);
       score += 1;
     }
 
-    // Sodium safety audit
-    let safetyCheck = "✓ Ingredients comply with safe pregnancy preparation guidelines. Ensure all meats and seafood are cooked thoroughly.";
-    if (totals.sodiumMg > 1500) {
-      safetyCheck = "⚠️ Note: Sodium is on the higher side (" + totals.sodiumMg.toFixed(0) + " mg). Reduce bouillon cubes or salt to protect blood pressure.";
+    // Week-specific nutritional alignment and missing critical nutrients
+    if (week >= 28) {
+      // 3rd Trimester priorities: Calcium (bones), Iron (blood), Protein
+      if (totals.calciumMg < 80) {
+        gaps.push(`Low Calcium (${totals.calciumMg.toFixed(0)} mg): Week ${week} is the peak window for baby's bone mineral deposition. Pair this dish with dark leafy greens (Ugwu, waterleaf), milk, or fortified grains.`);
+      }
+      if (totals.ironMg < 3) {
+        gaps.push(`Low Iron (${totals.ironMg.toFixed(1)} mg): Blood volume demands in late pregnancy remain elevated to prevent maternal fatigue and postpartum hemorrhage. Consider adding beans, lentils, or lean meat.`);
+      }
+    } else if (week <= 13) {
+      // 1st Trimester priorities: Folate (neural tube), B6
+      if (totals.folateMcg < 80) {
+        gaps.push(`Low Folate (${totals.folateMcg.toFixed(0)} µg): Folate is vital during early pregnancy for cellular division and preventing neural tube defects. Add sweet oranges, beans, or spinach.`);
+      }
     }
 
-    if (score >= 5) {
+    // General safe preparation checklist
+    let safetyCheck = "✓ Ingredients comply with safe pregnancy preparation guidelines. Ensure all meats and seafood are cooked thoroughly to at least 74°C (165°F), and wash all fresh leaves in clean potable water.";
+    if (warnings.length > 0) {
+      safetyCheck = "⚠️ Review the ingredient cautions above before cooking or logging this recipe.";
+    }
+
+    if (warnings.length > 0) {
+      return {
+        badge: "⚠️ Cautions to Review for Week " + week,
+        color: "text-[#9c2d15] bg-[#fdf4f0] border-[#f4cfc4]",
+        summary: `Clinical review identified ingredient cautions or high sodium levels that require adjustment for safe pregnancy consumption.`,
+        highlights,
+        warnings,
+        gaps,
+        safetyCheck,
+      };
+    } else if (score >= 5) {
       return {
         badge: "★ Highly Recommended for Week " + week,
         color: "text-[#385a38] bg-[#edf5eb] border-[#c6dfc0]",
         summary: `This recipe aligns closely with Week ${week} priorities (${weekGuide.focus}). It delivers high-density micronutrients tailored to your current stage.`,
         highlights,
+        warnings,
+        gaps,
         safetyCheck,
       };
     } else if (score >= 3) {
@@ -207,6 +287,8 @@
         color: "text-[#475842] bg-[#f4f7f2] border-[#dce5d6]",
         summary: `Nutritious, moderate-density recipe. Consider adding dark green leaves (Ugwu or Spinach) to boost calcium and folate for baby's current growth spurt.`,
         highlights,
+        warnings,
+        gaps,
         safetyCheck,
       };
     } else {
@@ -215,6 +297,8 @@
         color: "text-[#7c440a] bg-[#fef9e7] border-[#e9d27a]",
         summary: `Provides good caloric sustenance. For optimal fetal development at Week ${week}, pair with calcium-rich greens or protein.`,
         highlights,
+        warnings,
+        gaps,
         safetyCheck,
       };
     }
@@ -657,6 +741,43 @@
           {clinicalAssessment.summary}
         </p>
 
+        <!-- Warnings & Contraindications -->
+        {#if clinicalAssessment.warnings.length}
+          <div class="p-3.5 rounded-2xl bg-[#fdf4f0] border border-[#f4cfc4] space-y-2">
+            <strong class="text-xs font-bold text-[#9c2d15] uppercase tracking-wider flex items-center gap-1.5">
+              <i class="iconoir-warning-triangle text-sm text-[#af705a]"></i>
+              Pregnancy Safety Cautions & Alerts:
+            </strong>
+            <ul class="text-xs text-[#6e2b1d] space-y-2">
+              {#each clinicalAssessment.warnings as warn}
+                <li class="flex items-start gap-2">
+                  <span class="text-[#af705a] font-bold text-sm leading-none mt-0.5">⚠️</span>
+                  <span class="leading-relaxed">{warn}</span>
+                </li>
+              {/each}
+            </ul>
+          </div>
+        {/if}
+
+        <!-- Week-Specific Nutrient Gaps -->
+        {#if clinicalAssessment.gaps.length}
+          <div class="p-3.5 rounded-2xl bg-[#fef9e7] border border-[#e9d27a] space-y-2">
+            <strong class="text-xs font-bold text-[#7c440a] uppercase tracking-wider flex items-center gap-1.5">
+              <i class="iconoir-info-circle text-sm text-[#b8860b]"></i>
+              Week {week} Nutritional Opportunities:
+            </strong>
+            <ul class="text-xs text-[#523910] space-y-1.5">
+              {#each clinicalAssessment.gaps as gap}
+                <li class="flex items-start gap-2">
+                  <span class="text-[#b8860b] font-bold text-sm leading-none mt-0.5">ℹ</span>
+                  <span class="leading-relaxed">{gap}</span>
+                </li>
+              {/each}
+            </ul>
+          </div>
+        {/if}
+
+        <!-- Key Nutritional Strengths -->
         {#if clinicalAssessment.highlights.length}
           <div class="p-3.5 rounded-2xl bg-[#faf9f6] border border-[#eeece6] space-y-2">
             <strong class="text-xs font-bold text-[#475842] uppercase tracking-wider block">Key Nutritional Strengths:</strong>
