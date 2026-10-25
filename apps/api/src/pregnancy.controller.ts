@@ -25,6 +25,7 @@ import { FoodSearchService } from "./infrastructure/food-search.service";
 import { GroqEncouragementService } from "./infrastructure/groq-encouragement.service";
 import { calculatePortion } from "./infrastructure/food-search.service";
 import { InjectDataSource } from "@nestjs/typeorm";
+import { DataSource } from "typeorm";
 import { PregnancyBookChunkEntity } from "./database/entities/pregnancy-book-chunk.entity";
 import { ClinicalContentReviewEntity } from "./database/entities/clinical-content-review.entity";
 
